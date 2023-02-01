@@ -15,7 +15,7 @@ enum wildlife {
     SALMON
 }
 
-public class CreateTile {
+public class CardSpecs {
 
     Random place = new Random();
 
