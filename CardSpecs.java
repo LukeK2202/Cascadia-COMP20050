@@ -2,7 +2,7 @@ import java.util.Random;
 
 enum habitat {
     WOODLAND,
-    WATERAREA,
+    WATER_AREA,
     SANDY,
     MOUNTAINS
 }
