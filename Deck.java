@@ -1,22 +1,14 @@
-import java.util.Random;
+import java.util.Stack;
 
-public class Deck {
+public class Deck extends Stack {
 
+    Deck() {
+        super();
+        for(int i = 0; i < 43; i++) {
 
-    Random place = new Random();
-
-    public String chooseHabitat() {
-
-        int x = place.nextInt(4);
-
-        return String.valueOf(habitat.values()[x]);
+            super.add(
+                    new Tile(Habitat.chooseHabitatArr(), Wildlife.chooseWildlifeArr())
+            );
+        }
     }
-
-    public String chooseWildlife() {
-
-        int y = place.nextInt(5);
-
-        return String.valueOf(wildlife.values()[y]);
-    }
-}
 }
