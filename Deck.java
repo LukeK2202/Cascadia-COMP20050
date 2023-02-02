@@ -1,6 +1,6 @@
 import java.util.Stack;
 
-public class Deck extends Stack {
+public class Deck extends Stack<Tile> {
 
     Deck() {
         super();
