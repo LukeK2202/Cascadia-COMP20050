@@ -1,9 +1,9 @@
 public enum Habitat {
-    WOODLAND("\033[48;5;22m"),
-    RIVER("\033[48;5;6m"),
-    PRAIRIE("\033[48;5;26m"),
-    MOUNTAINS("\033[48;5;11m"),
-    WETLAND("\033[48;5;8m");
+    WOODLAND(ViewColours.D_GREEN_BG),
+    RIVER(ViewColours.BLUE_BG),
+    PRAIRIE(ViewColours.YELLOW_BG),
+    MOUNTAINS(ViewColours.GREY_BG),
+    WETLAND(ViewColours.GREEN_BG);
 
     private String placeColour;
 
