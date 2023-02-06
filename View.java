@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class View {
@@ -38,6 +39,7 @@ public class View {
     public int getPlayerNum() {
         System.out.println("How many players are playing? (2-4): ");
         int num = 0;
+        
         do {
             if(in.hasNextInt()) {
                 int input = in.nextInt();
@@ -103,6 +105,12 @@ public class View {
 
     public Command getCommand() {
         return command;
+    }
+
+    // random number generator to give a number between 2 and 4
+    public static int randomizer(){
+        Random rand = new Random();
+        return rand.nextInt(3) + 2;
     }
 
     public void showFinalScore(ArrayList<String> players) {
