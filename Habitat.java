@@ -27,7 +27,7 @@ public enum Habitat {
     public static ArrayList<Habitat> chooseHabitatArr() {
         Random rnd = new Random();
         ArrayList<Habitat> habitats  = new ArrayList<>();
-        int num = rnd.nextInt(3);
+        int num = rnd.nextInt(2);
         for(int i = 0; i <= num; i++){
             Habitat habitat = chooseHabitat();
             if(!habitats.contains(habitat)) {

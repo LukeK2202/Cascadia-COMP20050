@@ -74,6 +74,26 @@ public class View {
         return players;
     }
 
+    public void printBoard(Board board) {
+        String out = "";
+        for (int row = 0; row < board.getBoardLength(); row++) {
+            if (!board.isRowNull(row)) {
+                out = "";
+
+                for (int tileRow = 0; tileRow < 4; tileRow++) {
+                    if(row % 2 == 1) {
+                        out += "      ";
+                    }
+                    for (int i = 0; i < board.getBoardWidth(); i++) {
+                        out += board.board[row][i].toString(tileRow);
+                    }
+                    System.out.println(out);
+                    out = "";
+                }
+            }
+        }
+    }
+
 
     public Command getUserInput() {
         boolean valid = false;
