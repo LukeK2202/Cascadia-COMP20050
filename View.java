@@ -119,7 +119,7 @@ public class View {
         System.out.println("Game over.");
     }
 
-    public void showQuit() {
+    public static void showQuit() {
         System.out.println("Quitting game.");
     }
 
