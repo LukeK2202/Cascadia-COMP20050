@@ -128,11 +128,6 @@ public class View {
         return command;
     }
 
-    // random number generator to give a number between 2 and 4
-    public static int randomizer(){
-        Random rand = new Random();
-        return rand.nextInt(3) + 2;
-    }
 
     public void showFinalScore(ArrayList<String> players) {
         System.out.println("");

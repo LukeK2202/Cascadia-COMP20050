@@ -24,7 +24,6 @@ public class Casc {
         currUser = usersArr.get(0);
         do {
             view.printBoard(board);
-
             System.out.println(currUser);
             boolean commDone = false;
             do {

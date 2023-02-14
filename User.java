@@ -17,6 +17,14 @@ public class User {
         return orderNumber;
     }
 
+    User(String name) {
+        this.name = name;
+    }
+
+    public String toString() {
+        return name;
+    }
+
     /* {
 
 
