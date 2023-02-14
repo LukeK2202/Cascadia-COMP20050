@@ -6,7 +6,13 @@ public enum Wildlife {
     ELK(ViewColours.BLACK + ViewColours.WHITE_BG + " E "+ ViewColours.RESET),
     BEAR(ViewColours.BROWN + ViewColours.WHITE_BG + " B "+ ViewColours.RESET),
     HAWK(ViewColours.BLUE + ViewColours.WHITE_BG + " H "+ ViewColours.RESET),
-    SALMON(ViewColours.PINK + ViewColours.WHITE_BG + " S "+ ViewColours.RESET);
+    SALMON(ViewColours.PINK + ViewColours.WHITE_BG + " S "+ ViewColours.RESET),
+
+    FOX_PLACED(ViewColours.WHITE + ViewColours.ORANGE_BG + " F " + ViewColours.RESET),
+    ELK_PLACED(ViewColours.WHITE + ViewColours.BLACK_BG + " E " + ViewColours.RESET),
+    BEAR_PLACED(ViewColours.WHITE + ViewColours.BROWN_BG + " B " + ViewColours.RESET),
+    HAWK_PLACED(ViewColours.WHITE + ViewColours.BLUE_BG + " H " + ViewColours.RESET),
+    SALMON_PLACED(ViewColours.WHITE + ViewColours.PINK_BG + " S " + ViewColours.RESET);
 
     private String animalColour;
 

@@ -126,7 +126,7 @@ public class View {
     public Command getCommand() {
         return command;
     }
-    
+
 
     public void showFinalScore(ArrayList<String> players) {
         System.out.println("");

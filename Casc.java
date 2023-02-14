@@ -8,6 +8,7 @@ public class Casc {
         View view = new View();
         Deck deck = new Deck();
         Board board = new Board();
+        WildlifeDeck wDeck = new WildlifeDeck();
 
         view.printBoard(board);
     }
