@@ -31,8 +31,8 @@ public class View {
         System.out.println("Wipe any number of wildlife tokens from the pool on the table. There is no limit to how many nature tokens you can spend per turn.");
         System.out.println("");
         System.out.println("Commands:");
-        System.out.println("");
-        System.out.println("");
+        System.out.println("Enter q to quit.");
+        System.out.println("Enter n to go to next user.");
     }
 
     //Gets desired number of players, returns it as an int
@@ -42,9 +42,9 @@ public class View {
         
         do {
             if(in.hasNextInt()) {
-                int input = in.nextInt();
-                if(input >= 2 && input <=4) {
-                    num = input;
+                String input = in.nextLine();
+                if(Integer.parseInt(input) >= 2 && Integer.parseInt(input) <=4) {
+                    num = Integer.parseInt(input);
                 } else {
                     System.out.println("Invalid amount of players given. Try again.");
                 }
@@ -64,7 +64,8 @@ public class View {
 
         do {
             System.out.println("Please enter a players name (Max 20 Characters): ");
-            String input = in.next();
+            String input = in.nextLine();
+            input = input.trim();
             if (input.length() > 21) {
                 System.out.println("Please enter a name within 20 Characters. Try again.");
             } else {
@@ -119,7 +120,7 @@ public class View {
         System.out.println("Game over.");
     }
 
-    public static void showQuit() {
+    public void showQuit() {
         System.out.println("Quitting game.");
     }
 
