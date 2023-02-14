@@ -31,20 +31,20 @@ public class View {
         System.out.println("Wipe any number of wildlife tokens from the pool on the table. There is no limit to how many nature tokens you can spend per turn.");
         System.out.println("");
         System.out.println("Commands:");
-        System.out.println("Enter q to quit.");
-        System.out.println("Enter n to go to next user.");
+        System.out.println("Enter 'Q' to quit.");
+        System.out.println("Enter 'N' to go to next user.");
     }
 
     //Gets desired number of players, returns it as an int
     public int getPlayerNum() {
         System.out.println("How many players are playing? (2-4): ");
         int num = 0;
-        
         do {
             if(in.hasNextInt()) {
-                String input = in.nextLine();
-                if(Integer.parseInt(input) >= 2 && Integer.parseInt(input) <=4) {
-                    num = Integer.parseInt(input);
+                int input = in.nextInt();
+                in.nextLine();
+                if(input >= 2 && input <=4) {
+                    num = input;
                 } else {
                     System.out.println("Invalid amount of players given. Try again.");
                 }
@@ -60,13 +60,11 @@ public class View {
     //Creates and populates an arraylist of strings containing all player names
     public ArrayList<String> getplayerNames(int playNum) {
         ArrayList<String> players = new ArrayList<String>();
-
-
         do {
             System.out.println("Please enter a players name (Max 20 Characters): ");
             String input = in.nextLine();
             input = input.trim();
-            if (input.length() > 21) {
+            if (input.length() > 21 || input.isBlank()) {
                 System.out.println("Please enter a name within 20 Characters. Try again.");
             } else {
                 players.add(input);
@@ -80,7 +78,6 @@ public class View {
         for (int row = 0; row < board.getBoardLength(); row++) {
             if (!board.isRowNull(row)) {
                 out = "";
-
                 for (int tileRow = 0; tileRow < 4; tileRow++) {
                     if(row % 2 == 1) {
                         out += "      ";
