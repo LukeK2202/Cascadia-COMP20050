@@ -25,9 +25,21 @@ public class Table {
     public Tile getTile(int n) {
         return shownTiles.get(n);
     }
-
     public Wildlife getWildlife(int n) {
         return shownWildlife.get(n);
+    }
+
+    public Tile takeTile(int position) {
+        return shownTiles.remove(position);
+    }
+    public Wildlife takeWildlife(int position) {
+        return shownWildlife.remove(position);
+    }
+    public void addTile() {
+        shownTiles.add(tileDeck.pop());
+    }
+    public void addWildlife() {
+        shownWildlife.add(wildlifeDeck.pop());
     }
 
 }
