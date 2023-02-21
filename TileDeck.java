@@ -1,5 +1,7 @@
 import java.util.Stack;
 
+
+// this class stores the tiles in the deck for the game
 public class TileDeck extends Stack<Tile>{
 
     TileDeck() {
