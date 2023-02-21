@@ -5,6 +5,7 @@ public class WildlifeDeck extends Stack<Wildlife>{
 
     WildlifeDeck() {
         super();
+        // adds twenty of each of the wildlife tokens to a stack type database called WildlifeDeck
 
             for(int i = 0; i < 20; i++) {
 

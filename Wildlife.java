@@ -7,12 +7,15 @@ public enum Wildlife {
     BEAR(ViewColours.BROWN + ViewColours.WHITE_BG + " B "+ ViewColours.RESET),
     HAWK(ViewColours.BLUE + ViewColours.WHITE_BG + " H "+ ViewColours.RESET),
     SALMON(ViewColours.PINK + ViewColours.WHITE_BG + " S "+ ViewColours.RESET),
+    //enums to be used on tiles as placeholders for the wildlifes compatible there
 
     FOX_PLACED(ViewColours.WHITE + ViewColours.ORANGE_BG + " F " + ViewColours.RESET),
     ELK_PLACED(ViewColours.WHITE + ViewColours.BLACK_BG + " E " + ViewColours.RESET),
     BEAR_PLACED(ViewColours.WHITE + ViewColours.BROWN_BG + " B " + ViewColours.RESET),
     HAWK_PLACED(ViewColours.WHITE + ViewColours.BLUE_BG + " H " + ViewColours.RESET),
     SALMON_PLACED(ViewColours.WHITE + ViewColours.PINK_BG + " S " + ViewColours.RESET);
+    //enums to be used on the table to show available tokens, and also to signify that a certain token has been placed
+    //on a tile
 
     private String animalColour;
 
@@ -23,6 +26,7 @@ public enum Wildlife {
     public String toString() {
         return this.animalColour;
     }
+    //returns string to print out colour of the enum type string
 
 
     public static Wildlife chooseWildlife() {
@@ -31,6 +35,7 @@ public enum Wildlife {
 
         return Wildlife.values()[y];
     }
+    //function to choose random wildlife
 
     public static ArrayList<Wildlife> chooseWildlifeArr() {
         Random rnd = new Random();
@@ -44,4 +49,6 @@ public enum Wildlife {
         }
         return animals;
     }
+    //function to choose up to a maximum of 3 tokens (max per tile) and return them in an ArrayList to be used in tile
+    //construction
 }
