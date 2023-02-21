@@ -16,13 +16,19 @@ public class User {
     public int getOrderNumber() {
         return orderNumber;
     }
+    private Board board;
 
     User(String name) {
         this.name = name;
+        this.board = new Board();
     }
 
     public String toString() {
         return name;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     /* {

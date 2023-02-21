@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 public class View {
@@ -65,7 +64,7 @@ public class View {
             String input = in.nextLine();
             input = input.trim();
             if (input.length() > 21 || input.isBlank()) {
-                System.out.println("Please enter a name within 20 Characters. Try again.");
+                System.out.println("Please enter a non-empty name within 20 Characters. Try again.");
             } else {
                 players.add(input);
             }
@@ -90,6 +89,28 @@ public class View {
                 }
             }
         }
+    }
+
+    public void printTable(Table table) {
+        StringBuilder out = new StringBuilder();
+
+        for(int i = 0; i < 4; i++) {
+            for(int j = 0; j < 4; j++) {
+                out.append(Tile.space);
+                out.append(table.getTile(j).toString(i));
+                out.append(Tile.space);
+            }
+            out.append("\n");
+        }
+        out.append("\n");
+        for(int i = 0; i < 4; i++) {
+            out.append(Tile.space + Tile.space);
+            out.append(table.getWildlife(i));
+            out.append(Tile.space + Tile.space + Tile.space);
+        }
+        out.append("\n");
+        out.append("**      [1]                 [2]             [3]                 [4]     **");
+        System.out.println(out);
     }
 
 

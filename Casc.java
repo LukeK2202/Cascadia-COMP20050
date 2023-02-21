@@ -1,18 +1,14 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 
 public class Casc {
     //Main java File, will use this to start the game.
     public static ArrayList<User> usersArr = new ArrayList<>();
-    public static int playerNum;
+    public static int playerNum = 3;
     public static User currUser;
 
     public static void main(String[] args) {
         View view = new View();
-        Deck deck = new Deck();
-        Board board = new Board();
         Command command;
         view.welcomeMsg();
         int userIndex = 0;
@@ -22,8 +18,11 @@ public class Casc {
         }
         Collections.shuffle(usersArr);
         currUser = usersArr.get(0);
+        Board currBoard = currUser.getBoard();
+        Table table = new Table();
         do {
-            view.printBoard(board);
+            view.printTable(table);
+            view.printBoard(currBoard);
             System.out.println(currUser);
             boolean commDone = false;
             do {
@@ -33,6 +32,7 @@ public class Casc {
                 } else if(command.isNext()) {
                     userIndex = (userIndex + 1) % playerNum;
                     currUser = usersArr.get(userIndex);
+                    currBoard = currUser.getBoard();
                     commDone = true;
                 }
             } while(!commDone);
