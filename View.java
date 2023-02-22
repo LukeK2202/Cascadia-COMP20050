@@ -12,6 +12,7 @@ public class View {
         in = new Scanner(System.in);
     }
 
+    //Displays opening welcome message
     public void welcomeMsg() {
         System.out.println("*** *** Welcome to Cascadia! *** ***");
         System.out.println("");
@@ -72,6 +73,7 @@ public class View {
         return players;
     }
 
+    //Displays full board
     public void printBoard(Board board) {
         String out = "";
         for (int row = 0; row < board.getBoardLength(); row++) {
@@ -91,6 +93,7 @@ public class View {
         }
     }
 
+    //Displays table, being the 4 shown tiles and the 4 shown wildlife
     public void printTable(Table table) {
         StringBuilder out = new StringBuilder();
 
@@ -114,6 +117,7 @@ public class View {
     }
 
 
+    //method to receive user input for commands
     public Command getUserInput() {
         boolean valid = false;
         do {
@@ -129,19 +133,23 @@ public class View {
         return command;
     }
 
+    //Print place token error
     public void showPlaceTokenError() {
         System.out.println("Cant place wildlife token on tile.");
     }
 
+    //Displays game over
     public void showGameOver(String playerWon) {
         System.out.println(playerWon + "won!!");
         System.out.println("Game over.");
     }
 
+    //Displays quitting game
     public void showQuit() {
         System.out.println("Quitting game.");
     }
 
+    //Returns command
     public Command getCommand() {
         return command;
     }

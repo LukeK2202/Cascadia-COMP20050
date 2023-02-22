@@ -37,18 +37,4 @@ public enum Wildlife {
     }
     //function to choose random wildlife
 
-    public static ArrayList<Wildlife> chooseWildlifeArr() {
-        Random rnd = new Random();
-        ArrayList<Wildlife> animals = new ArrayList<Wildlife>();
-        int num = rnd.nextInt(3);
-        for(int i = 0; i <= num; i++){
-            Wildlife animal = chooseWildlife();
-            if(!animals.contains(animal)) {
-                animals.add(animal);
-            }
-        }
-        return animals;
-    }
-    //function to choose up to a maximum of 3 tokens (max per tile) and return them in an ArrayList to be used in tile
-    //construction
 }

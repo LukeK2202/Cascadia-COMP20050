@@ -27,19 +27,5 @@ public enum Habitat {
         return Habitat.values()[x];
     }
     //function to choose a habitat
-
-    public static ArrayList<Habitat> chooseHabitatArr() {
-        Random rnd = new Random();
-        ArrayList<Habitat> habitats  = new ArrayList<>();
-        int num = rnd.nextInt(2);
-        for(int i = 0; i <= num; i++){
-            Habitat habitat = chooseHabitat();
-            if(!habitats.contains(habitat)) {
-                habitats.add(habitat);
-            }
-        }
-        return habitats;
-    }
-    //function to choose two random habitats (2 per tile) and return that as an ArrayList and be used later
-
+    
 }
