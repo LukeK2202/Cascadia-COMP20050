@@ -115,7 +115,7 @@ public class Tile {
         }
 
 
-        //Else its an empty tile
+        //Else it's an empty tile
        else {
            for(int i = 0; i < tile.length; i++) {
                //Fill tile with space
