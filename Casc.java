@@ -69,5 +69,8 @@ public class Casc {
         if(command.isQuit()) {
             view.showQuit();
         }
+        else if(command.DeckisFin()) {
+            view.showDeckEmpty();
+        }
     }
 }
