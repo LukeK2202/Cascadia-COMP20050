@@ -23,6 +23,8 @@ public class Tile {
     public static String space = "   ";
     //Blank space(white)
     public static String whiteSpace = ViewColours.WHITE_BG + space + ViewColours.RESET;
+    //The current Co-Ord index of the tile
+    int coOrd = 0;
 
     //Main tile constructor
     Tile(tileTypes type) {
@@ -202,5 +204,40 @@ public class Tile {
     //Method to return the habitat arraylist
     public ArrayList<Habitat> getHabitats() {
         return habitats;
+    }
+
+    //Displays the held coOrd index of the tile
+    public void showCoOrd() {
+        if(isBlank()) {
+            if(coOrd < 10) {
+                this.tile[2][2] = " " + coOrd + " ";
+            } else {
+                this.tile[2][2] = " " + coOrd + "";
+            }
+        } else if(coOrd < 10){
+            this.tile[2][2] = ViewColours.WHITE_BG + " " + coOrd + " " + ViewColours.RESET;
+        } else {
+            this.tile[2][2] = ViewColours.WHITE_BG + " " + coOrd + "" + ViewColours.RESET;
+        }
+        
+    }
+
+    //Hides the coOrd index of the tile
+    public void hideCoOrd() {
+        if(isBlank()) {
+            this.tile[2][2] = space;
+        } else {
+            this.tile[2][2] = whiteSpace;
+        }
+    }
+
+    //Sets the coOrd index of the tile, meant to take in the index of the coOrd from board class
+    public void setCoOrd(int coOrd) {
+        this.coOrd = coOrd;
+    }
+
+    //Returds the coOrd index of the tile
+    public int getCoOrd() {
+        return coOrd;
     }
 }

@@ -5,11 +5,13 @@ public class Board {
 
     //Main board matrix, a grid of tile classes
     Tile[][] board = new Tile[11][11];
-    ArrayList<int[]> occPlaces = new ArrayList<int[]>();
+    //Arraylist to hold interger arrays of 2, acting as Co-ords, for placed tiles
+    ArrayList<int[]> occupiedTiles = new ArrayList<int[]>();
+    //Arraylist to hold interger arrays of 2, acting as Co-ords, for places tiles can be placed
+    ArrayList<int[]> placeableArea = new ArrayList<int[]>();
     //Board constructor, adds 3 tiles as a started tile. 1 keystone and 2 randoms
     //Origin of board is 6,6.
     Board() {
-
         addTile(new Tile(Tile.tileTypes.KEYSTONE), 6, 6);
         addTile(new Tile(Tile.tileTypes.RANDOM), 7, 5);
         addTile(new Tile(Tile.tileTypes.RANDOM), 7, 6);
@@ -43,10 +45,19 @@ public class Board {
     }
 
     //Method to add a tile to the board, requiring the row and column
-    public void addTile(Tile tile ,int row, int column) {
+    private void addTile(Tile tile ,int row, int column) {
         if(isRowNull(row)) {
             populateRow(row);
         }
+        int coOrd[] = {row, column};
+        occupiedTiles.add(coOrd);
         board[row][column] = tile;
+        tile.setCoOrd(occupiedTiles.indexOf(coOrd));
+    }
+
+    //Method to place a tile at a co-ordinate from a given index of the placeableArea array
+    public void placeTile(Tile tile, int n) {
+        int[] coOrd = placeableArea.get(n);
+        addTile(tile, coOrd[0], coOrd[1]);
     }
 }

@@ -19,11 +19,14 @@ public class Casc {
         view.welcomeMsg();
         //Sets users index to 0 (first player) and asks for how many players are playing
         int userIndex = 0;
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------");
         playerNum = view.getPlayerNum();
         //Iterates through the users array and receives the player name for each user.
         for(String p: view.getplayerNames(playerNum)) {
             usersArr.add(new User(p));
         }
+        view.clearView();
+        view.displayCommands();
         //shuffles user array to get a random order
         Collections.shuffle(usersArr);
         //Sets current user to the first one in the array and sets the current board to the board of that user
@@ -33,13 +36,16 @@ public class Casc {
         Table table = new Table();
         do {
             //Display the table and the current board
+            view.skipLines();
             view.printTable(table);
+            System.out.println("Current Players Board: " + currUser.getName());
             view.printBoard(currBoard);
             boolean commDone = false;
             //Begins the loop to receive a command
             do {
                 //receive user input
                 command = view.getUserInput();
+                view.clearView();
                 //If command is quit sets commDone to true to exit loop
                 if(command.isQuit()) {
                     commDone = true;
@@ -48,6 +54,9 @@ public class Casc {
                     userIndex = (userIndex + 1) % playerNum;
                     currUser = usersArr.get(userIndex);
                     currBoard = currUser.getBoard();
+                    commDone = true;
+                } else if(command.isComm()) {
+                    view.displayCommands();
                     commDone = true;
                 }
             } while(!commDone);

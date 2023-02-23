@@ -7,6 +7,7 @@ public class View {
     Scanner in;
 
     Command command;
+    String largeTab = "            ";
 
     View() {
         in = new Scanner(System.in);
@@ -29,10 +30,29 @@ public class View {
         System.out.println("If you place a wildlife on a keystone tile, you receive a nature token");
         System.out.println("These can be used to, take ANY one of the 4 habitat tiles and ANY one of the 4 wildlife tokens,");
         System.out.println("Wipe any number of wildlife tokens from the pool on the table. There is no limit to how many nature tokens you can spend per turn.");
-        System.out.println("");
+    }
+
+    //Displays all commands
+    public void displayCommands() {
         System.out.println("Commands:");
         System.out.println("Enter 'Q' to quit.");
         System.out.println("Enter 'N' to go to next user.");
+        System.out.println("Enter 'C' to display commands again.");
+    }
+
+    //Clears the view with new lines and adds a line. Used when at a new game state
+    public void clearView() {
+        skipLines();
+        skipLines();
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------");
+    }
+
+    public void skipLines() {
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
     }
 
     //Gets desired number of players, returns it as an int
@@ -91,29 +111,36 @@ public class View {
                 }
             }
         }
+        skipLines();
     }
 
     //Displays table, being the 4 shown tiles and the 4 shown wildlife
     public void printTable(Table table) {
         StringBuilder out = new StringBuilder();
+        out.append(largeTab + largeTab + largeTab);
+        out.append("**                         Available Tiles and Wildlife                           **\n");  
+
 
         for(int i = 0; i < 4; i++) {
+            out.append(largeTab + largeTab + largeTab);
             for(int j = 0; j < 4; j++) {
-                out.append(Tile.space);
                 out.append(table.getTile(j).toString(i));
-                out.append(Tile.space);
+                out.append(largeTab);
             }
             out.append("\n");
         }
         out.append("\n");
+        out.append(largeTab + largeTab + largeTab);
         for(int i = 0; i < 4; i++) {
-            out.append(Tile.space + Tile.space);
+            out.append("       ");
             out.append(table.getWildlife(i));
-            out.append(Tile.space + Tile.space + Tile.space);
+            out.append(largeTab);
         }
         out.append("\n");
-        out.append("**      [1]                 [2]             [3]                 [4]     **");
+        out.append(largeTab + largeTab + largeTab);
+        out.append("**       [1]                  [2]                  [3]                 [4]         **");
         System.out.println(out);
+        skipLines();
     }
 
 
