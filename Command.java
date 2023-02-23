@@ -1,7 +1,7 @@
 public class Command{
     //Main Control Class, Purpose to call commands.
 
-    private enum CommandType {QUIT, NEXT, COMMAND};
+    private enum CommandType {QUIT, NEXT, COMMAND, DECK_EMPTY};
     private CommandType commandType;
 
     //Command method, recieves input, formats and sets the command settings to the received command,
@@ -17,6 +17,9 @@ public class Command{
         else if(inputFormat.equals("C")) {
             commandType = CommandType.COMMAND;
         }
+        else if(inputFormat.equals("deckFin")) {
+            commandType = CommandType.DECK_EMPTY;
+        }
 
     }
 
@@ -24,11 +27,7 @@ public class Command{
     //Input validity checker, checks to ensure user input is only a valid input, return false if invalid
     public static boolean isValid(String input) {
        String inputFormat = input.trim().toUpperCase();
-       if(inputFormat.equals("Q") || inputFormat.equals("N") || inputFormat.equals("C")) {
-           return true;
-       } else {
-           return false;
-       }
+       return inputFormat.equals("Q") || inputFormat.equals("N") || inputFormat.equals("C") || inputFormat.equals("deckFin");
 
     }
 
@@ -53,6 +52,14 @@ public class Command{
     //Checks if the command command was given
     public boolean isComm() {
         if(commandType == CommandType.COMMAND) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean DeckisFin() {
+        if(commandType == CommandType.DECK_EMPTY) {
             return true;
         } else {
             return false;

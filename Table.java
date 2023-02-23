@@ -56,5 +56,8 @@ public class Table {
     public void addWildlife() {
         shownWildlife.add(wildlifeDeck.pop());
     }
+    public boolean deckIsEmpty() {
+        return tileDeck.isEmpty();
+    }
 
 }
