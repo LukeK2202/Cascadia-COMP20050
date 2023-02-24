@@ -43,6 +43,10 @@ public class Casc {
             boolean commDone = false;
             //Begins the loop to receive a command
             do {
+                if(table.deckIsEmpty()) {
+                    commDone = true;
+                    command = new Command("deckFin");
+                }
                 //receive user input
                 command = view.getUserInput();
                 view.clearView();
@@ -60,10 +64,13 @@ public class Casc {
                     commDone = true;
                 }
             } while(!commDone);
-        } while(!command.isQuit());
+        } while(!command.isQuit() && !command.DeckisFin());
         //If command is quit show quit game.
         if(command.isQuit()) {
             view.showQuit();
+        }
+        else if(command.DeckisFin()) {
+            view.showDeckEmpty();
         }
     }
 }

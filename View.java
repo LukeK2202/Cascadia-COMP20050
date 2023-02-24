@@ -176,6 +176,10 @@ public class View {
         System.out.println("Quitting game.");
     }
 
+    public void showDeckEmpty() {
+        System.out.println("The deck is empty, the cores are being calculated!!");
+    }
+
     //Returns command
     public Command getCommand() {
         return command;
