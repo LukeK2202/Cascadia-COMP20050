@@ -59,6 +59,42 @@ public class Board {
         tile.setCoOrd(occupiedTiles.indexOf(coOrd));
     }
 
+    public void addPlaceableArea(int row, int column) {
+        for(int i = row - 1; i < row + 1; i++) {
+            //goes through the immediate antecedent and descendent rows
+
+            for(int j = column; j < column + 1; j++) {
+                //goes through current column plus one as these are the general cases
+            int[] holder = {i, j};
+            boolean instanceFound = false;
+
+                for(int k = 0; k < placeableArea.size(); k++) {
+                    if(placeableArea.get(k) == holder || (holder[0] == row && holder[1] == column)) {
+                        instanceFound = true;
+                        break;
+                    }
+                }
+                /*breaks if the current position is already in placeableArea ArrayList or
+                if the current holder is the current tiles being placed*/
+
+                if(!instanceFound && board[i][j].isBlank()) {
+                placeableArea.add(holder);
+                }
+            }
+        }
+        int[] temp = {row, column - 1};
+        for(int k = 0; k < placeableArea.size(); k++) {
+            if(placeableArea.get(k) == temp) {
+                return;
+            }
+            else {
+                placeableArea.add(temp);
+            }
+        }
+        /*the edge case tile, the one on the same row but one column behind, outside of previous
+        for loop as it is outside the general case*/
+    }
+
     //Method to place a tile at a co-ordinate from a given index of the placeableArea array
     public void placeTile(Tile tile, int n) {
         int[] coOrd = placeableArea.get(n);
