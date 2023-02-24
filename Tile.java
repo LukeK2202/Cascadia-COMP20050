@@ -11,12 +11,9 @@ public class Tile {
         RANDOM,
         BLANK
     }
-    //Boolean to show if tile is a blank tile or not
-    Boolean blank = false;
-    //Array list to be populated with the habitats the tile has
-    ArrayList<Habitat> habitats = new ArrayList<>();
-    //Array list to be populated with the wildlife the tile has
-    ArrayList<Wildlife> wildlife = new ArrayList<>();
+    private Boolean blank = false;
+    private ArrayList<Habitat> habitats = new ArrayList<>();
+    private ArrayList<Wildlife> wildlife = new ArrayList<>();
     //Main tile array, a 4x4 grid of strings which become the tile
     private String[][] tile = new String[4][4];
     //Spacing used as a constant between tiles
@@ -24,9 +21,8 @@ public class Tile {
     //Blank space(white)
     public static String whiteSpace = ViewColours.WHITE_BG + space + ViewColours.RESET;
     //The current Co-Ord index of the tile
-    int coOrd = 0;
+    private int coOrd = 0;
 
-    //Main tile constructor
     Tile(tileTypes type) {
         //Keystone tile constructor
         if(type == tileTypes.KEYSTONE) {
@@ -144,31 +140,6 @@ public class Tile {
         tile[0][1] = tmp;
         tile[0][0] = tmp2;
     }
-
-//    Tile(Habitat habitat, Habitat habitat2, ArrayList<Wildlife> animal) {
-//        habitats.add(habitat); habitats.add(habitat2);
-//        wildlife = animal;
-//
-//        for(int i = 0; i < tile.length; i++) {
-//            for(int j = 0; j < tile.length; j++) {
-//                if(i == 0 || i == tile.length - 1 || j == 0 || j == tile[i].length - 1) {
-//                    if(i == 0 || (i < tile.length - 1 && j == 0)) {
-//                        this.tile[i][j] = habitat + space + ViewColours.RESET;
-//                    } else {
-//                        this.tile[i][j] = habitat2 + space + ViewColours.RESET;
-//                    }
-//
-//                } else {
-//                    if(animal.size() > 0) {
-//                        this.tile[i][j] = animal.get(0).toString();
-//                        animal.remove(0);
-//                    } else {
-//                        this.tile[i][j] = blankSpace;
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     //Draw method to draw a whole tile in its own row
     public void draw() {

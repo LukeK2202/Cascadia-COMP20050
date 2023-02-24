@@ -4,10 +4,10 @@ import java.util.Scanner;
 public class View {
     //Class to deal with printing to terminal and receiving input from user.
 
-    Scanner in;
+    private final Scanner in;
 
-    Command command;
-    String largeTab = "            ";
+    private Command command;
+    private final String largeTab = "            ";
 
     View() {
         in = new Scanner(System.in);
@@ -104,7 +104,7 @@ public class View {
                         out += "      ";
                     }
                     for (int i = 0; i < board.getBoardWidth(); i++) {
-                        out += board.board[row][i].toString(tileRow);
+                        out += board.getTile(row,i).toString(tileRow);
                     }
                     System.out.println(out);
                     out = "";

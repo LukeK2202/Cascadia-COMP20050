@@ -4,17 +4,17 @@ import java.util.ArrayList;
 public class Board {
 
     //Main board matrix, a grid of tile classes
-    Tile[][] board = new Tile[11][11];
+    private Tile[][] board = new Tile[21][21];
     //Arraylist to hold interger arrays of 2, acting as Co-ords, for placed tiles
-    ArrayList<int[]> occupiedTiles = new ArrayList<int[]>();
+    private ArrayList<int[]> occupiedTiles = new ArrayList<int[]>();
     //Arraylist to hold interger arrays of 2, acting as Co-ords, for places tiles can be placed
-    ArrayList<int[]> placeableArea = new ArrayList<int[]>();
+    private ArrayList<int[]> placeableArea = new ArrayList<int[]>();
     //Board constructor, adds 3 tiles as a started tile. 1 keystone and 2 randoms
     //Origin of board is 6,6.
     Board() {
-        addTile(new Tile(Tile.tileTypes.KEYSTONE), 6, 6);
-        addTile(new Tile(Tile.tileTypes.RANDOM), 7, 5);
-        addTile(new Tile(Tile.tileTypes.RANDOM), 7, 6);
+        addTile(new Tile(Tile.tileTypes.KEYSTONE), 11, 11);
+        addTile(new Tile(Tile.tileTypes.RANDOM), 12, 11);
+        addTile(new Tile(Tile.tileTypes.RANDOM), 12, 12);
     }
 
     //Returns board length
@@ -42,6 +42,10 @@ public class Board {
         for(int i = 0; i < board[row].length; i++) {
             board[row][i] = new Tile(Tile.tileTypes.BLANK);
         }
+    }
+
+    public Tile getTile(int row, int column) {
+        return board[row][column];
     }
 
     //Method to add a tile to the board, requiring the row and column
