@@ -60,4 +60,20 @@ public class Table {
         return tileDeck.isEmpty();
     }
 
+    public void cullAll(){
+
+        // if wildlife deck has more than 4 "distinct" wildlife
+        // creates a new wildlife deck and shuffles them and adds them all in to the deck
+        boolean allEqual = wildlifeDeck.stream().distinct().count() <= 4;
+        if(allEqual) {
+            wildlifeDeck = new WildlifeDeck();
+            Collections.shuffle(wildlifeDeck);
+
+            for (int i = 0; i < 4; i++) {
+                shownWildlife.add(wildlifeDeck.pop());
+            }
+        }
+    }
+
+
 }
