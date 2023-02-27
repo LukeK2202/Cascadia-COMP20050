@@ -60,17 +60,53 @@ public class Table {
         return tileDeck.isEmpty();
     }
 
-    public void cullAll(){
-
-        // if wildlife deck has more than 4 "distinct" wildlife
-        // creates a new wildlife deck and shuffles them and adds them all in to the deck
+    public void cullWildlifeTokens() {
+        /* 
+         * If the wildlife shown tokens on the table are all of the same type, it discards them and takes new ones out the 
+         * wildlife deck and fills the table array with them
+         */
         long sameAmount = shownWildlife.stream().distinct().count();
-        if(sameAmount < 2) {
-                shownWildlife.removeAll(wildlifeDeck);
-
+        int occurences = Collections.frequency(shownWildlife, shownWildlife.get(0));
+        if(sameAmount == 1) {
+            for(int j = 0; j < 4; j++) {
+                Wildlife temp = shownWildlife.get(j);
+                wildlifeDeck.add(temp);
+                shownWildlife.remove(j);
+            }
+            Collections.shuffle(wildlifeDeck);
             for (int i = 0; i < 4; i++) {
                 shownWildlife.add(wildlifeDeck.pop());
             }
+            if(shownWildlife.stream().distinct().count() == 1) {
+                cullWildlifeTokens();
+            }
+
+        }
+        else if (sameAmount == 2 && (occurences == 1 || occurences == 3)) {
+            if(occurences == 1) {
+                for(int i = 1; i < 3; i++) {
+                    Wildlife temp = shownWildlife.get(i);
+                    wildlifeDeck.add(temp);
+                    shownWildlife.remove(i);
+                }
+            }
+            else if(occurences == 3) {
+                Wildlife tempHolderForToken = shownWildlife.get(0);
+                for(int i = 0; i < 4; i++) {
+                    if(tempHolderForToken.equals(shownWildlife.get(i))) {
+                        Wildlife temp = shownWildlife.get(i);
+                        wildlifeDeck.add(temp);
+                        shownWildlife.remove(i);
+                    }
+                }
+            }
+            Collections.shuffle(wildlifeDeck);
+            for(int i = 0; i < 3; i++) {
+                shownWildlife.add(wildlifeDeck.pop());
+            }
+        }
+        else {
+            return;
         }
     }
 
