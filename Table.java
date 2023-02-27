@@ -64,10 +64,9 @@ public class Table {
 
         // if wildlife deck has more than 4 "distinct" wildlife
         // creates a new wildlife deck and shuffles them and adds them all in to the deck
-        boolean allEqual = wildlifeDeck.stream().distinct().count() <= 4;
-        if(allEqual) {
-            wildlifeDeck = new WildlifeDeck();
-            Collections.shuffle(wildlifeDeck);
+        long sameAmount = shownWildlife.stream().distinct().count();
+        if(sameAmount < 2) {
+                shownWildlife.removeAll(wildlifeDeck);
 
             for (int i = 0; i < 4; i++) {
                 shownWildlife.add(wildlifeDeck.pop());

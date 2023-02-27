@@ -189,4 +189,8 @@ public class View {
     public void showFinalScore(ArrayList<String> players) {
         System.out.println("");
     }
+
+    public void cullAllRequired() {
+        System.out.println("A necassary cull has been detected and will now be enacted");
+    }
 }
