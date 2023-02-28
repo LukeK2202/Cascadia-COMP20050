@@ -209,6 +209,6 @@ public class View {
     }
 
     public void cullAllRequired() {
-        System.out.println("A necassary cull has been detected and will now be enacted");
+        System.out.println("A necessary cull has been detected and will now be enacted");
     }
 }
