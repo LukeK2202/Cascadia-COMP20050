@@ -93,65 +93,24 @@ public class Table {
         return selectedTile != null;
     }
 
-    public void cullWildlifeTokens() {
-        /* 
-         * If the wildlife shown tokens on the table are all of the same type, it discards them and takes new ones out the 
-         * wildlife deck and fills the table array with them
-         */
-        //checks if there are either 1 or two distinct types of tokens on the table, and if there are two, whether the lonely 
-        //occurence is at the start or not
-        long sameAmount = shownWildlife.stream().distinct().count();
-        int occurences = Collections.frequency(shownWildlife, shownWildlife.get(0));
-
-        //if all tokens are the same, add them back to the wildlife deck, remove them from the shownTiles array,
-        //shuffle the deck and add four new tokens back to the array
-        //Recursive call if all four tokens are still the same
-        if(sameAmount == 1) {
-            for(int j = 0; j < 4; j++) {
-                Wildlife temp = shownWildlife.get(j);
-                wildlifeDeck.add(temp);
-                shownWildlife.remove(j);
-            }
-            Collections.shuffle(wildlifeDeck);
-            for (int i = 0; i < 4; i++) {
-                shownWildlife.add(wildlifeDeck.pop());
-            }
-            if(shownWildlife.stream().distinct().count() == 1) {
-                cullWildlifeTokens();
-            }
-
-        //if the lonely occurence is at the start, then the same tokens are at the last three positions
-        //add all tokens from the array back to the deck and removes them from array
-        }
-        else if (sameAmount == 2 && (occurences == 1 || occurences == 3)) {
-            if(occurences == 1) {
-                for(int i = 1; i < 3; i++) {
-                    Wildlife temp = shownWildlife.get(i);
-                    wildlifeDeck.add(temp);
-                    shownWildlife.remove(i);
-                }
-            }
-            //if the triple occurences begin at the start, iterate through the array to find all three occurences, add
-            //them back to the deck and remove from the array
-            else if(occurences == 3) {
-                Wildlife tempHolderForToken = shownWildlife.get(0);
-                for(int i = 0; i < 4; i++) {
-                    if(tempHolderForToken.equals(shownWildlife.get(i))) {
-                        Wildlife temp = shownWildlife.get(i);
-                        wildlifeDeck.add(temp);
-                        shownWildlife.remove(i);
-                    }
-                }
-            }
-            //adds three back from the deck to teh array regardless where teh occurences were initailly detected
-            Collections.shuffle(wildlifeDeck);
-            for(int i = 0; i < 3; i++) {
-                shownWildlife.add(wildlifeDeck.pop());
+    //will return 0 if a cull is not required, return 1 if an ALL cull is needed,
+    //and 2 if an optional cull can be done
+    public int cullDetectionMethod() {
+        int detectionOutput = 0;
+        for(int i = 0; i < 1; i++) {
+            int occurences = Collections.frequency(shownWildlife, shownWildlife.get(0));
+            if(occurences >= 3) {
+                detectionOutput = occurences;
+                break;
             }
         }
-        else {
-            return;
+        if(detectionOutput == 0) {
+            return 0;
         }
+        else if(detectionOutput == 3){
+            return 1;
+        }
+        return 2;
     }
 
 
