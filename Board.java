@@ -53,6 +53,16 @@ public class Board {
         if(isRowNull(row)) {
             populateRow(row);
         }
+        if(row > 0) {
+            if(isRowNull(row - 1)) {
+                populateRow(row - 1);
+            }
+        }
+        if(row < getBoardLength()) {
+            if(isRowNull(row + 1)) {
+                populateRow(row + 1);
+            }
+        }
         int coOrd[] = {row, column};
         occupiedTiles.add(coOrd);
         board[row][column] = tile;

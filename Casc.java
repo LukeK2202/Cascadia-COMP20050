@@ -41,6 +41,10 @@ public class Casc {
             System.out.println("Current Players Board: " + currUser.getName());
             view.printBoard(currBoard);
             boolean commDone = false;
+
+            if(table.hadSelected()) {
+                view.displaySelected(table);
+            }
             //Begins the loop to receive a command
             do {
                 if(table.deckIsEmpty()) {
@@ -62,6 +66,16 @@ public class Casc {
                 } else if(command.isComm()) {
                     view.displayCommands();
                     commDone = true;
+                } else if(command.isSelect()) {
+                    table.selectColumn(command.getSelected());
+                    commDone = true;
+                } else if(command.isRotate()) {
+                    if(!table.hadSelected()) {
+                        view.showRotateError();
+                    } else {
+                        table.getSelectedTile().rotate();
+                        commDone = true;
+                    }
                 }
             } while(!commDone);
         } while(!command.isQuit() && !command.DeckisFin());

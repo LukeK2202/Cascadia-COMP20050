@@ -12,6 +12,9 @@ public class Table {
     //Arraylist to hold the 4 displayed wildlife
     private ArrayList<Wildlife> shownWildlife;
 
+    private Tile selectedTile;
+    private Wildlife selectedWildlife;
+
     //Table constructor
     Table() {
         //Created and shuffles a tile deck
@@ -26,8 +29,7 @@ public class Table {
 
         //adds 4 wildlife and tiles to the arraylists
         for(int i = 0; i < 4; i++) {
-            shownWildlife.add(wildlifeDeck.pop());
-            shownTiles.add(tileDeck.pop());
+            drawFromDecks(i);
         }
     }
 
@@ -58,6 +60,37 @@ public class Table {
     }
     public boolean deckIsEmpty() {
         return tileDeck.isEmpty();
+    }
+
+    public void drawFromDecks(int n) {
+        shownWildlife.add(n, wildlifeDeck.pop());
+        shownTiles.add(n, tileDeck.pop());
+    }
+    public void selectColumn(int n) {
+        this.selectedTile = shownTiles.get(n - 1);
+        this.selectedWildlife = shownWildlife.get(n - 1);
+
+        shownTiles.remove(n - 1);
+        shownWildlife.remove(n - 1);
+
+        drawFromDecks(n - 1);
+    }
+
+    public void unselect() {
+        this.selectedTile = null;
+        this.selectedWildlife = null;
+    }
+
+    public Tile getSelectedTile() {
+        return selectedTile;
+    }
+
+    public Wildlife getSelectedWildlife() {
+        return selectedWildlife;
+    }
+
+    public boolean hadSelected() {
+        return selectedTile != null;
     }
 
     public void cullWildlifeTokens() {

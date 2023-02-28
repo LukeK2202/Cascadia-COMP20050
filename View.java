@@ -143,6 +143,20 @@ public class View {
         skipLines();
     }
 
+    public void displaySelected(Table table) {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < 4; i++) {
+            sb.append(largeTab + largeTab + largeTab);
+            sb.append(table.getSelectedTile().toString(i));
+            if(i == 3) {
+                sb.append(largeTab + largeTab);
+                sb.append(table.getSelectedWildlife());
+            }
+            sb.append("\n");
+        }
+        System.out.println(sb);
+    }
+
 
     //method to receive user input for commands
     public Command getUserInput() {
@@ -163,6 +177,10 @@ public class View {
     //Print place token error
     public void showPlaceTokenError() {
         System.out.println("Cant place wildlife token on tile.");
+    }
+
+    public void showRotateError() {
+        System.out.println("Cant rotate tile. Please Select a tile.");
     }
 
     //Displays game over
