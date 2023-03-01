@@ -96,21 +96,31 @@ public class Table {
     //will return 0 if a cull is not required, return 1 if an ALL cull is needed,
     //and 2 if an optional cull can be done
     public int cullDetectionMethod() {
-        int detectionOutput = 0;
-        for(int i = 0; i < 1; i++) {
-            int occurences = Collections.frequency(shownWildlife, shownWildlife.get(0));
+        int occurences = 0;
+        for(int i = 0; i < 2; i++) {
+            occurences = Collections.frequency(shownWildlife, shownWildlife.get(i));
             if(occurences >= 3) {
-                detectionOutput = occurences;
                 break;
             }
         }
-        if(detectionOutput == 0) {
-            return 0;
+        if(occurences == 4) {
+            return 2;
         }
-        else if(detectionOutput == 3){
+        else if(occurences == 3){
             return 1;
         }
-        return 2;
+        return 0;
+    }
+
+    public void cullAllCall() {
+        for(int i = 0; i < 4; i++) {
+            wildlifeDeck.add(shownWildlife.get(3 - i));
+            shownWildlife.remove(3 - i);
+        }
+        Collections.shuffle(wildlifeDeck);
+        for(int i = 0; i < 4; i++) {
+            shownWildlife.add(wildlifeDeck.pop());
+        }
     }
 
 

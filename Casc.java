@@ -54,6 +54,11 @@ public class Casc {
                     command = new Command("deckFin");
                 }
                 //receive user input
+                int cullDecision = table.cullDetectionMethod();
+                if(cullDecision == 2) {
+                    view.cullAllRequired();
+                    table.cullAllCall();
+                }
                 command = view.getUserInput();
                 view.clearView();
                 //If command is quit sets commDone to true to exit loop
