@@ -1,7 +1,7 @@
 public class Command{
     //Main Control Class, Purpose to call commands.
 
-    private enum CommandType {QUIT, NEXT, COMMAND, DECK_EMPTY, SELECT, ROTATE}
+    private enum CommandType {QUIT, NEXT, COMMAND, DECK_EMPTY, SELECT, ROTATE, PLACE}
     private CommandType commandType;
     private int selected;
 
@@ -28,6 +28,15 @@ public class Command{
         else if(inputFormat.equals("R")) {
             commandType = CommandType.ROTATE;
         }
+        else if(inputFormat.matches("[P][0-99]")) {
+            commandType = CommandType.PLACE;
+            if(inputFormat.length() == 3) {
+                selected = Character.getNumericValue(inputFormat.charAt(1) + inputFormat.charAt(2));
+            } else {
+                selected = Character.getNumericValue(inputFormat.charAt(1));
+            }
+
+        }
 
     }
 
@@ -36,7 +45,8 @@ public class Command{
     public static boolean isValid(String input) {
        String inputFormat = input.trim().toUpperCase();
        return inputFormat.equals("Q") || inputFormat.equals("N") || inputFormat.equals("C") ||
-               inputFormat.equals("DECKFIN") || inputFormat.matches("[S][1-4]") || inputFormat.equals("R");
+               inputFormat.equals("DECKFIN") || inputFormat.matches("[S][1-4]") || inputFormat.equals("R")
+               || inputFormat.matches("[P][0-99]");
 
     }
 
@@ -85,5 +95,9 @@ public class Command{
 
     public int getSelected() {
         return selected;
+    }
+
+    public boolean isPlace() {
+        return commandType == CommandType.PLACE;
     }
 }

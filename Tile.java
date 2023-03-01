@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.function.ToDoubleBiFunction;
 
 //Tile class to construct and use tiles for the game
 public class Tile {
@@ -211,4 +212,11 @@ public class Tile {
     public int getCoOrd() {
         return coOrd;
     }
+
+    // TODO
+    //PLACE WILDLIFE
+    //fucntion takes in just a wildlife
+    //function iterates through the wildlife arraylist checking if the wildlife argument is contained within...
+    //if yes, located that wildlife, and replaces with "placed wildlife"
+    //if no, throw an error
 }

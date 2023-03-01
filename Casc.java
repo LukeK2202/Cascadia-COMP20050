@@ -39,6 +39,8 @@ public class Casc {
             view.skipLines();
             view.printTable(table);
             System.out.println("Current Players Board: " + currUser.getName());
+            currBoard.checkPLaceableArea();
+            currBoard.displayAreas();
             view.printBoard(currBoard);
             boolean commDone = false;
 
@@ -76,6 +78,10 @@ public class Casc {
                         table.getSelectedTile().rotate();
                         commDone = true;
                     }
+                } else if(command.isPlace()) {
+                    currBoard.placeTile(table.getSelectedTile(), command.getSelected());
+                    table.unselect();
+                    commDone = true;
                 }
             } while(!commDone);
         } while(!command.isQuit() && !command.DeckisFin());

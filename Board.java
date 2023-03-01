@@ -68,46 +68,99 @@ public class Board {
         board[row][column] = tile;
         tile.setCoOrd(occupiedTiles.indexOf(coOrd));
     }
-
-    public void addPlaceableArea(int row, int column) {
-        for(int i = row - 1; i < row + 1; i++) {
-            //goes through the immediate antecedent and descendent rows
-
-            for(int j = column; j < column + 1; j++) {
-                //goes through current column plus one as these are the general cases
-            int[] holder = {i, j};
-            boolean instanceFound = false;
-
-                for(int k = 0; k < placeableArea.size(); k++) {
-                    if(placeableArea.get(k) == holder || (holder[0] == row && holder[1] == column)) {
-                        instanceFound = true;
-                        break;
-                    }
-                }
-                /*breaks if the current position is already in placeableArea ArrayList or
-                if the current holder is the current tiles being placed*/
-
-                if(!instanceFound && board[i][j].isBlank()) {
-                placeableArea.add(holder);
-                }
-            }
-        }
-        int[] temp = {row, column - 1};
-        for(int k = 0; k < placeableArea.size(); k++) {
-            if(placeableArea.get(k) == temp) {
-                return;
-            }
-            else {
-                placeableArea.add(temp);
-            }
-        }
-        /*the edge case tile, the one on the same row but one column behind, outside of previous
-        for loop as it is outside the general case*/
-    }
-
     //Method to place a tile at a co-ordinate from a given index of the placeableArea array
     public void placeTile(Tile tile, int n) {
         int[] coOrd = placeableArea.get(n);
         addTile(tile, coOrd[0], coOrd[1]);
+        placeableArea.remove(n);
+    }
+
+    // TODO
+    //PLACE WILDLIFE
+    //TAKES IN and int and a wildlife, int used as index for occupiedPLaces
+    //looks up index in occupiedPlaces and grabs that coOrd
+    //then called placeWildlife tile method on the tile in that coOrd.
+
+    public void displayAreas() {
+        for(int i = 0; i < placeableArea.size(); i++) {
+            int[] coOrd = placeableArea.get(i);
+            board[coOrd[0]][coOrd[1]].setCoOrd(i);
+            board[coOrd[0]][coOrd[1]].showCoOrd();
+        }
+    }
+    private boolean isCoOrdsContained(ArrayList<int[]> list, int[] coOrd) {
+        for(int[] listCoOrd : list) {
+            if(listCoOrd[0] == coOrd[0] && listCoOrd[1] == coOrd[1]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void checkPLaceableArea() {
+        for(int[] coOrd : occupiedTiles) {
+            int row = coOrd[0];
+            int column = coOrd[1];
+            int[] newCoOrd;
+            if(row > 0) {
+                if(row % 2 == 1) {
+                    newCoOrd = new int[]{(row - 1), column};
+                    if(board[row -1][column].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
+                        placeableArea.add(newCoOrd);
+                    } if(column < getBoardWidth()) {
+                        newCoOrd = new int[]{(row - 1), column + 1};
+                        if(board[row -1][column + 1].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
+                            placeableArea.add(newCoOrd);
+                        }
+                    }
+                } else {
+                    newCoOrd = new int[]{(row - 1), column - 1};
+                    if(board[row -1][column - 1].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
+                        placeableArea.add(newCoOrd);
+                    } if(column > 0) {
+                        newCoOrd = new int[]{(row - 1), column};
+                        if(board[row -1][column].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
+                            placeableArea.add(newCoOrd);
+                        }
+                    }
+                }
+            }
+
+            if(column > 0) {
+                newCoOrd = new int[]{(row), column - 1};
+                if(board[row][column - 1].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
+                    placeableArea.add(newCoOrd);
+                }
+            }if(column < getBoardWidth()) {
+                newCoOrd = new int[]{(row), column + 1};
+                if(board[row][column + 1].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
+                    placeableArea.add(newCoOrd);
+                }
+            }
+
+            if(row < getBoardLength()) {
+                if(row % 2 == 1) {
+                    newCoOrd = new int[]{(row + 1), column};
+                    if(board[row + 1][column].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
+                        placeableArea.add(newCoOrd);
+                    } if(column < getBoardWidth()) {
+                        newCoOrd = new int[]{(row + 1), column + 1};
+                        if(board[row + 1][column + 1].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
+                            placeableArea.add(newCoOrd);
+                        }
+                    }
+                } else {
+                    newCoOrd = new int[]{(row + 1), column - 1};
+                    if(board[row + 1][column - 1].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
+                        placeableArea.add(newCoOrd);
+                    } if(column > 0) {
+                        newCoOrd = new int[]{(row + 1), column};
+                        if(board[row + 1][column].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
+                            placeableArea.add(newCoOrd);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
