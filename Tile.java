@@ -219,4 +219,23 @@ public class Tile {
     //function iterates through the wildlife arraylist checking if the wildlife argument is contained within...
     //if yes, located that wildlife, and replaces with "placed wildlife"
     //if no, throw an error
+
+    public int addWildlifeToken(Wildlife wildlifeToken) {
+        int index = -1;
+        String[] tokenToBePlaced = wildlifeToken.name().split("_");
+
+        for(int j = 0; j < wildlife.size(); j++) {
+            if(wildlife.get(j).name().equals(tokenToBePlaced[0])) {
+                index = j;
+                break;
+            }
+        }
+        if(index == -1) {
+            return index;
+        }
+        else {
+            wildlife.set(index, wildlifeToken);
+            return index;
+        }
+    }
 }
