@@ -28,7 +28,7 @@ public class Command{
         else if(inputFormat.equals("R")) {
             commandType = CommandType.ROTATE;
         }
-        else if(inputFormat.matches("[P][0-99]")) {
+        else if(inputFormat.matches("[P]\\d{1,2}")) {
             commandType = CommandType.PLACE;
             if(inputFormat.length() == 3) {
                 selected = Character.getNumericValue(inputFormat.charAt(1) + inputFormat.charAt(2));
@@ -46,7 +46,7 @@ public class Command{
        String inputFormat = input.trim().toUpperCase();
        return inputFormat.equals("Q") || inputFormat.equals("N") || inputFormat.equals("C") ||
                inputFormat.equals("DECKFIN") || inputFormat.matches("[S][1-4]") || inputFormat.equals("R")
-               || inputFormat.matches("[P][0-99]");
+               || inputFormat.matches("[P]\\d{1,2}");
 
     }
 
