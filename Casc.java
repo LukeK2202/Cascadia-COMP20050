@@ -1,3 +1,5 @@
+import Exceptions.CantPlaceTileException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -84,11 +86,16 @@ public class Casc {
                         commDone = true;
                     }
                 } else if(command.isPlace()) {
-                    currBoard.placeTile(table.getSelectedTile(), command.getSelected());
-                    table.unselect();
-                    commDone = true;
+                    try {
+                        currBoard.placeTile(table.getSelectedTile(), command.getSelected());
+                        table.unselect();
+                        commDone = true;
+                    } catch(CantPlaceTileException ex) {
+                        System.out.println(ex.getMessage());
+                    }
                 }
             } while(!commDone);
+
         } while(!command.isQuit() && !command.DeckisFin());
         //If command is quit show quit game.
         if(command.isQuit()) {

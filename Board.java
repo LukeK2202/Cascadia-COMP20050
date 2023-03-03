@@ -1,3 +1,5 @@
+import Exceptions.CantPlaceTileException;
+
 import java.util.ArrayList;
 
 //Main board class that will contain the tiles for each user
@@ -69,7 +71,10 @@ public class Board {
         tile.setCoOrd(occupiedTiles.indexOf(coOrd));
     }
     //Method to place a tile at a co-ordinate from a given index of the placeableArea array
-    public void placeTile(Tile tile, int n) {
+    public void placeTile(Tile tile, int n) throws CantPlaceTileException{
+        if(n > placeableArea.size()) {
+            throw new CantPlaceTileException("Entered index beyond tracked index's. Try Again");
+        }
         int[] coOrd = placeableArea.get(n);
         addTile(tile, coOrd[0], coOrd[1]);
         placeableArea.remove(n);
