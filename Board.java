@@ -86,11 +86,14 @@ public class Board {
     //looks up index in occupiedPlaces and grabs that coOrd
     //then called placeWildlife tile method on the tile in that coOrd.
 
-    public void placeWildlife(int index, Wildlife wildlifeToken) throws WildlifeTokenNotFound{
+    public int placeWildlife(int index, Wildlife wildlifeToken) throws WildlifeTokenNotFound{
         int[] tempCoOrdHolder = occupiedTiles.get(index);
+
+        try {
         int i = board[tempCoOrdHolder[0]][tempCoOrdHolder[1]].addWildlifeToken(wildlifeToken);
-        if(i == -1){
-            throw new WildlifeTokenNotFound("Wildlife not found\nPlease select another tile");
+        return i;
+        } catch(WildlifeTokenNotFound no) {
+            throw new WildlifeTokenNotFound("Wildlife not found\nPlease select another tile or discard the wildlife token");
         }
     }
 

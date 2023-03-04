@@ -220,7 +220,7 @@ public class Tile {
     //if yes, located that wildlife, and replaces with "placed wildlife"
     //if no, throw an error
 
-    public int addWildlifeToken(Wildlife wildlifeToken) {
+    public int addWildlifeToken(Wildlife wildlifeToken) throws WildlifeTokenNotFound{
         int index = -1;
         String[] tokenToBePlaced = wildlifeToken.name().split("_");
 
@@ -231,9 +231,14 @@ public class Tile {
             }
         }
         if(index == -1) {
-            return index;
+            throw new WildlifeTokenNotFound("Wildlife not found\nPlease select another tile or discard the wildlife token");
         }
         else {
+            for(int i = 0; i < wildlife.size(); i++) {
+                if(!(wildlife.get(i).name().equals(tokenToBePlaced[0]))) {
+                    wildlife.set(i, Wildlife.ERASER);
+                }
+            }
             wildlife.set(index, wildlifeToken);
             return index;
         }
