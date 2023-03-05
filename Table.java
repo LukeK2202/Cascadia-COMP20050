@@ -76,8 +76,11 @@ public class Table {
         drawFromDecks(n - 1);
     }
 
-    public void unselect() {
+    public void unselectTile() {
         this.selectedTile = null;
+    }
+
+    public void unselectWildlife() {
         this.selectedWildlife = null;
     }
 

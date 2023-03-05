@@ -88,7 +88,7 @@ public class Casc {
                 } else if(command.isPlace()) {
                     try {
                         currBoard.placeTile(table.getSelectedTile(), command.getSelected());
-                        table.unselect();
+                        //table.unselectTile();
                         commDone = true;
                     } catch(CantPlaceTileException ex) {
                         System.out.println(ex.getMessage());
