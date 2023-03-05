@@ -1,4 +1,5 @@
 import Exceptions.CantPlaceTileException;
+import Exceptions.WildlifeTokenNotFoundException;
 
 import java.util.ArrayList;
 
