@@ -115,16 +115,30 @@ public class Table {
         return 0;
     }
 
+    // TODO
+
+    /*
+        *write a cull method rather than a cull all method which will take an undetermined amount of integers as input which will correspond
+        *to their respective integer positions in the shownWildlife arrayList and cull them.
+     */
+
     public void cullAllCall() {
-        for(int i = 0; i < 4; i++) {
-            wildlifeDeck.add(shownWildlife.get(3 - i));
-            shownWildlife.remove(3 - i);
-        }
-        Collections.shuffle(wildlifeDeck);
-        for(int i = 0; i < 4; i++) {
-            shownWildlife.add(wildlifeDeck.pop());
-        }
+        // for(int i = 0; i < 4; i++) {
+        //     wildlifeDeck.add(shownWildlife.get(3 - i));
+        //     shownWildlife.remove(3 - i);
+        // }
+        // Collections.shuffle(wildlifeDeck);
+        // for(int i = 0; i < 4; i++) {
+        //     shownWildlife.add(wildlifeDeck.pop());
+        // }
+
+        //TODO
+        // call cull method with the parameters of all 4 wildlife
     }
 
 
+    //TODO
+    //Optional cull
+    //Determine the location of the 3 matching wildlife
+    //call cull with those 3 found locations
 }
