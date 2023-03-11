@@ -214,4 +214,11 @@ public class View {
     public void cullAllRequired() {
         System.out.println("A necessary cull has been detected and will now be enacted");
     }
+
+    // TODO
+    /* Need output statements to cover the users choice for optinal cull and choice on what to do with their nature tokens */
+    /* Have a statement which askes the user if they want to proceed with the optional cull, if one is detected by the game */
+    /* Have a output statement if the user has 1 or more nature tokens, which asks the user what they want to do with them,
+     * like pick a combination of a tile and wildlife or cull any number of wildlife
+     */
 }

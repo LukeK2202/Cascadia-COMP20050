@@ -115,30 +115,48 @@ public class Table {
         return 0;
     }
 
-    // TODO
+    //culls all the wildlife coressponding to the indexes given to the function
+    public void cull(int ... i) {
+        for(int a : i) {
+            wildlifeDeck.add(shownWildlife.get(a));
+            shownWildlife.remove(a);
+        }
+        Collections.shuffle(wildlifeDeck);
+        for(int j = 0; j < i.length; j ++) {
+            shownWildlife.add(wildlifeDeck.pop());
+        }
+    }
 
-    /*
-        *write a cull method rather than a cull all method which will take an undetermined amount of integers as input which will correspond
-        *to their respective integer positions in the shownWildlife arrayList and cull them.
-     */
-
+    //culls every index within the shownwildlife array
     public void cullAllCall() {
-        // for(int i = 0; i < 4; i++) {
-        //     wildlifeDeck.add(shownWildlife.get(3 - i));
-        //     shownWildlife.remove(3 - i);
-        // }
-        // Collections.shuffle(wildlifeDeck);
-        // for(int i = 0; i < 4; i++) {
-        //     shownWildlife.add(wildlifeDeck.pop());
-        // }
-
-        //TODO
-        // call cull method with the parameters of all 4 wildlife
+        cull(0, 1, 2, 3);
     }
 
 
-    //TODO
-    //Optional cull
-    //Determine the location of the 3 matching wildlife
-    //call cull with those 3 found locations
+    //cull that detects which wildlife repeats three times within the array, then those indexes are called to the cull method
+    public void optionalCull() {
+        int occurences = 0;
+        int index = 0;
+
+        for(int i = 0; i < 2; i++) {
+            occurences = Collections.frequency(shownWildlife, shownWildlife.get(i));
+            if(occurences == 3) {
+                index = i;
+                break;
+            }
+        }
+        for(int i = 0; i < shownWildlife.size(); i++) {
+            if(shownWildlife.get(i) == shownWildlife.get(index)) {
+                cull(i);
+            }
+        }
+    }
+
+    //calls cull on the array of the chosen indexes by the user
+    public void natureTokenCull(int[] positions) {
+        for(int i = 0; i < positions.length; i++) {
+            positions[i] -= 1;
+        }
+        cull(positions);
+    }
 }
