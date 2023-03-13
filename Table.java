@@ -117,9 +117,9 @@ public class Table {
 
     //culls all the wildlife coressponding to the indexes given to the function
     public void cull(int ... i) {
-        for(int a : i) {
-            wildlifeDeck.add(shownWildlife.get(a));
-            shownWildlife.remove(a);
+        for(int a = i.length; a > 0; a--) {
+            wildlifeDeck.add(shownWildlife.get(i[a - 1]));
+            shownWildlife.remove(i[a - 1]);
         }
         Collections.shuffle(wildlifeDeck);
         for(int j = 0; j < i.length; j ++) {
@@ -138,10 +138,10 @@ public class Table {
         int occurences = 0;
         int index = 0;
 
-        for(int i = 0; i < 2; i++) {
-            occurences = Collections.frequency(shownWildlife, shownWildlife.get(i));
+        for(int j = 0; j < 2; j++) {
+            occurences = Collections.frequency(shownWildlife, shownWildlife.get(j));
             if(occurences == 3) {
-                index = i;
+                index = j;
                 break;
             }
         }

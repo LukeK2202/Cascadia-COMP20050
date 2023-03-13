@@ -219,6 +219,10 @@ public class View {
         System.out.println("An optional cull is available, Y to proceed with cull N to skip optional cull.");
     }
 
+    public void optionalCullHasBeenCompleted() {
+        System.out.println("Optoinal cull has been performed");
+    }
+
     public void optionalCullCarriedOutPreviousRound() {
         System.out.println("Optional cull detected but no longer available as you carried it out last round");
     }
