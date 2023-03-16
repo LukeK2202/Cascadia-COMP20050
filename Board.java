@@ -1,5 +1,5 @@
 import Exceptions.CantPlaceTileException;
-import Exceptions.WildlifeTokenNotFoundException;
+import Exceptions.CantPlaceWildlifeException;
 
 import java.util.ArrayList;
 
@@ -73,8 +73,11 @@ public class Board {
     }
     //Method to place a tile at a co-ordinate from a given index of the placeableArea array
     public void placeTile(Tile tile, int n) throws CantPlaceTileException{
-        if(n > placeableArea.size()) {
-            throw new CantPlaceTileException("Entered index beyond tracked index's. Try Again");
+        if(tile == null) {
+            throw new CantPlaceTileException("No tile selected. Please select a tile first.");
+        }
+        if(n >= placeableArea.size()) {
+            throw new CantPlaceTileException("Entered index beyond tracked index's. Try Again.");
         }
         int[] coOrd = placeableArea.get(n);
         addTile(tile, coOrd[0], coOrd[1]);
@@ -87,22 +90,45 @@ public class Board {
     //looks up index in occupiedPlaces and grabs that coOrd
     //then called placeWildlife tile method on the tile in that coOrd.
 
-    public int placeWildlife(int index, Wildlife wildlifeToken) throws WildlifeTokenNotFoundException {
-        int[] tempCoOrdHolder = occupiedTiles.get(index);
-
-        try {
-        int i = board[tempCoOrdHolder[0]][tempCoOrdHolder[1]].addWildlifeToken(wildlifeToken);
-        return i;
-        } catch(WildlifeTokenNotFoundException no) {
-            throw new WildlifeTokenNotFoundException("Wildlife not found\nPlease select another tile or discard the wildlife token");
+    public void placeWildlife(int index, Wildlife wildlifeToken) throws CantPlaceWildlifeException {
+        if(wildlifeToken == null) {
+            throw new CantPlaceWildlifeException("No wildlife selected. Please select a wildlife first.");
         }
+        if(index >= occupiedTiles.size()) {
+            throw new CantPlaceWildlifeException("Entered index beyond tracked index's. Try Again.");
+        }
+        int[] tempCoOrdHolder = occupiedTiles.get(index);
+        board[tempCoOrdHolder[0]][tempCoOrdHolder[1]].addWildlifeToken(wildlifeToken);
     }
 
-    public void displayAreas() {
+    public void displayAvailableAreas() {
         for(int i = 0; i < placeableArea.size(); i++) {
             int[] coOrd = placeableArea.get(i);
             board[coOrd[0]][coOrd[1]].setCoOrd(i);
             board[coOrd[0]][coOrd[1]].showCoOrd();
+        }
+    }
+
+    public void hideAvailableAreas() {
+        for(int i = 0; i < placeableArea.size(); i++) {
+            int[] coOrd = placeableArea.get(i);
+            board[coOrd[0]][coOrd[1]].setCoOrd(i);
+            board[coOrd[0]][coOrd[1]].hideCoOrd();
+        }
+
+    }public void displayPlacedAreas() {
+        for(int i = 0; i < occupiedTiles.size(); i++) {
+            int[] coOrd = occupiedTiles.get(i);
+            board[coOrd[0]][coOrd[1]].setCoOrd(i);
+            board[coOrd[0]][coOrd[1]].showCoOrd();
+        }
+    }
+
+    public void hidePlacedAreas() {
+        for(int i = 0; i < occupiedTiles.size(); i++) {
+            int[] coOrd = occupiedTiles.get(i);
+            board[coOrd[0]][coOrd[1]].setCoOrd(i);
+            board[coOrd[0]][coOrd[1]].hideCoOrd();
         }
     }
     private boolean isCoOrdsContained(ArrayList<int[]> list, int[] coOrd) {

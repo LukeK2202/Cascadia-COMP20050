@@ -150,8 +150,10 @@ public class View {
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < 4; i++) {
             sb.append(largeTab + largeTab + largeTab);
-            sb.append(table.getSelectedTile().toString(i));
-            if(i == 3) {
+            if(table.hadSelectedTile()) {
+                sb.append(table.getSelectedTile().toString(i));
+            }
+            if(i == 3 && table.hadSelectedWildlife()) {
                 sb.append(largeTab + largeTab);
                 sb.append(table.getSelectedWildlife());
             }

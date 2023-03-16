@@ -1,4 +1,5 @@
 import Exceptions.CantPlaceTileException;
+import Exceptions.CantPlaceWildlifeException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,11 +43,11 @@ public class Casc {
             view.printTable(table);
             System.out.println("Current Players Board: " + currUser.getName());
             currBoard.checkPLaceableArea();
-            currBoard.displayAreas();
+            currBoard.displayAvailableAreas();
             view.printBoard(currBoard);
             boolean commDone = false;
 
-            if(table.hadSelected()) {
+            if(table.hadSelectedTile() || table.hadSelectedWildlife()) {
                 view.displaySelected(table);
             }
             //Begins the loop to receive a command
@@ -62,7 +63,6 @@ public class Casc {
                     table.cullAllCall();
                 }
                 command = view.getUserInput();
-                view.clearView();
                 //If command is quit sets commDone to true to exit loop
                 if(command.isQuit()) {
                     commDone = true;
@@ -79,22 +79,55 @@ public class Casc {
                     table.selectColumn(command.getSelected());
                     commDone = true;
                 } else if(command.isRotate()) {
-                    if(!table.hadSelected()) {
+                    if(!table.hadSelectedTile()) {
                         view.showRotateError();
                     } else {
                         table.getSelectedTile().rotate();
                         commDone = true;
                     }
                 } else if(command.isPlace()) {
-                    try {
-                        currBoard.placeTile(table.getSelectedTile(), command.getSelected());
-                        table.unselectTile();
-                        commDone = true;
-                    } catch(CantPlaceTileException ex) {
-                        System.out.println(ex.getMessage());
-                    }
+                    boolean bothPlaced = false;
+                    do {
+                        try {
+                            if(table.hadSelectedTile()) {
+                                currBoard.placeTile(table.getSelectedTile(), command.getSelected());
+                                table.unselectTile();
+
+                                currBoard.hideAvailableAreas();
+                                currBoard.displayPlacedAreas();
+
+                                view.skipLines();
+                                view.printTable(table);
+                                System.out.println("Current Players Board: " + currUser.getName());
+                                view.printBoard(currBoard);
+                                view.displaySelected(table);
+                            } else if (!table.hadSelectedWildlife()){
+                                throw new CantPlaceTileException("No Tile Selected. Please select a tile.");
+                            }
+
+
+                            command = view.getUserInput();
+
+                            if(command.isPlace()) {
+                                currBoard.placeWildlife(command.getSelected(), table.getSelectedWildlife());
+                                table.unselectWildlife();
+                                bothPlaced = true;
+
+                                currBoard.hidePlacedAreas();
+                                currBoard.displayAvailableAreas();
+                            }
+
+                        } catch(CantPlaceTileException ex) {
+                            System.out.println(ex.getMessage());
+                            break;
+                        } catch (CantPlaceWildlifeException ex) {
+                            System.out.println(ex.getMessage());
+                        }
+                    } while(!bothPlaced);
+                    commDone = true;
                 }
             } while(!commDone);
+            view.clearView();
 
         } while(!command.isQuit() && !command.DeckisFin());
         //If command is quit show quit game.

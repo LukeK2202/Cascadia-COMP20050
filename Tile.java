@@ -1,9 +1,8 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-import java.util.function.ToDoubleBiFunction;
 
-import Exceptions.WildlifeTokenNotFoundException;
+import Exceptions.CantPlaceWildlifeException;
 
 //Tile class to construct and use tiles for the game
 public class Tile {
@@ -25,6 +24,7 @@ public class Tile {
     public static String whiteSpace = ViewColours.WHITE_BG + space + ViewColours.RESET;
     //The current Co-Ord index of the tile
     private int coOrd = 0;
+    private Wildlife placedToken;
 
     Tile(tileTypes type) {
         //Keystone tile constructor
@@ -188,10 +188,18 @@ public class Tile {
             } else {
                 this.tile[2][2] = " " + coOrd + "";
             }
-        } else if(coOrd < 10){
-            this.tile[2][2] = ViewColours.WHITE_BG + " " + coOrd + " " + ViewColours.RESET;
+        } else if(hasPlacedToken()) {
+            if(coOrd < 10){
+                this.tile[2][2] = placedToken.getBgColour() + " " + coOrd + " " + ViewColours.RESET;
+            } else {
+                this.tile[2][2] = placedToken.getBgColour() + " " + coOrd + "" + ViewColours.RESET;
+            }
         } else {
-            this.tile[2][2] = ViewColours.WHITE_BG + " " + coOrd + "" + ViewColours.RESET;
+            if(coOrd < 10){
+                this.tile[2][2] = ViewColours.WHITE_BG + " " + coOrd + " " + ViewColours.RESET;
+            } else {
+                this.tile[2][2] = ViewColours.WHITE_BG + " " + coOrd + "" + ViewColours.RESET;
+            }
         }
         
     }
@@ -200,6 +208,8 @@ public class Tile {
     public void hideCoOrd() {
         if(isBlank()) {
             this.tile[2][2] = space;
+        } else if(hasPlacedToken()) {
+            this.tile[2][2] = placedToken.getBgColour() + space + ViewColours.RESET;
         } else {
             this.tile[2][2] = whiteSpace;
         }
@@ -215,6 +225,10 @@ public class Tile {
         return coOrd;
     }
 
+    public boolean hasPlacedToken() {
+        return placedToken != null;
+    }
+
     // TODO
     //PLACE WILDLIFE
     //fucntion takes in just a wildlife
@@ -222,9 +236,13 @@ public class Tile {
     //if yes, located that wildlife, and replaces with "placed wildlife"
     //if no, throw an error
 
-    public int addWildlifeToken(Wildlife wildlifeToken) throws WildlifeTokenNotFoundException{
+    public void addWildlifeToken(Wildlife wildlifeToken) throws CantPlaceWildlifeException {
         int index = -1;
         String[] tokenToBePlaced = wildlifeToken.name().split("_");
+
+        if (hasPlacedToken()) {
+            throw new CantPlaceWildlifeException("Wildlife Token already placed");
+        }
 
         for(int j = 0; j < wildlife.size(); j++) {
             if(wildlife.get(j).name().equals(tokenToBePlaced[0])) {
@@ -233,16 +251,20 @@ public class Tile {
             }
         }
         if(index == -1) {
-            throw new WildlifeTokenNotFoundException("Wildlife not found\nPlease select another tile or discard the wildlife token");
+            throw new CantPlaceWildlifeException("Tile does not contain a matching wildlife to place. Please choose another tile, or discard token.");
         }
         else {
-            for(int i = 0; i < wildlife.size(); i++) {
-                if(!(wildlife.get(i).name().equals(tokenToBePlaced[0]))) {
-                    wildlife.set(i, Wildlife.ERASER);
+            placedToken = wildlifeToken;
+
+            for(int i = 0; i < 2; i++) {
+                for(int j = 0; j < 2; j++) {
+                    if(i == 0 && j == 0) {
+                        tile[i+1][j+1] = wildlifeToken.toString();
+                    } else {
+                        tile[i+1][j+1] = wildlifeToken.getBgColour() + space + ViewColours.RESET;
+                    }
                 }
             }
-            wildlife.set(index, wildlifeToken);
-            return index;
         }
     }
     

@@ -92,8 +92,12 @@ public class Table {
         return selectedWildlife;
     }
 
-    public boolean hadSelected() {
+    public boolean hadSelectedTile() {
         return selectedTile != null;
+    }
+
+    public boolean hadSelectedWildlife() {
+        return selectedWildlife != null;
     }
 
     //will return 0 if a cull is not required, return 1 if an ALL cull is needed,
