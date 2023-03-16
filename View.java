@@ -216,4 +216,21 @@ public class View {
     public void cullAllRequired() {
         System.out.println("A necessary cull has been detected and will now be enacted");
     }
+
+    public void optionalCullAvailable() {
+        System.out.println("An optional cull is available, Y to proceed with cull N to skip optional cull.");
+    }
+
+    public void optionalCullHasBeenCompleted() {
+        System.out.println("Optoinal cull has been performed");
+    }
+
+    public void optionalCullCarriedOutPreviousRound() {
+        System.out.println("Optional cull detected but no longer available as you carried it out last round");
+    }
+
+    public void natureTokensAvailable() {
+        System.out.print("You have nature tokens available, press /*BLANK*/ to choose a tile and wildlife of your preference ");
+        System.out.println("or press /*BLANK*/ to cull any number of wildlife tokens");
+    }
 }

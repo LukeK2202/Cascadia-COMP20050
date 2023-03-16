@@ -56,18 +56,35 @@ public class Casc {
                     commDone = true;
                     command = new Command("deckFin");
                 }
-                //receive user input
                 int cullDecision = table.cullDetectionMethod();
                 if(cullDecision == 2) {
                     view.cullAllRequired();
                     table.cullAllCall();
                 }
+                else if(cullDecision  == 1) {
+                    if(currUser.getOptionalCullCarriedOut()) {
+                        view.optionalCullCarriedOutPreviousRound();
+                        currUser.setOptionalCullPreviouslyDone();
+                    }
+                    else {
+                        view.optionalCullAvailable();
+                        //takes user input
+                        //if yes carry out optional cull
+                        table.optionalCull();
+                        currUser.setOptionalCullDoneNow();
+                        view.optionalCullHasBeenCompleted();
+                        //sets cull done now aka sets the value to true
+                    }
+                }
+                //receive user input
                 command = view.getUserInput();
                 //If command is quit sets commDone to true to exit loop
                 if(command.isQuit()) {
                     commDone = true;
                     //If command is next then go to the next user and set the current board to their board
                 } else if(command.isNext()) {
+                    //sets optional cull to false, just in case it was true before so that optional cull is available next time fore the user
+                    currUser.setOptionalCullPreviouslyDone();
                     userIndex = (userIndex + 1) % playerNum;
                     currUser = usersArr.get(userIndex);
                     currBoard = currUser.getBoard();

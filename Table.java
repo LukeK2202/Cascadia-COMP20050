@@ -119,16 +119,48 @@ public class Table {
         return 0;
     }
 
-    public void cullAllCall() {
-        for(int i = 0; i < 4; i++) {
-            wildlifeDeck.add(shownWildlife.get(3 - i));
-            shownWildlife.remove(3 - i);
+    //culls all the wildlife coressponding to the indexes given to the function
+    public void cull(int ... i) {
+        for(int a = i.length; a > 0; a--) {
+            wildlifeDeck.add(shownWildlife.get(i[a - 1]));
+            shownWildlife.remove(i[a - 1]);
         }
         Collections.shuffle(wildlifeDeck);
-        for(int i = 0; i < 4; i++) {
+        for(int j = 0; j < i.length; j ++) {
             shownWildlife.add(wildlifeDeck.pop());
         }
     }
 
+    //culls every index within the shownwildlife array
+    public void cullAllCall() {
+        cull(0, 1, 2, 3);
+    }
 
+
+    //cull that detects which wildlife repeats three times within the array, then those indexes are called to the cull method
+    public void optionalCull() {
+        int occurences = 0;
+        int index = 0;
+
+        for(int j = 0; j < 2; j++) {
+            occurences = Collections.frequency(shownWildlife, shownWildlife.get(j));
+            if(occurences == 3) {
+                index = j;
+                break;
+            }
+        }
+        for(int i = 0; i < shownWildlife.size(); i++) {
+            if(shownWildlife.get(i) == shownWildlife.get(index)) {
+                cull(i);
+            }
+        }
+    }
+
+    //calls cull on the array of the chosen indexes by the user
+    public void natureTokenCull(int[] positions) {
+        for(int i = 0; i < positions.length; i++) {
+            positions[i] -= 1;
+        }
+        cull(positions);
+    }
 }

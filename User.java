@@ -6,6 +6,22 @@ public class User {
     //name of the user entered from the console
     private int orderNumber;
     //integer number to store the order? Possible reworks may occur
+    private boolean optionalCullCarriedOut = false;
+    //boolean to tell the main class if the user has carried out an otional cull or not
+
+    //gets the boolean value, if false carries out cull, if true, tells user that cull was done then sets boolean back to false
+    public boolean getOptionalCullCarriedOut() {
+        return optionalCullCarriedOut;
+    }
+    //sets optionalCullCarriedOut to true when an optional cull was carried out
+    public void setOptionalCullDoneNow() {
+        optionalCullCarriedOut = true;
+    }
+    //sets optionalCullCarriedOut to false when an optional cull was carried out the previous round, this resets the value so the user
+    //can carry it out again the next time their turn comes around
+    public void setOptionalCullPreviouslyDone() {
+        optionalCullCarriedOut = false;
+    }
 
     public int getScore() {
         return score;
