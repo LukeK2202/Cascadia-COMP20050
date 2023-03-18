@@ -149,7 +149,7 @@ public class Table {
                 break;
             }
         }
-        for(int i = 0; i < shownWildlife.size(); i++) {
+        for(int i = shownWildlife.size() - 1;  i > 0; i--) {
             if(shownWildlife.get(i) == shownWildlife.get(index)) {
                 cull(i);
             }
