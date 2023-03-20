@@ -1,8 +1,7 @@
 package Exceptions;
-public class WildlifeTokenNotFoundException extends Exception {
+public class CantPlaceWildlifeException extends Exception {
 
-    public WildlifeTokenNotFoundException (String str) {
-
+    public CantPlaceWildlifeException(String str) {
         super(str);
     }
     

@@ -7,7 +7,7 @@ public class User {
     private int orderNumber;
     //integer number to store the order? Possible reworks may occur
     private boolean optionalCullCarriedOut = false;
-    //boolean to tell the main class if the user has carried out an otional cull or not
+    //boolean to tell the main class if the user has carried out an otional cull or not, on their current turn
 
     //gets the boolean value, if false carries out cull, if true, tells user that cull was done then sets boolean back to false
     public boolean getOptionalCullCarriedOut() {

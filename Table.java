@@ -42,21 +42,31 @@ public class Table {
     public Wildlife getWildlife(int n) {
         return shownWildlife.get(n);
     }
-    //removes a tile from the shown tiles
-    public Tile takeTile(int position) {
-        return shownTiles.remove(position);
+    //removes a tile from the shown tiles and returns to deck
+    public void returnTile(int position) {
+        tileDeck.add(getTile(position));
+        removeTile(position);
     }
-    //removes the wildlife from the shown wildlife
-    public Wildlife takeWildlife(int position) {
-        return shownWildlife.remove(position);
+    //removes the wildlife from the shown wildlife and returns to deck
+    public void returnWildlife(int position) {
+        wildlifeDeck.add(getWildlife(position));
+        removeWildlife(position);
     }
     //adds a tile back to shown tiles from the stack
-    public void addTile() {
-        shownTiles.add(tileDeck.pop());
+    public void addTile(int position) {
+        shownTiles.add(position, tileDeck.pop());
     }
     //adds a wildlife back to shown wildlife from the stack
-    public void addWildlife() {
-        shownWildlife.add(wildlifeDeck.pop());
+    public void addWildlife(int position) {
+        shownWildlife.add(position, wildlifeDeck.pop());
+    }
+
+    public void removeTile(int position) {
+        shownTiles.remove(position);
+    }
+
+    public void removeWildlife(int position) {
+        shownWildlife.remove(position);
     }
     public boolean deckIsEmpty() {
         return tileDeck.isEmpty();
@@ -120,14 +130,11 @@ public class Table {
     }
 
     //culls all the wildlife coressponding to the indexes given to the function
-    public void cull(int ... i) {
-        for(int a = i.length; a > 0; a--) {
-            wildlifeDeck.add(shownWildlife.get(i[a - 1]));
-            shownWildlife.remove(i[a - 1]);
-        }
-        Collections.shuffle(wildlifeDeck);
-        for(int j = 0; j < i.length; j ++) {
-            shownWildlife.add(wildlifeDeck.pop());
+    private void cull(int ... i) {
+        for(int n : i) {
+            returnWildlife(n);
+            Collections.shuffle(wildlifeDeck);
+            addWildlife(n);
         }
     }
 
@@ -140,27 +147,26 @@ public class Table {
     //cull that detects which wildlife repeats three times within the array, then those indexes are called to the cull method
     public void optionalCull() {
         int occurences = 0;
-        int index = 0;
+        Wildlife wildCopy = null;
 
         for(int j = 0; j < 2; j++) {
             occurences = Collections.frequency(shownWildlife, shownWildlife.get(j));
             if(occurences == 3) {
-                index = j;
+                wildCopy = shownWildlife.get(j);
                 break;
             }
         }
-        for(int i = 0; i < shownWildlife.size(); i++) {
-            if(shownWildlife.get(i) == shownWildlife.get(index)) {
-                cull(i);
+        if(wildCopy != null) {
+            for(int i = 0; i < shownWildlife.size(); i++) {
+                if(shownWildlife.get(i) == wildCopy) {
+                    cull(i);
+                }
             }
         }
     }
 
     //calls cull on the array of the chosen indexes by the user
     public void natureTokenCull(int[] positions) {
-        for(int i = 0; i < positions.length; i++) {
-            positions[i] -= 1;
-        }
         cull(positions);
     }
 }

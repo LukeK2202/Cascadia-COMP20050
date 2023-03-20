@@ -40,7 +40,7 @@ public class View {
         System.out.println("Enter 'C' to display commands again.");
         System.out.println("Enter 'S'[1-4] to select a tile and wildlife pair from the table.");
         System.out.println("Enter 'R' to rotate a selected tile after selection");
-        System.out.println("Enter 'P'[0-99] to place the selected tile on the board");
+        System.out.println("Enter 'P'[0-99] to place the selected tile or wildlife on the board");
     }
 
     //Clears the view with new lines and adds a line. Used when at a new game state
@@ -179,6 +179,31 @@ public class View {
         return command;
     }
 
+//    public int[] getUserCullInfo() {
+//        boolean valid = false;
+//        do {
+//            System.out.println("Please enter ");
+//        }
+//    }
+
+    public boolean getUserYorN() {
+        boolean valid = false;
+        boolean inputBool = false;
+        do {
+            System.out.println("Please enter Y (yes) or N (no): ");
+            String input = in.nextLine();
+            if(input.trim().equalsIgnoreCase("Y")) {
+                valid = true;
+                inputBool = true;
+            } else if(input.trim().equalsIgnoreCase("N")) {
+                valid = true;
+            } else {
+                System.out.println("Invalid input entered. Please Enter Y (yes) or N (no).");
+            }
+        } while (!valid);
+        return inputBool;
+    }
+
     //Print place token error
     public void showPlaceTokenError() {
         System.out.println("Cant place wildlife token on tile.");
@@ -225,8 +250,8 @@ public class View {
         System.out.println("Optoinal cull has been performed");
     }
 
-    public void optionalCullCarriedOutPreviousRound() {
-        System.out.println("Optional cull detected but no longer available as you carried it out last round");
+    public void optionalCullCarriedOutAlready() {
+        System.out.println("Optional cull detected but no longer available as you already done one this turn");
     }
 
     public void natureTokensAvailable() {
