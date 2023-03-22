@@ -26,6 +26,8 @@ public class Tile {
     private int coOrd = 0;
     private Wildlife placedToken;
 
+    private boolean keystoneTile = false;
+
     Tile(tileTypes type) {
         //Keystone tile constructor
         if(type == tileTypes.KEYSTONE) {
@@ -34,6 +36,7 @@ public class Tile {
             habitats.add(Habitat.chooseHabitat());
             wildlife = new ArrayList<Wildlife>();
             wildlife.add(Wildlife.chooseWildlife());
+            keystoneTile = true;
 
             //Double for loop to iterate through each entry in the 4x4 array
             for(int i = 0; i < tile.length; i++) {
@@ -229,12 +232,9 @@ public class Tile {
         return placedToken != null;
     }
 
-    // TODO
-    //PLACE WILDLIFE
-    //fucntion takes in just a wildlife
-    //function iterates through the wildlife arraylist checking if the wildlife argument is contained within...
-    //if yes, located that wildlife, and replaces with "placed wildlife"
-    //if no, throw an error
+    public boolean isKeystoneTile() {
+        return keystoneTile;
+    }
 
     public void addWildlifeToken(Wildlife wildlifeToken) throws CantPlaceWildlifeException {
         int index = -1;

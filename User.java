@@ -8,6 +8,47 @@ public class User {
     //integer number to store the order? Possible reworks may occur
     private boolean optionalCullCarriedOut = false;
     //boolean to tell the main class if the user has carried out an otional cull or not, on their current turn
+    private Board board;
+
+    private int natureTokens = 0;
+
+    User(String name) {
+        this.name = name;
+        this.board = new Board();
+    }
+
+    public void setNatureTokens(int n) {
+        natureTokens = n;
+    }
+
+    public int getNatureTokens() {
+        return natureTokens;
+    }
+
+    public void addNatureToken() {
+        natureTokens++;
+    }
+
+    public void removeNatureToken() {
+        natureTokens--;
+    }
+
+    public int getScore() {
+        return score;
+    }
+    public String getName() {
+        return name;
+    }
+    public int getOrderNumber() {
+        return orderNumber;
+    }
+    public String toString() {
+        return name;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
 
     //gets the boolean value, if false carries out cull, if true, tells user that cull was done then sets boolean back to false
     public boolean getOptionalCullCarriedOut() {
@@ -22,31 +63,6 @@ public class User {
     public void setOptionalCullPreviouslyDone() {
         optionalCullCarriedOut = false;
     }
-
-    public int getScore() {
-        return score;
-    }
-    public String getName() {
-        return name;
-    }
-    public int getOrderNumber() {
-        return orderNumber;
-    }
-    private Board board;
-
-    User(String name) {
-        this.name = name;
-        this.board = new Board();
-    }
-
-    public String toString() {
-        return name;
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
     /* {
 
 

@@ -19,6 +19,7 @@ public class Casc {
         //initiates view and a command for the game. displays the welcome message
         View view = new View();
         Command command;
+        int natureTokens = 20;
         view.welcomeMsg();
         //Sets users index to 0 (first player) and asks for how many players are playing
         int userIndex = 0;
@@ -42,6 +43,7 @@ public class Casc {
             view.skipLines();
             view.printTable(table);
             System.out.println("Current Players Board: " + currUser.getName());
+            System.out.println("Players Nature Tokens: " + currUser.getNatureTokens());
             currBoard.checkPLaceableArea();
             currBoard.displayAvailableAreas();
             view.printBoard(currBoard);
@@ -69,6 +71,7 @@ public class Casc {
                         view.skipLines();
                         view.printTable(table);
                         System.out.println("Current Players Board: " + currUser.getName());
+                        System.out.println("Players Nature Tokens: " + currUser.getNatureTokens());
                         currBoard.checkPLaceableArea();
                         currBoard.displayAvailableAreas();
                         view.printBoard(currBoard);
@@ -91,6 +94,7 @@ public class Casc {
                                 view.skipLines();
                                 view.printTable(table);
                                 System.out.println("Current Players Board: " + currUser.getName());
+                                System.out.println("Players Nature Tokens: " + currUser.getNatureTokens());
                                 currBoard.checkPLaceableArea();
                                 currBoard.displayAvailableAreas();
                                 view.printBoard(currBoard);
@@ -142,6 +146,7 @@ public class Casc {
                             view.skipLines();
                             view.printTable(table);
                             System.out.println("Current Players Board: " + currUser.getName());
+                            System.out.println("Players Nature Tokens: " + currUser.getNatureTokens());
                             view.printBoard(currBoard);
                             view.displaySelected(table);
                         } else if (!table.hadSelectedWildlife()) {
@@ -155,6 +160,16 @@ public class Casc {
                                 try {
                                     if (command.isPlace()) {
                                         currBoard.placeWildlife(command.getSelected(), table.getSelectedWildlife());
+                                        int[] coOrd = currBoard.getTilePlacedCoOrd(command.getSelected());
+                                        if(currBoard.getTile(coOrd[0], coOrd[1]).isKeystoneTile()) {
+                                            if(natureTokens > 0) {
+                                                currUser.addNatureToken();
+                                                natureTokens--;
+                                                System.out.println("Given nature token for placing on keystone tile.");
+                                            } else {
+                                                System.out.println("Couldn't give nature token as none are available.");
+                                            }
+                                        }
                                         table.unselectWildlife();
                                         bothPlaced = true;
                                         commDone = true;

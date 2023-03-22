@@ -51,6 +51,14 @@ public class Board {
         return board[row][column];
     }
 
+    public int[] getTilePlacedCoOrd(int n) {
+        return occupiedTiles.get(n);
+    }
+
+    public int[] getTileAvailableCoOrd(int n) {
+        return placeableArea.get(n);
+    }
+
     //Method to add a tile to the board, requiring the row and column
     private void addTile(Tile tile ,int row, int column) {
         if(isRowNull(row)) {
@@ -84,11 +92,6 @@ public class Board {
         placeableArea.remove(n);
     }
 
-    // TODO
-    //PLACE WILDLIFE
-    //TAKES IN and int and a wildlife, int used as index for occupiedPLaces
-    //looks up index in occupiedPlaces and grabs that coOrd
-    //then called placeWildlife tile method on the tile in that coOrd.
 
     public void placeWildlife(int index, Wildlife wildlifeToken) throws CantPlaceWildlifeException {
         if(wildlifeToken == null) {
