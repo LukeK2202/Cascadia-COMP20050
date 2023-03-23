@@ -28,6 +28,10 @@ public class Tile {
 
     private boolean keystoneTile = false;
 
+    public Wildlife showPlacedToken() {
+        return placedToken;
+    }
+
     Tile(tileTypes type) {
         //Keystone tile constructor
         if(type == tileTypes.KEYSTONE) {
