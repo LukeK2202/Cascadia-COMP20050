@@ -109,6 +109,7 @@ public class Casc {
                             }
                             table.natureTokenCull(userCullPos);
                             currUser.removeNatureToken();
+                            natureTokens++;
                             commDone = true;
                         } else if(userInputInt == 2) {
                             System.out.println("Please enter the number of the tile you would like to select: ");
@@ -122,6 +123,7 @@ public class Casc {
                             table.selectWildlife(userSelectWildlife);
 
                             currUser.removeNatureToken();
+                            natureTokens++;
                             commDone = true;
                         } else {
                         }
@@ -132,8 +134,13 @@ public class Casc {
                     view.displayCommands();
                     commDone = true;
                 } else if (command.isSelect()) {
-                    table.selectColumn(command.getSelected());
-                    commDone = true;
+                    if(table.hadSelectedTile() || table.hadSelectedWildlife()) {
+                        table.swapSelected(command.getSelected());
+                        commDone = true;
+                    } else {
+                        table.selectColumn(command.getSelected());
+                        commDone = true;
+                    }
                 } else if (command.isRotate()) {
                     if (!table.hadSelectedTile()) {
                         view.showRotateError();
