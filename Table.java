@@ -53,11 +53,11 @@ public class Table {
         removeWildlife(position);
     }
     //adds a tile back to shown tiles from the stack
-    public void addTile(int position) {
+    public void drawTile(int position) {
         shownTiles.add(position, tileDeck.pop());
     }
     //adds a wildlife back to shown wildlife from the stack
-    public void addWildlife(int position) {
+    public void drawWildlife(int position) {
         shownWildlife.add(position, wildlifeDeck.pop());
     }
 
@@ -76,14 +76,22 @@ public class Table {
         shownWildlife.add(n, wildlifeDeck.pop());
         shownTiles.add(n, tileDeck.pop());
     }
-    public void selectColumn(int n) {
+
+    public void selectTile(int n) {
         this.selectedTile = shownTiles.get(n - 1);
-        this.selectedWildlife = shownWildlife.get(n - 1);
-
         shownTiles.remove(n - 1);
-        shownWildlife.remove(n - 1);
+        drawTile(n - 1);
+    }
 
-        drawFromDecks(n - 1);
+    public void selectWildlife(int n) {
+        this.selectedWildlife = shownWildlife.get(n - 1);
+        shownWildlife.remove(n - 1);
+        drawWildlife(n - 1);
+    }
+
+    public void selectColumn(int n) {
+        selectTile(n);
+        selectWildlife(n);
     }
 
     public void unselectTile() {
@@ -134,7 +142,7 @@ public class Table {
         for(int n : i) {
             returnWildlife(n);
             Collections.shuffle(wildlifeDeck);
-            addWildlife(n);
+            drawWildlife(n);
         }
     }
 

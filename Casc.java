@@ -140,7 +140,26 @@ public class Casc {
                             currUser.removeNatureToken();
                             commDone = true;
                         } else if(userInputInt == 2) {
-                            System.out.println(userInputInt);
+                            System.out.println("Please enter the number of the tile you would like to select: ");
+                            int userSelectTile = view.getUserint(1, 4);
+                            table.selectTile(userSelectTile);
+
+                            view.skipLines();
+                            view.printTable(table);
+                            System.out.println("Current Players Board: " + currUser.getName());
+                            System.out.println("Players Nature Tokens: " + currUser.getNatureTokens());
+                            currBoard.checkPLaceableArea();
+                            currBoard.displayAvailableAreas();
+                            view.printBoard(currBoard);
+                            if(table.hadSelectedTile() || table.hadSelectedWildlife()) {
+                                view.displaySelected(table);
+                            }
+
+                            System.out.println("Please enter the number of the wildlife you would like to select: ");
+                            int userSelectWildlife = view.getUserint(1, 4);
+                            table.selectWildlife(userSelectWildlife);
+
+                            currUser.removeNatureToken();
                             commDone = true;
                         } else {
                         }
