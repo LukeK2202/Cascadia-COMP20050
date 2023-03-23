@@ -1,7 +1,7 @@
 public class Command{
     //Main Control Class, Purpose to call commands.
 
-    private enum CommandType {QUIT, NEXT, COMMAND, DECK_EMPTY, SELECT, ROTATE, PLACE}
+    private enum CommandType {QUIT, NATURE, COMMAND, DECK_EMPTY, SELECT, ROTATE, PLACE}
     private CommandType commandType;
     private int selected;
 
@@ -13,7 +13,7 @@ public class Command{
             commandType = CommandType.QUIT;
         }
         else if(inputFormat.equals("N")) {
-            commandType = CommandType.NEXT;
+            commandType = CommandType.NATURE;
         }
         else if(inputFormat.equals("C")) {
             commandType = CommandType.COMMAND;
@@ -68,8 +68,8 @@ public class Command{
     }
 
     //Checks if the next command was given
-    public boolean isNext() {
-        if(commandType == CommandType.NEXT) {
+    public boolean isNature() {
+        if(commandType == CommandType.NATURE) {
             return true;
         } else {
             return false;

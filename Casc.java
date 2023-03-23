@@ -76,6 +76,10 @@ public class Casc {
                         currBoard.displayAvailableAreas();
                         view.printBoard(currBoard);
 
+                        if(table.hadSelectedTile() || table.hadSelectedWildlife()) {
+                            view.displaySelected(table);
+                        }
+
                         view.cullAllRequired();
                         //If 3 are matching, optional cull
                     } else if (cullDecision == 1) {
@@ -99,6 +103,10 @@ public class Casc {
                                 currBoard.displayAvailableAreas();
                                 view.printBoard(currBoard);
 
+                                if(table.hadSelectedTile() || table.hadSelectedWildlife()) {
+                                    view.displaySelected(table);
+                                }
+
                                 view.optionalCullHasBeenCompleted();
                             }
                             else {
@@ -113,13 +121,37 @@ public class Casc {
                 if (command.isQuit()) {
                     commDone = true;
                     //If command is next then go to the next user and set the current board to their board
-                } else if (command.isNext()) {
+                } else if (command.isNature()) {
                     //sets optional cull to false, just in case it was true before so that optional cull is available next time fore the user
-                    currUser.setOptionalCullPreviouslyDone();
-                    userIndex = (userIndex + 1) % playerNum;
-                    currUser = usersArr.get(userIndex);
-                    currBoard = currUser.getBoard();
-                    commDone = true;
+                    if(currUser.getNatureTokens() > 0) {
+                        System.out.println("Spend a nature token to: ");
+                        System.out.println("(0) to cancel, (1) Cull any number of wildlife tokens, or (2) Take any combination of tile and wildlife token: ");
+                        int userInputInt = view.getUserint(0, 2);
+                        if(userInputInt == 1) {
+                            System.out.println("Please enter the numbers of the wildlife you would like to cull (e.g. 1,3,4 to cull positions 1, 3 and 4): ");
+                            int[] userCullPos = new int[0];
+                            do {
+                                userCullPos = view.getUserintArray(1, 4);
+                            } while (userCullPos.length > 4);
+                            for(int n = 0; n < userCullPos.length; n++) {
+                                userCullPos[n]--;
+                            }
+                            table.natureTokenCull(userCullPos);
+                            currUser.removeNatureToken();
+                            commDone = true;
+                        } else if(userInputInt == 2) {
+                            System.out.println(userInputInt);
+                            commDone = true;
+                        } else {
+                        }
+                    } else {
+                        System.out.println("No nature tokens to spend.");
+                    }
+//                    currUser.setOptionalCullPreviouslyDone();
+//                    userIndex = (userIndex + 1) % playerNum;
+//                    currUser = usersArr.get(userIndex);
+//                    currBoard = currUser.getBoard();
+//                    commDone = true;
                 } else if (command.isComm()) {
                     view.displayCommands();
                     commDone = true;

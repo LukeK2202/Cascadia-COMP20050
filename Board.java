@@ -59,6 +59,10 @@ public class Board {
         return placeableArea.get(n);
     }
 
+    public ArrayList<int[]> getOccupiedTileArray() {
+        return occupiedTiles;
+    }
+
     //Method to add a tile to the board, requiring the row and column
     private void addTile(Tile tile ,int row, int column) {
         if(isRowNull(row)) {
@@ -134,7 +138,7 @@ public class Board {
             board[coOrd[0]][coOrd[1]].hideCoOrd();
         }
     }
-    private boolean isCoOrdsContained(ArrayList<int[]> list, int[] coOrd) {
+    public boolean isCoOrdsContained(ArrayList<int[]> list, int[] coOrd) {
         for(int[] listCoOrd : list) {
             if(listCoOrd[0] == coOrd[0] && listCoOrd[1] == coOrd[1]) {
                 return true;
@@ -207,6 +211,7 @@ public class Board {
                     }
                 }
             }
+
         }
     }
 }

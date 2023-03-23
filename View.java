@@ -189,8 +189,8 @@ public class View {
     public boolean getUserYorN() {
         boolean valid = false;
         boolean inputBool = false;
+        System.out.println("Please enter Y (yes) or N (no): ");
         do {
-            System.out.println("Please enter Y (yes) or N (no): ");
             String input = in.nextLine();
             if(input.trim().equalsIgnoreCase("Y")) {
                 valid = true;
@@ -202,6 +202,67 @@ public class View {
             }
         } while (!valid);
         return inputBool;
+    }
+
+    //Prompts the user to enter a number between the 2 bounds given, inclusive
+    public int getUserint(int lowBound, int highBound) {
+        boolean valid = false;
+        int inputInt = -1;
+        if(lowBound >= highBound) {
+            int tmp = highBound;
+            highBound = lowBound;
+            lowBound = tmp;
+        }
+        System.out.println("Please enter a number between " + lowBound + " and " + highBound + ", inclusive: ");
+        do {
+
+            String input = in.nextLine();
+            try {
+                inputInt = Integer.parseInt(input);
+                if(inputInt >= lowBound && inputInt <= highBound) {
+                    valid = true;
+                } else {
+                    System.out.println("Invalid input entered. Please enter a number between "
+                            + lowBound + " and " + highBound + ", inclusive.");
+                }
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid input entered. Please enter a number.");
+            }
+        } while(!valid);
+        return inputInt;
+    }
+
+    //Prompts the user to enter a number list, all between the 2 bounds given, inclusive
+    public int[] getUserintArray(int lowBound, int highBound) {
+        boolean valid = false;
+        ArrayList<Integer> intArrayList = new ArrayList<>();
+        if(lowBound >= highBound) {
+            int tmp = highBound;
+            highBound = lowBound;
+            lowBound = tmp;
+        }
+        System.out.println("Please enter a list of numbers, all between " + lowBound + " and " + highBound + ", inclusive: ");
+        do{
+            String input = in.nextLine();
+            String[] inputSplit = input.split(",");
+            try {
+                for(String s : inputSplit) {
+                    int num = Integer.parseInt(s);
+                    if((num >= lowBound && num <= highBound) && !intArrayList.contains(num)) {
+                        intArrayList.add(num);
+                    } else {
+                        throw new IllegalArgumentException();
+                    }
+                }
+                valid = true;
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid input entered. Please enter only numbers.");
+            } catch (IllegalArgumentException ex) {
+                System.out.println("Invalid input entered. Please enter a list of numbers, " +
+                        "all between " + lowBound + " and " + highBound + ", inclusive: ");
+            }
+        } while (!valid);
+        return intArrayList.stream().mapToInt(Integer::intValue).toArray();
     }
 
     //Print place token error
