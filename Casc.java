@@ -39,20 +39,11 @@ public class Casc {
         //Creates a table
         Table table = new Table();
         do {
+            boolean turnOver = false;
             //Display the table and the current board
-            view.skipLines();
-            view.printTable(table);
-            System.out.println("Current Players Board: " + currUser.getName());
-            System.out.println("Players Nature Tokens: " + currUser.getNatureTokens());
-            currBoard.checkPLaceableArea();
-            currBoard.displayAvailableAreas();
-            view.printBoard(currBoard);
-            boolean commDone = false;
+            view.displayScreen(currUser, currBoard, table);
 
-            //Check for if any tile or wildlife selected should be displayed
-            if(table.hadSelectedTile() || table.hadSelectedWildlife()) {
-                view.displaySelected(table);
-            }
+            boolean commDone = false;
             //Begins the loop to receive a command
             do {
                 if (table.deckIsEmpty()) {
@@ -68,17 +59,7 @@ public class Casc {
                         table.cullAllCall();
 
                         //Block to print out updated table
-                        view.skipLines();
-                        view.printTable(table);
-                        System.out.println("Current Players Board: " + currUser.getName());
-                        System.out.println("Players Nature Tokens: " + currUser.getNatureTokens());
-                        currBoard.checkPLaceableArea();
-                        currBoard.displayAvailableAreas();
-                        view.printBoard(currBoard);
-
-                        if(table.hadSelectedTile() || table.hadSelectedWildlife()) {
-                            view.displaySelected(table);
-                        }
+                        view.displayScreen(currUser, currBoard, table);
 
                         view.cullAllRequired();
                         //If 3 are matching, optional cull
@@ -95,17 +76,7 @@ public class Casc {
                                 table.optionalCull();
                                 currUser.setOptionalCullDoneNow();
 
-                                view.skipLines();
-                                view.printTable(table);
-                                System.out.println("Current Players Board: " + currUser.getName());
-                                System.out.println("Players Nature Tokens: " + currUser.getNatureTokens());
-                                currBoard.checkPLaceableArea();
-                                currBoard.displayAvailableAreas();
-                                view.printBoard(currBoard);
-
-                                if(table.hadSelectedTile() || table.hadSelectedWildlife()) {
-                                    view.displaySelected(table);
-                                }
+                                view.displayScreen(currUser, currBoard, table);
 
                                 view.optionalCullHasBeenCompleted();
                             }
@@ -144,16 +115,7 @@ public class Casc {
                             int userSelectTile = view.getUserint(1, 4);
                             table.selectTile(userSelectTile);
 
-                            view.skipLines();
-                            view.printTable(table);
-                            System.out.println("Current Players Board: " + currUser.getName());
-                            System.out.println("Players Nature Tokens: " + currUser.getNatureTokens());
-                            currBoard.checkPLaceableArea();
-                            currBoard.displayAvailableAreas();
-                            view.printBoard(currBoard);
-                            if(table.hadSelectedTile() || table.hadSelectedWildlife()) {
-                                view.displaySelected(table);
-                            }
+                            view.displayScreen(currUser, currBoard, table);
 
                             System.out.println("Please enter the number of the wildlife you would like to select: ");
                             int userSelectWildlife = view.getUserint(1, 4);
@@ -166,11 +128,6 @@ public class Casc {
                     } else {
                         System.out.println("No nature tokens to spend.");
                     }
-//                    currUser.setOptionalCullPreviouslyDone();
-//                    userIndex = (userIndex + 1) % playerNum;
-//                    currUser = usersArr.get(userIndex);
-//                    currBoard = currUser.getBoard();
-//                    commDone = true;
                 } else if (command.isComm()) {
                     view.displayCommands();
                     commDone = true;
@@ -194,12 +151,7 @@ public class Casc {
                             currBoard.hideAvailableAreas();
                             currBoard.displayPlacedAreas();
 
-                            view.skipLines();
-                            view.printTable(table);
-                            System.out.println("Current Players Board: " + currUser.getName());
-                            System.out.println("Players Nature Tokens: " + currUser.getNatureTokens());
-                            view.printBoard(currBoard);
-                            view.displaySelected(table);
+                            view.displayScreen(currUser, currBoard, table);
                         } else if (!table.hadSelectedWildlife()) {
                             throw new CantPlaceTileException("No Tile Selected. Please select a tile.");
                         }
@@ -240,12 +192,27 @@ public class Casc {
                                 currBoard.hidePlacedAreas();
                                 currBoard.displayAvailableAreas();
                             }
+                            turnOver = true;
                         } while (!bothPlaced);
+
                     } catch (CantPlaceTileException ex) {
                         System.out.println(ex.getMessage());
                     }
                 }
             } while(!commDone);
+            if(turnOver) {
+                view.displayScreen(currUser, currBoard, table);
+                System.out.println("Press 1 to move to next player.");
+                int userNext = 0;
+                do {
+                    userNext = view.getUserint(1, 1);
+                } while(userNext != 1);
+                currUser.setOptionalCullPreviouslyDone();
+                userIndex = (userIndex + 1) % playerNum;
+                currUser = usersArr.get(userIndex);
+                currBoard = currUser.getBoard();
+                System.out.println("Turn Over. Moving to next user.");
+            }
             view.clearView();
 
         } while(!command.isQuit() && !command.DeckisFin());

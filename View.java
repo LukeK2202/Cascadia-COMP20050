@@ -96,6 +96,19 @@ public class View {
         return players;
     }
 
+    public void displayScreen(User user, Board board, Table table) {
+        skipLines();
+        printTable(table);
+        System.out.println("Current Players Board: " + user.getName());
+        System.out.println("Players Nature Tokens: " + user.getNatureTokens());
+        board.checkPLaceableArea();
+        board.displayAvailableAreas();
+        printBoard(board);
+        if(table.hadSelectedTile() || table.hadSelectedWildlife()) {
+            displaySelected(table);
+        }
+    }
+
     //Displays full board
     public void printBoard(Board board) {
         String out = "";
