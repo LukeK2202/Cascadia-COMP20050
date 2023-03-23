@@ -63,10 +63,10 @@ public class View {
         System.out.println("How many players are playing? (2-4): ");
         int num = 0;
         do {
-            if(in.hasNextInt()) {
+            if (in.hasNextInt()) {
                 int input = in.nextInt();
                 in.nextLine();
-                if(input >= 2 && input <=4) {
+                if (input >= 2 && input <= 4) {
                     num = input;
                 } else {
                     System.out.println("Invalid amount of players given. Try again.");
@@ -103,11 +103,11 @@ public class View {
             if (!board.isRowNull(row)) {
                 out = "";
                 for (int tileRow = 0; tileRow < 4; tileRow++) {
-                    if(row % 2 == 1) {
+                    if (row % 2 == 1) {
                         out += "      ";
                     }
                     for (int i = 0; i < board.getBoardWidth(); i++) {
-                        out += board.getTile(row,i).toString(tileRow);
+                        out += board.getTile(row, i).toString(tileRow);
                     }
                     System.out.println(out);
                     out = "";
@@ -121,12 +121,12 @@ public class View {
     public void printTable(Table table) {
         StringBuilder out = new StringBuilder();
         out.append(largeTab + largeTab + largeTab);
-        out.append("**                         Available Tiles and Wildlife                           **\n");  
+        out.append("**                         Available Tiles and Wildlife                           **\n");
 
 
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             out.append(largeTab + largeTab + largeTab);
-            for(int j = 0; j < 4; j++) {
+            for (int j = 0; j < 4; j++) {
                 out.append(table.getTile(j).toString(i));
                 out.append(largeTab);
             }
@@ -134,7 +134,7 @@ public class View {
         }
         out.append("\n");
         out.append(largeTab + largeTab + largeTab);
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             out.append("       ");
             out.append(table.getWildlife(i));
             out.append(largeTab);
@@ -148,12 +148,12 @@ public class View {
 
     public void displaySelected(Table table) {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             sb.append(largeTab + largeTab + largeTab);
-            if(table.hadSelectedTile()) {
+            if (table.hadSelectedTile()) {
                 sb.append(table.getSelectedTile().toString(i));
             }
-            if(i == 3 && table.hadSelectedWildlife()) {
+            if (i == 3 && table.hadSelectedWildlife()) {
                 sb.append(largeTab + largeTab);
                 sb.append(table.getSelectedWildlife());
             }
@@ -192,10 +192,10 @@ public class View {
         do {
             System.out.println("Please enter Y (yes) or N (no): ");
             String input = in.nextLine();
-            if(input.trim().equalsIgnoreCase("Y")) {
+            if (input.trim().equalsIgnoreCase("Y")) {
                 valid = true;
                 inputBool = true;
-            } else if(input.trim().equalsIgnoreCase("N")) {
+            } else if (input.trim().equalsIgnoreCase("N")) {
                 valid = true;
             } else {
                 System.out.println("Invalid input entered. Please Enter Y (yes) or N (no).");
@@ -258,4 +258,14 @@ public class View {
         System.out.print("You have nature tokens available, press /*BLANK*/ to choose a tile and wildlife of your preference ");
         System.out.println("or press /*BLANK*/ to cull any number of wildlife tokens");
     }
+
+    public void displayScore() {
+        System.out.println("Players\t\tScore");
+        System.out.println("-----------------");
+        for (int i = 0; i < Casc.playerNum; i++) {
+            System.out.println(Casc.usersArr.get(i) + "\t\t" + Casc.usersArr.get(i).getScore());
+        }
+    }
 }
+
+
