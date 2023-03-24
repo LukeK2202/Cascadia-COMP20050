@@ -49,6 +49,90 @@ public class ScoreTests {
     }
 
     @Test
+    public void testBearB() {
+        /*
+        Bear Card B gives points for each pair of exactly 3 bears.
+        10 points for each pair
+         */
+        Board board = new Board(true);
+        Scoring scoreBoard = new Scoring(true);
+        TileCreators tc = new TileCreators();
+
+        /*
+        Board Visualisation:
+        10,10<     >10,11<     >10,12<     >10,13
+	          11,10<     >11,11<     >11,12
+        12,10<     >12,11<     >12,12<     >12,13
+	          13,10<     >13,11<     >13,12
+        14,10<     >14,11<     >14,12<     >14,13
+         */
+
+        //Creating Bear Tiles and some other animal tile
+        Tile tB = tc.createPlacedBearTile();
+        Tile tH = tc.createPlacedHawkTile();
+
+        //Creating invalid 2 bear pair
+        board.addTile(tB, 11, 11);
+        board.addTile(tB, 11, 12);
+        assertEquals(0, scoreBoard.bearScoreCardB(board));
+        //Creating valid 3 bear pair
+        board.addTile(tB, 12, 10);
+        board.addTile(tB, 12, 9);
+        board.addTile(tB, 13, 10);
+        assertEquals(10, scoreBoard.bearScoreCardB(board));
+        //Creating valid 3 bear pair, with neighbour of other animal
+        board.addTile(tB, 14, 12);
+        board.addTile(tB, 14, 13);
+        board.addTile(tB, 15, 12);
+        board.addTile(tH, 15, 13);
+        assertEquals(20, scoreBoard.bearScoreCardB(board));
+    }
+
+    @Test
+    public void testBearC() {
+        /*
+        Bear Card C gives points for each pair of groups between size of 1 and 3.
+        2 points for size 1.
+        5 points for size 2.
+        8 points for size 3.
+        bonus 3 points if you have atleast 1 of each size
+         */
+        Board board = new Board(true);
+        Scoring scoreBoard = new Scoring(true);
+        TileCreators tc = new TileCreators();
+
+        /*
+        Board Visualisation:
+        10,10<     >10,11<     >10,12<     >10,13
+	          11,10<     >11,11<     >11,12
+        12,10<     >12,11<     >12,12<     >12,13
+	          13,10<     >13,11<     >13,12
+        14,10<     >14,11<     >14,12<     >14,13
+         */
+
+        //Creating Bear Tiles and some other animal tile
+        Tile tB = tc.createPlacedBearTile();
+        Tile tH = tc.createPlacedHawkTile();
+
+        //Creating valid 1 bear pair
+        board.addTile(tB, 10, 10);
+        assertEquals(2, scoreBoard.bearScoreCardC(board));
+
+        //Creating valid 2 bear pair
+        board.addTile(tB, 11, 11);
+        board.addTile(tB, 11, 12);
+        assertEquals(7, scoreBoard.bearScoreCardC(board));
+        //Adding 1 bear to become a pair of 3
+        board.addTile(tB, 10, 12);
+        assertEquals(10, scoreBoard.bearScoreCardC(board));
+
+        //Creating valid 2 bear pair, which then gives the bonus 3 points
+        board.addTile(tB, 12, 10);
+        board.addTile(tB, 13, 10);
+        assertEquals(18, scoreBoard.bearScoreCardC(board));
+    }
+
+    @Test
     public void testFoxA() {
         /*
         Fox card A gives points for each unique wildlife bordering any fox

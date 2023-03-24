@@ -17,7 +17,6 @@ public class Casc {
     public static void main(String[] args) {
         //initiates view and a command for the game. displays the welcome message
         View view = new View();
-        Scoring scoreBoard = new Scoring();
         Command command;
         int natureTokens = 20;
         view.welcomeMsg();
@@ -29,6 +28,7 @@ public class Casc {
         for(String p: view.getplayerNames(playerNum)) {
             usersArr.add(new User(p));
         }
+        Scoring scoreBoard = new Scoring();
         view.clearView();
         //shuffles user array to get a random order
         Collections.shuffle(usersArr);

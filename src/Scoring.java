@@ -17,11 +17,13 @@ public class Scoring {
 
     public Scoring() {
         View view = new View();
+        //Forming Array lists of all score card methods
         ArrayList<Method> hawkScoreCards = new ArrayList<>();
         ArrayList<Method> elkScoreCards = new ArrayList<>();
         ArrayList<Method> foxScoreCards = new ArrayList<>();
         ArrayList<Method> bearScoreCards = new ArrayList<>();
         ArrayList<Method> salmonScoreCards = new ArrayList<>();
+        //Populate all array lists
         for(Method method : Scoring.class.getDeclaredMethods()) {
             if(method.getName().startsWith("hawkScoreCard")) hawkScoreCards.add(method);
             if(method.getName().startsWith("elkScoreCard")) elkScoreCards.add(method);
@@ -29,13 +31,14 @@ public class Scoring {
             if(method.getName().startsWith("bearScoreCard")) bearScoreCards.add(method);
             if(method.getName().startsWith("salmonScoreCard")) salmonScoreCards.add(method);
         }
+        //Sort them alphabetically
         hawkScoreCards.sort((name1, name2) -> name1.getName().compareTo(name2.getName()));
         elkScoreCards.sort((name1, name2) -> name1.getName().compareTo(name2.getName()));
         foxScoreCards.sort((name1, name2) -> name1.getName().compareTo(name2.getName()));
         bearScoreCards.sort((name1, name2) -> name1.getName().compareTo(name2.getName()));
         salmonScoreCards.sort((name1, name2) -> name1.getName().compareTo(name2.getName()));
 
-
+        //Block to display which score cards are available
         System.out.println("Current Available score cards: ");
         System.out.print("Hawk Cards -> ");
         for(int i = 0; i < hawkScoreCards.size(); i++) System.out.print(hawkScoreCards.get(i).getName() + "(" + (i + 1) + "), "); System.out.println();
@@ -48,31 +51,30 @@ public class Scoring {
         System.out.print("Salmon Cards -> ");
         for(int i = 0; i < salmonScoreCards.size(); i++) System.out.print(salmonScoreCards.get(i).getName() + "(" + (i + 1) + "), "); System.out.println();
 
+        //Block to prompt user which cards they would like to use
         System.out.println("Please select which hawk card you would like to use.");
         int input = view.getUserint(1, hawkScoreCards.size());
         selectedHawkCard = hawkScoreCards.get(input - 1);
-
         System.out.println("Please select which elk card you would like to use.");
         input = view.getUserint(1, elkScoreCards.size());
         selectedElkCard = elkScoreCards.get(input - 1);
-
         System.out.println("Please select which fox card you would like to use.");
         input = view.getUserint(1, foxScoreCards.size());
         selectedFoxCard = foxScoreCards.get(input - 1);
-
         System.out.println("Please select which bear card you would like to use.");
         input = view.getUserint(1, bearScoreCards.size());
         selectedBearCard = bearScoreCards.get(input - 1);
-
         System.out.println("Please select which salmon card you would like to use.");
         input = view.getUserint(1, salmonScoreCards.size());
         selectedSalmonCard = salmonScoreCards.get(input - 1);
     }
 
+    //Blank scoring constructor. used for unit tests
     public Scoring(boolean blank) {
 
     }
 
+    //Generate score method for all users at the end of gameplay
     public void generateScore(User currUser) {
         try {
             currUser.addScore((int) selectedHawkCard.invoke(this, currUser.getBoard()));
@@ -181,14 +183,6 @@ public class Scoring {
         }
     }
 
-    public int hawkScoreCardB(Board currUserBoard) {
-        return 0;
-    }
-
-    public int hawkScoreCardC(Board currUserBoard) {
-        return 0;
-    }
-
     /**
      * locates all the tiles in the board that have a FOX_PLACED token on them and calculates the score for each fox
      * @param currentUserBoard is the current user's board that will be used to navigate the tiles
@@ -210,14 +204,6 @@ public class Scoring {
         return amount;
     }
 
-    public int foxScoreCardB(Board currUserBoard) {
-        return 0;
-    }
-
-    public int foxScoreCardC(Board currUserBoard) {
-        return 0;
-    }
-
     public int bearScoreCardA(Board currentUserBoard) {
         ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.BEAR_PLACED);
         int numValidGroups = findGroupNumSize(currentUserBoard, wildlifePositions, 2);
@@ -236,19 +222,24 @@ public class Scoring {
 
     public int bearScoreCardB(Board currentUserBoard) {
         ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.BEAR_PLACED);
-        return findGroupNumSize(currentUserBoard, wildlifePositions, 3);
+        int numValidGroups = findGroupNumSize(currentUserBoard, wildlifePositions, 3);
+        return 10 * numValidGroups;
     }
 
     public int bearScoreCardC(Board currUserBoard) {
-        return 0;
-    }
+        ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currUserBoard, Wildlife.BEAR_PLACED);
+        int numOneGroup = findGroupNumSize(currUserBoard, wildlifePositions, 1);
+        int numTwoGroup = findGroupNumSize(currUserBoard, wildlifePositions, 2);
+        int numThreeGroup = findGroupNumSize(currUserBoard, wildlifePositions, 3);
+        int score = 0;
 
-    public int elkScoreCardA(Board currentUserBoard) {
-        ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.ELK_PLACED);
-
-        for(int[] elkCoord : wildlifePositions) {
+        score += 2 * numOneGroup;
+        score += 5 * numTwoGroup;
+        score += 8 * numThreeGroup;
+        if(numOneGroup > 0 && numTwoGroup > 0 && numThreeGroup > 0) {
+            score += 3;
         }
-        return 0;
+        return score;
     }
 
     /**
@@ -272,22 +263,10 @@ public class Scoring {
         return totalScore;
         }
 
-    public int elkScoreCardC(Board currUserBoard) {
-        return 0;
-    }
 
     public int salmonScoreCardA(Board currentUserBoard) {
         ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.SALMON_PLACED);
         return 1;
-    }
-
-    public int salmonScoreCardB(Board currentUserBoard) {
-        int amount = 0;
-        return amount;
-    }
-
-    public int salmonScoreCardC(Board currUserBoard) {
-        return 0;
     }
 
     public ArrayList<Integer> getGroupSizeAmount(Board currBoard, ArrayList<int[]> coOrdsToCheck) {
