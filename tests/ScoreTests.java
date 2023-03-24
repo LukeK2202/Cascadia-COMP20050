@@ -182,28 +182,41 @@ public class ScoreTests {
         assertEquals(2, scoreBoard.hawkScoreCardA(board));
     }
 
-//    @Test
-//    public void testSalmnonB(){
-//        /*
-//        Board Visualisation:
-//        10,10<     >10,11<     >10,12<     >10,13
-//	          11,10<     >11,11<     >11,12
-//        12,10<     >12,11<     >12,12<     >12,13
-//	          13,10<     >13,11<     >13,12
-//        14,10<     >14,11<     >14,12<     >14,13
-//         */
-//
-//        Board board = new Board(true);
-//        Scoring scoring = new Scoring(true);
-//        TileCreators tc = new TileCreators();
-//
-//        Tile tS1 = tc.createPlacedSalmonTile();
-//
-//        board.addTile(tS1, 11, 10);
-//        board.addTile(tS1, 12, 11);
-//        board.addTile(tS1, 12, 12);
-//        board.addTile(tS1, 11, 12);
-//
-//        assertEquals(4, scoring.salmonScoreCardB(board));
-//    }
+    @Test
+    public void testSalmonA(){
+        /*
+        Board Visualisation:
+        10,10<     >10,11<     >10,12<     >10,13
+	          11,10<     >11,11<     >11,12
+        12,10<     >12,11<     >12,12<     >12,13
+	          13,10<     >13,11<     >13,12
+        14,10<     >14,11<     >14,12<     >14,13
+         */
+
+        Board board = new Board(true);
+        Scoring scoring = new Scoring(true);
+        TileCreators tc = new TileCreators();
+
+        //Creating sample tiles
+        Tile tB = tc.createPlacedBearTile();
+        Tile tH = tc.createPlacedHawkTile();
+        Tile tE = tc.createPlacedElkTile();
+        Tile tF = tc.createPlacedFoxTile();
+        Tile tS = tc.createPlacedSalmonTile();
+
+        board.addTile(tS, 11, 12);
+        board.addTile(tS, 10, 12);
+        board.addTile(tS, 10, 13);
+        assertEquals(7, scoring.salmonScoreCardA(board));
+
+        board.addTile(tS, 11, 13);
+        assertEquals(7, scoring.salmonScoreCardA(board));
+
+        board.addTile(tS, 14, 9);
+        board.addTile(tS, 14, 10);
+        board.addTile(tS, 13, 10);
+        board.addTile(tS, 13, 11);
+        board.addTile(tB, 14, 11);
+        assertEquals(18, scoring.salmonScoreCardA(board));
+    }
 }

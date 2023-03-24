@@ -276,7 +276,7 @@ public class Scoring {
         return 0;
     }
 
-    public void salmonScoreCardA(Board currentUserBoard) {
+    public int salmonScoreCardA(Board currentUserBoard) {
         ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.SALMON_PLACED);
         ArrayList<Integer> groupSizes = getGroupSizeAmount(currentUserBoard, wildlifePositions, 99);
         int totalScore = 0;
@@ -288,6 +288,7 @@ public class Scoring {
             else if(amount == 6) totalScore += 20;
             else totalScore += 26;
         }
+        return totalScore;
     }
 
     public int salmonScoreCardB(Board currentUserBoard) {
@@ -320,7 +321,7 @@ public class Scoring {
             accountedForList.add(currCoOrd);
         }
 
-        if(!(isSalmonEligibleRun(currBoard, accountedForList, currCoOrd))) return 0;
+        //if(!(isSalmonEligibleRun(currBoard, accountedForList, currCoOrd))) return 0;
         Iterator<int[]> iterator = adjacent.iterator();
         while (iterator.hasNext()) {
             int[] adj = iterator.next();
@@ -333,7 +334,7 @@ public class Scoring {
         }
         int members = 1;
         for(int[] adj : adjacent) {
-            members += groupSizeHelper(accountedForList, adj, currBoard);
+            members += salmonRunFindHelper(accountedForList, adj, currBoard);
         }
         if(adjacent.isEmpty()) {
             return 1;
