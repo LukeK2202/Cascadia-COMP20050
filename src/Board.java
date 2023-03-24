@@ -2,38 +2,54 @@ import Exceptions.*;
 
 import java.util.ArrayList;
 
-//Main board class that will contain the tiles for each user
 public class Board {
 
-    //Main board matrix, a grid of tile classes
+
+    /* Main board matrix, a grid of tile classes */
     private Tile[][] board = new Tile[21][21];
-    //Arraylist to hold interger arrays of 2, acting as Co-ords, for placed tiles
+    /* Arraylist to hold integer arrays of 2, acting as Co-ords, for placed tiles */
     private ArrayList<int[]> occupiedTiles = new ArrayList<int[]>();
-    //Arraylist to hold interger arrays of 2, acting as Co-ords, for places tiles can be placed
+    /*Arraylist to hold integer arrays of 2, acting as Co-ords, for places tiles can be placed */
     private ArrayList<int[]> placeableArea = new ArrayList<int[]>();
-    //Board constructor, adds 3 tiles as a started tile. 1 keystone and 2 randoms
-    //Origin of board is 6,6.
+
+    /**
+     * Board constructor, adds 3 tiles as a started tile. 1 keystone and 2 randoms
+     * Origin of board is 6,6.
+     */
     Board() {
         addTile(new Tile(Tile.tileTypes.KEYSTONE), 11, 11);
         addTile(new Tile(Tile.tileTypes.RANDOM), 12, 11);
         addTile(new Tile(Tile.tileTypes.RANDOM), 12, 12);
     }
 
-    //Constructor for a blank board
+    /**
+     * Constructor for a blank board
+     * @param blank
+     */
     Board(boolean blank) {
     }
 
-    //Returns board length
+    /**
+     *
+     * @return board length
+     */
     public int getBoardLength() {
         return board.length;
     }
 
-    //Returns board width
+    /**
+     *
+     * @return board width
+     */
     public int getBoardWidth() {
         return board[0].length;
     }
 
-    //Method to check if a row contains any non initiated tiles
+    /**
+     * Method checks if a row contains any non initiated tiles
+     * @param row the row being checked
+     * @return false if it does not
+     */
     public boolean isRowNull(int row) {
         for(int i = 0; i < board[row].length; i++) {
             if(board[row][i] == null) {
@@ -43,17 +59,31 @@ public class Board {
         return false;
     }
 
-    //Method to populate an entire row with blank tiles
+    /**
+     * Method to populate an entire row with blank tiles
+     * @param row to be populated
+     */
     private void populateRow(int row) {
         for(int i = 0; i < board[row].length; i++) {
             board[row][i] = new Tile(Tile.tileTypes.BLANK);
         }
     }
 
+    /**
+     * Returns a Tile
+     * @param row the row the tile is in
+     * @param column the column the tile is in
+     * @return the position of the tile
+     */
     public Tile getTile(int row, int column) {
         return board[row][column];
     }
 
+    /**
+     * Returns co-ordinates for the occupied tile
+     * @param n the co-ordinates for the tile placed
+     * @return the co-ordinates of the occupied tile
+     */
     public int[] getTilePlacedCoOrd(int n) {
         return occupiedTiles.get(n);
     }
@@ -62,11 +92,20 @@ public class Board {
         return placeableArea.get(n);
     }
 
+    /**
+     * Returns the occupied tiles on the board
+     * @return the occupied tiles array list
+     */
     public ArrayList<int[]> getOccupiedTileArray() {
         return occupiedTiles;
     }
 
-    //Method to add a tile to the board, requiring the row and column
+    /**
+     * Method to add a tile to the board, requiring the row and column
+     * @param tile the tile object
+     * @param row the row the tile will be placed on
+     * @param column the column the tile will be placed on
+     */
     public void addTile(Tile tile ,int row, int column) {
         if(isRowNull(row)) {
             populateRow(row);
@@ -86,7 +125,13 @@ public class Board {
         board[row][column] = tile;
         tile.setCoOrd(occupiedTiles.indexOf(coOrd));
     }
-    //Method to place a tile at a co-ordinate from a given index of the placeableArea array
+
+    /**
+     * Method to place a tile at a co-ordinate from a given index of the placeableArea array
+     * @param tile the tile to be placed
+     * @param n where to place the tile
+     * @throws CantPlaceTileException
+     */
     public void placeTile(Tile tile, int n) throws CantPlaceTileException{
         if(tile == null) {
             throw new CantPlaceTileException("No tile selected. Please select a tile first.");
@@ -100,6 +145,12 @@ public class Board {
     }
 
 
+    /**
+     * Method to place a wildlife token with the index that's inputted by the user
+     * @param index where wildlife is placed
+     * @param wildlifeToken the wildlife to be placed
+     * @throws CantPlaceWildlifeException
+     */
     public void placeWildlife(int index, Wildlife wildlifeToken) throws CantPlaceWildlifeException {
         if(wildlifeToken == null) {
             throw new CantPlaceWildlifeException("No wildlife selected. Please select a wildlife first.");
@@ -141,6 +192,13 @@ public class Board {
             board[coOrd[0]][coOrd[1]].hideCoOrd();
         }
     }
+
+    /**
+     * checks if the co-ordinates are in the list
+     * @param list the list of co-ordinates
+     * @param coOrd the co-ordinates to check if it is in the list of co-ordinates
+     * @return true if they are return false if not
+     */
     public static boolean isCoOrdsContained(ArrayList<int[]> list, int[] coOrd) {
         for(int[] listCoOrd : list) {
             if(listCoOrd[0] == coOrd[0] && listCoOrd[1] == coOrd[1]) {
@@ -150,6 +208,9 @@ public class Board {
         return false;
     }
 
+    /**
+     * Method to check if the placeable area exists on the board
+     */
     public void checkPLaceableArea() {
         for(int[] coOrd : occupiedTiles) {
             int row = coOrd[0];
