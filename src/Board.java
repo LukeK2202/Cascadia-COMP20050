@@ -1,5 +1,4 @@
-import Exceptions.CantPlaceTileException;
-import Exceptions.CantPlaceWildlifeException;
+import Exceptions.*;
 
 import java.util.ArrayList;
 
@@ -18,6 +17,10 @@ public class Board {
         addTile(new Tile(Tile.tileTypes.KEYSTONE), 11, 11);
         addTile(new Tile(Tile.tileTypes.RANDOM), 12, 11);
         addTile(new Tile(Tile.tileTypes.RANDOM), 12, 12);
+    }
+
+    //Constructor for a blank board
+    Board(boolean blank) {
     }
 
     //Returns board length
@@ -64,7 +67,7 @@ public class Board {
     }
 
     //Method to add a tile to the board, requiring the row and column
-    private void addTile(Tile tile ,int row, int column) {
+    public void addTile(Tile tile ,int row, int column) {
         if(isRowNull(row)) {
             populateRow(row);
         }
@@ -138,7 +141,7 @@ public class Board {
             board[coOrd[0]][coOrd[1]].hideCoOrd();
         }
     }
-    public boolean isCoOrdsContained(ArrayList<int[]> list, int[] coOrd) {
+    public static boolean isCoOrdsContained(ArrayList<int[]> list, int[] coOrd) {
         for(int[] listCoOrd : list) {
             if(listCoOrd[0] == coOrd[0] && listCoOrd[1] == coOrd[1]) {
                 return true;

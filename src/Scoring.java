@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
 
 /**
  * Scoring class to calculate score of the user's board based on the scorecards selected
@@ -24,16 +22,16 @@ public class Scoring {
             for(int j = tileCoord[1]; j <= tileCoord[1] + 1; j++) {
                 if (i != tileCoord[0] || j != tileCoord[1]) {
                     tempHolder = new int[]{i, j};
-
-
-                    if(currentUserBoard.isCoOrdsContained(occupiedTiles, tempHolder) && currentUserBoard.getTile(tempHolder[0], tempHolder[1]).getPlacedToken() != null) {
+                    if(currentUserBoard.isCoOrdsContained(occupiedTiles, tempHolder) &&
+                            currentUserBoard.getTile(tempHolder[0], tempHolder[1]).getPlacedToken() != null) {
                         adjacent.add(tempHolder);
                     }
                 }
             }
         }
         tempHolder = new int[]{tileCoord[0], tileCoord[1] - 1};
-        if(currentUserBoard.isCoOrdsContained(occupiedTiles, tempHolder) && currentUserBoard.getTile(tempHolder[0], tempHolder[1]).getPlacedToken() != null) {
+        if(currentUserBoard.isCoOrdsContained(occupiedTiles, tempHolder) &&
+                currentUserBoard.getTile(tempHolder[0], tempHolder[1]).getPlacedToken() != null) {
             adjacent.add(tempHolder);
         }
         return adjacent;
@@ -55,15 +53,16 @@ public class Scoring {
             for(int j = tileCoord[1] - 1; j <= tileCoord[1]; j++) {
                 if (i != tileCoord[0] || j != tileCoord[1]) {
                     tempHolder = new int[]{i, j};
-
-                    if(currentUserBoard.isCoOrdsContained(occupiedTiles, tempHolder) && currentUserBoard.getTile(tempHolder[0], tempHolder[1]).getPlacedToken() != null) {
+                    if(currentUserBoard.isCoOrdsContained(occupiedTiles, tempHolder) &&
+                            currentUserBoard.getTile(tempHolder[0], tempHolder[1]).getPlacedToken() != null) {
                         adjacent.add(tempHolder);
                     }
                 }
             }
         }
         tempHolder = new int[]{tileCoord[0], tileCoord[1] + 1};
-        if(currentUserBoard.isCoOrdsContained(occupiedTiles, tempHolder) && currentUserBoard.getTile(tempHolder[0], tempHolder[1]).getPlacedToken() != null) {
+        if(currentUserBoard.isCoOrdsContained(occupiedTiles, tempHolder) &&
+                currentUserBoard.getTile(tempHolder[0], tempHolder[1]).getPlacedToken() != null) {
             adjacent.add(tempHolder);
         }
         return adjacent;
@@ -101,14 +100,6 @@ public class Scoring {
         }
     }
 
-//    public int bearScoreCardA(Board currentUserBoard) {
-//        ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.BEAR_PLACED);
-//        for(int i = 0; i < wildlifePositions.size(); i++) {
-//            ArrayList<int[]> adjacent = getNeighbourTilesHelper(currentUserBoard, wildlifePositions.get(i));
-//
-//        }
-//    }
-
     /**
      * locates all the tiles in the board that have a FOX_PLACED token on them and calculates the score for each fox
      * @param currentUserBoard is the current user's board that will be used to navigate the tiles
@@ -124,9 +115,73 @@ public class Scoring {
                 wildlifeContainment.add(currentUserBoard.getTile(neighbourCoord[0], neighbourCoord[1]).getPlacedToken());
             }
             Set<Wildlife> wildlifeSet = new HashSet<Wildlife>(wildlifeContainment);
-            amount += wildlifeSet.size();
+            if(wildlifeSet.size() > 5) amount += 5;
+            else amount += wildlifeSet.size() - 1;
         }
         return amount;
+    }
+
+    public int bearScoreCardA(Board currentUserBoard) {
+        ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.BEAR_PLACED);
+        int numValidGroups = findGroupNumSize(currentUserBoard, wildlifePositions, 2);
+        if(numValidGroups == 1) {
+            return 4;
+        } else if(numValidGroups == 2) {
+            return 11;
+        } else if(numValidGroups == 3) {
+            return 19;
+        } else if(numValidGroups == 4) {
+            return 27;
+        } else {
+            return 0;
+        }
+    }
+
+    public int bearScoreCardB(Board currentUserBoard) {
+        ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.BEAR_PLACED);
+        return findGroupNumSize(currentUserBoard, wildlifePositions, 3);
+    }
+
+    public int findGroupNumSize(Board currBoard, ArrayList<int[]> coOrdsToCheck, int wantedPairSize) {
+        ArrayList<int[]> accountedList = new ArrayList<>();
+        int numValidPairs = 0;
+        for(int[] currCoOrd : coOrdsToCheck) {
+            if(!Board.isCoOrdsContained(accountedList, currCoOrd)) {
+                int pairSize = groupSizeHelper(accountedList, currCoOrd, currBoard);
+                if(pairSize == wantedPairSize) {
+                    numValidPairs++;
+                }
+            }
+        }
+        return numValidPairs;
+    }
+
+
+    public int groupSizeHelper(ArrayList<int[]> accountedForList , int[] currCoOrd, Board currBoard) {
+        ArrayList<int[]> adjacent = getNeighbourTilesHelper(currBoard, currCoOrd);
+        if(!Board.isCoOrdsContained(accountedForList, currCoOrd)) {
+            accountedForList.add(currCoOrd);
+        }
+        Iterator<int[]> iterator = adjacent.iterator();
+        while (iterator.hasNext()) {
+            int[] adj = iterator.next();
+            if (Board.isCoOrdsContained(accountedForList, adj) ||
+                    !currBoard.getTile(adj[0], adj[1]).getPlacedToken().equals(currBoard.getTile(currCoOrd[0], currCoOrd[1]).getPlacedToken())) {
+                iterator.remove();
+            } else {
+                accountedForList.add(adj);
+            }
+        }
+        int members = 1;
+        for(int[] adj : adjacent) {
+            members += groupSizeHelper(accountedForList, adj, currBoard);
+        }
+        if(adjacent.isEmpty()) {
+            return 1;
+        } else {
+            return members;
+        }
+
     }
 
     /**

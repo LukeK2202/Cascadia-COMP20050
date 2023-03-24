@@ -1,5 +1,4 @@
-import Exceptions.CantPlaceTileException;
-import Exceptions.CantPlaceWildlifeException;
+import Exceptions.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
