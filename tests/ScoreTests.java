@@ -95,7 +95,7 @@ public class ScoreTests {
                  */
 
         Board board = new Board(true);
-        Scoring scoreBoard = new Scoring();
+        Scoring scoreBoard = new Scoring(true);
         TileCreators tc = new TileCreators();
 
         Tile tB = tc.createPlacedBearTile();
@@ -128,7 +128,7 @@ public class ScoreTests {
         board.addTile(tE, 14, 12);
         assertEquals(28, scoreBoard.elkScoreCardB(board));
     }
-
+    @Test
     public void testHawkA() {
         /*
         Hawk card A gives points for each hawk that are not adjacent to any other hawk
