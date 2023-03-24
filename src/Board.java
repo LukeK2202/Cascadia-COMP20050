@@ -32,7 +32,7 @@ public class Board {
     }
 
     /**
-     *
+     * Returns the length of the board
      * @return board length
      */
     public int getBoardLength() {
@@ -40,7 +40,7 @@ public class Board {
     }
 
     /**
-     *
+     * Returns the width of the board
      * @return board width
      */
     public int getBoardWidth() {
