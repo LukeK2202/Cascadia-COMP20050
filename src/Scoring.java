@@ -276,8 +276,9 @@ public class Scoring {
         return 0;
     }
 
-    public void salmonScoreCardA(Board currentUserBoard) {
+    public int salmonScoreCardA(Board currentUserBoard) {
         ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.SALMON_PLACED);
+        return 1;
     }
 
     public int salmonScoreCardB(Board currentUserBoard) {
