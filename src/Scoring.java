@@ -228,6 +228,11 @@ public class Scoring {
 //        }
 //    }
 
+    /**
+     * Generates points for total amount of elks in their groups
+     * @param currentUserBoard is the current user's board that will be used to navigate the tiles
+     * @return returns amount of points based on the total amount of elf and their respective group sizes
+     */
     public int elkScoreCardB(Board currentUserBoard) {
         ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.ELK_PLACED);
         int amount = findGroupNumSize(currentUserBoard, wildlifePositions, 99);
@@ -251,7 +256,10 @@ public class Scoring {
 
     }
 
-    public void salmonScoreCardA() {
+    public void salmonScoreCardA(Board currentUserBoard) {
+        ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.SALMON_PLACED);
+
+        
 
     }
 
@@ -297,6 +305,10 @@ public class Scoring {
         return numValidPairs;
     }
 
+//    public int longestLineInARow() {
+//
+//    }
+
     /**
      * assists findGroupNumSize method in finding the amount of wildlife adjacent to each other
      * @param accountedForList is the ArrayList of the wildlife already accounted for, meaning,
@@ -330,11 +342,7 @@ public class Scoring {
         } else {
             return members;
         }
-
     }
-
-//    public int longestLineInARow() {
-//    }
 
     /**
      * Helper method to find the all the tiles with the specified wildlife on them to avoid repetition in each scorecard
