@@ -58,6 +58,9 @@ public class Scoring {
         System.out.println("Please select which salmon card you would like to use.");
         input = view.getUserint(1, salmonScoreCards.size());
         Method selectedSalmonCard = salmonScoreCards.get(input - 1);
+    }
+
+    public Scoring(boolean blank) {
 
     }
 
