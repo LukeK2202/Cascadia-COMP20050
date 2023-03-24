@@ -5,80 +5,42 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ScoreTests {
 
+
+
     @Test
     public void testBearA() {
+        /*
+        Bear Card A gives points for each pair of exactly 2 bears, more points for each pair.
+         */
         Board board = new Board(true);
         Scoring scoreBoard = new Scoring();
+        TileCreators tc = new TileCreators();
 
-        Tile t1;
-        do {
-            t1 = new Tile(Tile.tileTypes.KEYSTONE);
-        } while(!t1.getAnimals().contains(Wildlife.BEAR));
-        try {
-            t1.addWildlifeToken(Wildlife.BEAR_PLACED);
-        } catch (CantPlaceWildlifeException ex) {
-            fail("Couldnt Place bear token");
-        }
-        board.addTile(t1, 11, 11);
+        /*
+        Board Visualisation:
+        10,10<     >10,11<     >10,12<     >10,13
+	          11,10<     >11,11<     >11,12
+        12,10<     >12,11<     >12,12<     >12,13
+	          13,10<     >13,11<     >13,12
+        14,10<     >14,11<     >14,12<     >14,13
+         */
 
-        Tile t2;
-        do {
-            t2 = new Tile(Tile.tileTypes.KEYSTONE);
-        } while(!t2.getAnimals().contains(Wildlife.BEAR));
-        try {
-            t2.addWildlifeToken(Wildlife.BEAR_PLACED);
-        } catch (CantPlaceWildlifeException ex) {
-            fail("Couldnt Place bear token");
-        }
-        board.addTile(t2, 11, 12);
+        //Creating Bear Tiles and some other animal tile
+        Tile tB = tc.createPlacedBearTile();
+        Tile tH = tc.createPlacedHawkTile();
 
-        Tile t3;
-        do {
-            t3 = new Tile(Tile.tileTypes.KEYSTONE);
-        } while(!t3.getAnimals().contains(Wildlife.BEAR));
-        try {
-            t3.addWildlifeToken(Wildlife.BEAR_PLACED);
-        } catch (CantPlaceWildlifeException ex) {
-            fail("Couldnt Place bear token");
-        }
-        board.addTile(t3, 3, 3);
+        //Creating valid 2 bear pair
+        board.addTile(tB, 11, 11);
+        board.addTile(tB, 11, 12);
+        //Creating valid 2 bear pair, with a neighbouring other animal
+        board.addTile(tB, 12, 10);
+        board.addTile(tB, 12, 9);
+        board.addTile(tH, 13, 10);
+        //Creating invalid 3 bear pair
+        board.addTile(tB, 14, 12);
+        board.addTile(tB, 14, 13);
+        board.addTile(tB, 15, 12);
 
-        Tile t4;
-        do {
-            t4 = new Tile(Tile.tileTypes.KEYSTONE);
-        } while(!t4.getAnimals().contains(Wildlife.FOX));
-        try {
-            t4.addWildlifeToken(Wildlife.FOX_PLACED);
-        } catch (CantPlaceWildlifeException ex) {
-            fail("Couldnt Place token");
-        }
-        board.addTile(t4, 4, 3);
-
-        Tile t5;
-        do {
-            t5 = new Tile(Tile.tileTypes.KEYSTONE);
-        } while(!t5.getAnimals().contains(Wildlife.BEAR));
-        try {
-            t5.addWildlifeToken(Wildlife.BEAR_PLACED);
-        } catch (CantPlaceWildlifeException ex) {
-            fail("Couldnt Place bear token");
-        }
-        board.addTile(t5, 4, 4);
-
-        Tile t6;
-        do {
-            t6 = new Tile(Tile.tileTypes.KEYSTONE);
-        } while(!t6.getAnimals().contains(Wildlife.BEAR));
-        try {
-            t6.addWildlifeToken(Wildlife.BEAR_PLACED);
-        } catch (CantPlaceWildlifeException ex) {
-            fail("Couldnt Place bear token");
-        }
-        board.addTile(t5, 3, 4);
-
-
-        assertEquals(1, scoreBoard.bearScoreCardA(board));
-        assertEquals(1, scoreBoard.bearScoreCardB(board));
-
+        assertEquals(11, scoreBoard.bearScoreCardA(board));
     }
 }

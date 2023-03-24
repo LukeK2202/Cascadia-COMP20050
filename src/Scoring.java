@@ -99,14 +99,6 @@ public class Scoring {
         }
     }
 
-//    public int bearScoreCardA(Board currentUserBoard) {
-//        ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.BEAR_PLACED);
-//        for(int i = 0; i < wildlifePositions.size(); i++) {
-//            ArrayList<int[]> adjacent = getNeighbourTilesHelper(currentUserBoard, wildlifePositions.get(i));
-//
-//        }
-//    }
-
     /**
      * locates all the tiles in the board that have a FOX_PLACED token on them and calculates the score for each fox
      * @param currentUserBoard is the current user's board that will be used to navigate the tiles
@@ -130,7 +122,18 @@ public class Scoring {
 
     public int bearScoreCardA(Board currentUserBoard) {
         ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.BEAR_PLACED);
-        return findGroupNumSize(currentUserBoard, wildlifePositions, 2);
+        int numValidGroups = findGroupNumSize(currentUserBoard, wildlifePositions, 2);
+        if(numValidGroups == 1) {
+            return 4;
+        } else if(numValidGroups == 2) {
+            return 11;
+        } else if(numValidGroups == 3) {
+            return 19;
+        } else if(numValidGroups == 4) {
+            return 27;
+        } else {
+            return 0;
+        }
     }
 
     public int bearScoreCardB(Board currentUserBoard) {
