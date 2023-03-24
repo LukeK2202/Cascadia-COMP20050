@@ -18,6 +18,7 @@ public class Casc {
     public static void main(String[] args) {
         //initiates view and a command for the game. displays the welcome message
         View view = new View();
+        Scoring scoreBoard = new Scoring();
         Command command;
         int natureTokens = 20;
         view.welcomeMsg();
@@ -226,6 +227,7 @@ public class Casc {
         //If command is quit show quit game.
         if(command.isQuit()) {
             view.showQuit();
+            System.out.println(scoreBoard.hawkScoreCardA(currBoard));
         }
         else if(command.DeckisFin()) {
             view.showDeckEmpty();
