@@ -28,7 +28,7 @@ public class Tile {
 
     private boolean keystoneTile = false;
 
-    public Wildlife showPlacedToken() {
+    public Wildlife getPlacedToken() {
         return placedToken;
     }
 
