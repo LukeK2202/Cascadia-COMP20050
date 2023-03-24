@@ -226,7 +226,10 @@ public class Casc {
         //If command is quit show quit game.
         if(command.isQuit()) {
             view.showQuit();
-            System.out.println(scoreBoard.hawkScoreCardA(currBoard));
+            for(User usr : usersArr) {
+                scoreBoard.generateScore(usr);
+            }
+            view.displayScore();
         }
     }
 }

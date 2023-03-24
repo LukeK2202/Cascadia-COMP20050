@@ -1,9 +1,15 @@
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
 
 public class Scoring {
 
+    private Method selectedHawkCard;
+    private Method selectedElkCard;
+    private Method selectedFoxCard;
+    private Method selectedBearCard;
+    private Method selectedSalmonCard;
 
 
     public Scoring() {
@@ -41,27 +47,40 @@ public class Scoring {
 
         System.out.println("Please select which hawk card you would like to use.");
         int input = view.getUserint(1, hawkScoreCards.size());
-        Method selectedHawkCard = hawkScoreCards.get(input - 1);
+        selectedHawkCard = hawkScoreCards.get(input - 1);
 
         System.out.println("Please select which elk card you would like to use.");
         input = view.getUserint(1, elkScoreCards.size());
-        Method selectedElkCard = elkScoreCards.get(input - 1);
+        selectedElkCard = elkScoreCards.get(input - 1);
 
         System.out.println("Please select which fox card you would like to use.");
         input = view.getUserint(1, foxScoreCards.size());
-        Method selectedFoxCard = foxScoreCards.get(input - 1);
+        selectedFoxCard = foxScoreCards.get(input - 1);
 
         System.out.println("Please select which bear card you would like to use.");
         input = view.getUserint(1, bearScoreCards.size());
-        Method selectedBearCard = bearScoreCards.get(input - 1);
+        selectedBearCard = bearScoreCards.get(input - 1);
 
         System.out.println("Please select which salmon card you would like to use.");
         input = view.getUserint(1, salmonScoreCards.size());
-        Method selectedSalmonCard = salmonScoreCards.get(input - 1);
+        selectedSalmonCard = salmonScoreCards.get(input - 1);
     }
 
     public Scoring(boolean blank) {
 
+    }
+
+    public void generateScore(User currUser) {
+        try {
+            currUser.addScore((int) selectedHawkCard.invoke(this, currUser.getBoard()));
+            currUser.addScore((int) selectedElkCard.invoke(this, currUser.getBoard()));
+            currUser.addScore((int) selectedFoxCard.invoke(this, currUser.getBoard()));
+            currUser.addScore((int) selectedBearCard.invoke(this, currUser.getBoard()));
+            currUser.addScore((int) selectedSalmonCard.invoke(this, currUser.getBoard()));
+            currUser.addScore(currUser.getNatureTokens());
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -161,12 +180,12 @@ public class Scoring {
         }
     }
 
-    public void hawkScoreCardB() {
-
+    public int hawkScoreCardB(Board currUserBoard) {
+        return 0;
     }
 
-    public void hawkScoreCardC() {
-
+    public int hawkScoreCardC(Board currUserBoard) {
+        return 0;
     }
 
     /**
@@ -190,12 +209,12 @@ public class Scoring {
         return amount;
     }
 
-    public void foxScoreCardB() {
-
+    public int foxScoreCardB(Board currUserBoard) {
+        return 0;
     }
 
-    public void foxScoreCardC() {
-
+    public int foxScoreCardC(Board currUserBoard) {
+        return 0;
     }
 
     public int bearScoreCardA(Board currentUserBoard) {
@@ -219,32 +238,32 @@ public class Scoring {
         return findGroupNumSize(currentUserBoard, wildlifePositions, 3);
     }
 
-    public void bearScoreCardC() {
-
+    public int bearScoreCardC(Board currUserBoard) {
+        return 0;
     }
 
-    public void elkScoreCardA() {
-
+    public int elkScoreCardA(Board currUserBoard) {
+        return 0;
     }
 
-    public void elkScoreCardB() {
-
+    public int elkScoreCardB(Board currUserBoard) {
+        return 0;
     }
 
-    public void elkScoreCardC() {
-
+    public int elkScoreCardC(Board currUserBoard) {
+        return 0;
     }
 
-    public void salmonScoreCardA() {
-
+    public int salmonScoreCardA(Board currUserBoard) {
+        return 0;
     }
 
-    public void salmonScoreCardB() {
-
+    public int salmonScoreCardB(Board currUserBoard) {
+        return 0;
     }
 
-    public void salmonScoreCardC() {
-
+    public int salmonScoreCardC(Board currUserBoard) {
+        return 0;
     }
 
     public int findGroupNumSize(Board currBoard, ArrayList<int[]> coOrdsToCheck, int wantedPairSize) {

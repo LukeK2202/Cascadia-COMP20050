@@ -50,6 +50,13 @@ public class User {
         return board;
     }
 
+    public void addScore(int n) {
+        score += n;
+    }
+
+    public void setScore(int n) {
+        score = n;
+    }
     //gets the boolean value, if false carries out cull, if true, tells user that cull was done then sets boolean back to false
     public boolean getOptionalCullCarriedOut() {
         return optionalCullCarriedOut;
