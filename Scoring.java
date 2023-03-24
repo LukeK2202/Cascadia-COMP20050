@@ -3,6 +3,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Scoring class to calculate score of the user's board based on the scorecards selected
+ */
 public class Scoring {
 
     /**
@@ -33,7 +36,6 @@ public class Scoring {
         if(currentUserBoard.isCoOrdsContained(occupiedTiles, tempHolder) && currentUserBoard.getTile(tempHolder[0], tempHolder[1]).getPlacedToken() != null) {
             adjacent.add(tempHolder);
         }
-
         return adjacent;
     }
 
@@ -64,7 +66,6 @@ public class Scoring {
         if(currentUserBoard.isCoOrdsContained(occupiedTiles, tempHolder) && currentUserBoard.getTile(tempHolder[0], tempHolder[1]).getPlacedToken() != null) {
             adjacent.add(tempHolder);
         }
-
         return adjacent;
     }
 
