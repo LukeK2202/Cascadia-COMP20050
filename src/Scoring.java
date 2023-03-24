@@ -235,14 +235,18 @@ public class Scoring {
      */
     public int elkScoreCardB(Board currentUserBoard) {
         ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.ELK_PLACED);
-        int amount = findGroupNumSize(currentUserBoard, wildlifePositions, 99);
+        ArrayList<Integer> groupSizes = getGroupSizeAmount(currentUserBoard, wildlifePositions);
+        int totalScore = 0;
 
-        if(amount == 0) return 0;
-        else if(amount <= 2) return 2 + (2 * (amount - 1));
-        else if(amount <= 4) return 7 + (3 * (amount - 3));
-        else if(amount <= 6) return 14 + (4 * (amount - 5));
-        else if(amount <= 8) return 23 + (5 * (amount - 7));
-        else return 28;
+        for(Integer amount : groupSizes) {
+            if (amount == 0) totalScore += 0;
+            else if (amount <= 2) totalScore += (2 + (2 * (amount - 1)));
+            else if (amount <= 4) totalScore += (7 + (3 * (amount - 3)));
+            else if (amount <= 6) totalScore += (14 + (4 * (amount - 5)));
+            else if (amount <= 8) totalScore += (23 + (5 * (amount - 7)));
+            else totalScore += 28;
+            }
+        return totalScore;
         }
 
 
@@ -271,6 +275,17 @@ public class Scoring {
 
     public void salmonScoreCardC() {
 
+    }
+
+    public ArrayList<Integer> getGroupSizeAmount(Board currBoard, ArrayList<int[]> coOrdsToCheck) {
+            ArrayList<int[]> accountedList = new ArrayList<>();
+            ArrayList<Integer> groupSize = new ArrayList<Integer>();
+            for (int[] currCoOrd : coOrdsToCheck) {
+                if (!Board.isCoOrdsContained(accountedList, currCoOrd)) {
+                    groupSize.add(groupSizeHelper(accountedList, currCoOrd, currBoard));
+                }
+            }
+            return groupSize;
     }
 
     /**
