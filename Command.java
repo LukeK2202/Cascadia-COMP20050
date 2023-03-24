@@ -30,12 +30,7 @@ public class Command{
         }
         else if(inputFormat.matches("[P]\\d{1,2}")) {
             commandType = CommandType.PLACE;
-            if(inputFormat.length() == 3) {
-                selected = Character.getNumericValue(inputFormat.charAt(1) + inputFormat.charAt(2));
-            } else {
-                selected = Character.getNumericValue(inputFormat.charAt(1));
-            }
-
+            selected = Integer.parseInt(inputFormat.substring(1));
         }
 
     }

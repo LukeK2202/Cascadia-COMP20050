@@ -12,8 +12,8 @@ public class Table {
     //Arraylist to hold the 4 displayed wildlife
     private ArrayList<Wildlife> shownWildlife;
 
-    private Tile selectedTile;
-    private Wildlife selectedWildlife;
+    private Tile selectedTile = new Tile(Tile.tileTypes.BLANK);
+    private Wildlife selectedWildlife = Wildlife.BLANK_I_NATOR;
 
     //Table constructor
     Table() {
@@ -78,41 +78,45 @@ public class Table {
     }
 
     public void selectTile(int n) {
-        this.selectedTile = shownTiles.get(n - 1);
-        shownTiles.remove(n - 1);
-        drawTile(n - 1);
-    }
-
-    public void selectWildlife(int n) {
-        this.selectedWildlife = shownWildlife.get(n - 1);
-        shownWildlife.remove(n - 1);
-        drawWildlife(n - 1);
-    }
-
-    public void selectColumn(int n) {
-        selectTile(n);
-        selectWildlife(n);
-    }
-
-    public void swapSelected(int n) {
         Tile tmpTile = selectedTile;
-        Wildlife tmpWildlife = selectedWildlife;
-
-        this.selectedWildlife = shownWildlife.get(n - 1);
-        shownWildlife.remove(n - 1);
-        shownWildlife.add(n - 1, tmpWildlife);
 
         this.selectedTile = shownTiles.get(n - 1);
         shownTiles.remove(n - 1);
         shownTiles.add(n - 1, tmpTile);
     }
 
+    public void selectWildlife(int n) {
+        Wildlife tmpWildlife = selectedWildlife;
+
+        this.selectedWildlife = shownWildlife.get(n - 1);
+        shownWildlife.remove(n - 1);
+        shownWildlife.add(n - 1, tmpWildlife);
+    }
+
+    public void fillTable() {
+        for(int i = 0; i < 4; i++) {
+            if(shownWildlife.get(i) == Wildlife.BLANK_I_NATOR) {
+                removeWildlife(i);
+                drawWildlife(i);
+            }
+            if(shownTiles.get(i).isBlank()) {
+                removeTile(i);
+                drawTile(i);
+            }
+        }
+    }
+
+    public void SelectTileWild(int n) {
+        selectTile(n);
+        selectWildlife(n);
+    }
+
     public void unselectTile() {
-        this.selectedTile = null;
+        this.selectedTile = new Tile(Tile.tileTypes.BLANK);
     }
 
     public void unselectWildlife() {
-        this.selectedWildlife = null;
+        this.selectedWildlife = Wildlife.BLANK_I_NATOR;
     }
 
     public Tile getSelectedTile() {
@@ -124,11 +128,11 @@ public class Table {
     }
 
     public boolean hadSelectedTile() {
-        return selectedTile != null;
+        return !selectedTile.isBlank();
     }
 
     public boolean hadSelectedWildlife() {
-        return selectedWildlife != null;
+        return selectedWildlife != Wildlife.BLANK_I_NATOR;
     }
 
     //will return 0 if a cull is not required, return 1 if an ALL cull is needed,

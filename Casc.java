@@ -41,6 +41,8 @@ public class Casc {
         do {
             boolean turnOver = false;
             //Display the table and the current board
+            currBoard.checkPLaceableArea();
+            currBoard.displayAvailableAreas();
             view.displayScreen(currUser, currBoard, table);
 
             boolean commDone = false;
@@ -134,13 +136,8 @@ public class Casc {
                     view.displayCommands();
                     commDone = true;
                 } else if (command.isSelect()) {
-                    if(table.hadSelectedTile() || table.hadSelectedWildlife()) {
-                        table.swapSelected(command.getSelected());
+                        table.SelectTileWild(command.getSelected());
                         commDone = true;
-                    } else {
-                        table.selectColumn(command.getSelected());
-                        commDone = true;
-                    }
                 } else if (command.isRotate()) {
                     if (!table.hadSelectedTile()) {
                         view.showRotateError();
@@ -157,8 +154,9 @@ public class Casc {
 
                             currBoard.hideAvailableAreas();
                             currBoard.displayPlacedAreas();
-
                             view.displayScreen(currUser, currBoard, table);
+
+
                         } else if (!table.hadSelectedWildlife()) {
                             throw new CantPlaceTileException("No Tile Selected. Please select a tile.");
                         }
@@ -185,6 +183,7 @@ public class Casc {
                                         commDone = true;
 
                                         currBoard.hidePlacedAreas();
+                                        currBoard.checkPLaceableArea();
                                         currBoard.displayAvailableAreas();
                                     }
                                 } catch (CantPlaceWildlifeException ex) {
@@ -208,6 +207,7 @@ public class Casc {
                 }
             } while(!commDone);
             if(turnOver) {
+                table.fillTable();
                 view.displayScreen(currUser, currBoard, table);
                 System.out.println("Press 1 to move to next player.");
                 int userNext = 0;

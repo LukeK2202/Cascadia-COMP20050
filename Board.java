@@ -68,12 +68,12 @@ public class Board {
         if(isRowNull(row)) {
             populateRow(row);
         }
-        if(row > 0) {
+        if(row > 1) {
             if(isRowNull(row - 1)) {
                 populateRow(row - 1);
             }
         }
-        if(row < getBoardLength()) {
+        if(row + 1 < getBoardLength()) {
             if(isRowNull(row + 1)) {
                 populateRow(row + 1);
             }
@@ -152,7 +152,7 @@ public class Board {
             int row = coOrd[0];
             int column = coOrd[1];
             int[] newCoOrd;
-            if(row > 0) {
+            if(row > 1) {
                 if(row % 2 == 1) {
                     newCoOrd = new int[]{(row - 1), column};
                     if(board[row -1][column].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
@@ -164,12 +164,12 @@ public class Board {
                         }
                     }
                 } else {
-                    newCoOrd = new int[]{(row - 1), column - 1};
-                    if(board[row -1][column - 1].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
+                    newCoOrd = new int[]{(row - 1), column};
+                    if(board[row -1][column].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
                         placeableArea.add(newCoOrd);
                     } if(column > 0) {
-                        newCoOrd = new int[]{(row - 1), column};
-                        if(board[row -1][column].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
+                        newCoOrd = new int[]{(row - 1), column - 1};
+                        if(board[row -1][column - 1].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
                             placeableArea.add(newCoOrd);
                         }
                     }
@@ -181,14 +181,14 @@ public class Board {
                 if(board[row][column - 1].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
                     placeableArea.add(newCoOrd);
                 }
-            }if(column < getBoardWidth()) {
+            }if(column + 1 < getBoardWidth()) {
                 newCoOrd = new int[]{(row), column + 1};
                 if(board[row][column + 1].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
                     placeableArea.add(newCoOrd);
                 }
             }
 
-            if(row < getBoardLength()) {
+            if(row + 1 < getBoardLength()) {
                 if(row % 2 == 1) {
                     newCoOrd = new int[]{(row + 1), column};
                     if(board[row + 1][column].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
@@ -200,12 +200,12 @@ public class Board {
                         }
                     }
                 } else {
-                    newCoOrd = new int[]{(row + 1), column - 1};
-                    if(board[row + 1][column - 1].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
+                    newCoOrd = new int[]{(row + 1), column };
+                    if(board[row + 1][column].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
                         placeableArea.add(newCoOrd);
                     } if(column > 0) {
-                        newCoOrd = new int[]{(row + 1), column};
-                        if(board[row + 1][column].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
+                        newCoOrd = new int[]{(row + 1), column - 1};
+                        if(board[row + 1][column - 1].isBlank() && !isCoOrdsContained(placeableArea, newCoOrd)) {
                             placeableArea.add(newCoOrd);
                         }
                     }

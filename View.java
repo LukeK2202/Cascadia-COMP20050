@@ -101,8 +101,6 @@ public class View {
         printTable(table);
         System.out.println("Current Players Board: " + user.getName());
         System.out.println("Players Nature Tokens: " + user.getNatureTokens());
-        board.checkPLaceableArea();
-        board.displayAvailableAreas();
         printBoard(board);
         if(table.hadSelectedTile() || table.hadSelectedWildlife()) {
             displaySelected(table);
