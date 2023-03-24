@@ -258,7 +258,7 @@ public class Scoring {
      */
     public int elkScoreCardB(Board currentUserBoard) {
         ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.ELK_PLACED);
-        ArrayList<Integer> groupSizes = getGroupSizeAmount(currentUserBoard, wildlifePositions);
+        ArrayList<Integer> groupSizes = getGroupSizeAmount(currentUserBoard, wildlifePositions, 12);
         int totalScore = 0;
 
         for(Integer amount : groupSizes) {
@@ -278,6 +278,16 @@ public class Scoring {
 
     public void salmonScoreCardA(Board currentUserBoard) {
         ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.SALMON_PLACED);
+        ArrayList<Integer> groupSizes = getGroupSizeAmount(currentUserBoard, wildlifePositions, 99);
+        int totalScore = 0;
+
+        for(Integer amount : groupSizes) {
+            if(amount == 0) totalScore += 0;
+            else if(amount <= 2) totalScore += (2 + (2 * (amount - 1)));
+            else if(amount <= 5) totalScore += (7 + (4 * (amount - 3)));
+            else if(amount == 6) totalScore += 20;
+            else totalScore += 26;
+        }
     }
 
     public int salmonScoreCardB(Board currentUserBoard) {
@@ -289,7 +299,60 @@ public class Scoring {
         return 0;
     }
 
-    public ArrayList<Integer> getGroupSizeAmount(Board currBoard, ArrayList<int[]> coOrdsToCheck) {
+    public boolean isSalmonEligibleRun(Board currBoard, ArrayList<int[]> accountedForList, int[] currCoOrd) {
+        ArrayList<int[]> salmonNeighbours = getNeighbourTilesHelper(currBoard, currCoOrd);
+        int inelegibleNeighours = 0;
+
+        for(int[] accounted : accountedForList) {
+            for(int[] neighbour : salmonNeighbours) {
+                if(neighbour[0] == accounted[0] && neighbour[1] == accounted[1]) {
+                    inelegibleNeighours++;
+                }
+            }
+            if(inelegibleNeighours >= 2) return false;
+        }
+        return true;
+    }
+
+    public int salmonRunFindHelper(ArrayList<int[]> accountedForList , int[] currCoOrd, Board currBoard) {
+        ArrayList<int[]> adjacent = getNeighbourTilesHelper(currBoard, currCoOrd);
+        if(!Board.isCoOrdsContained(accountedForList, currCoOrd)) {
+            accountedForList.add(currCoOrd);
+        }
+
+        if(!(isSalmonEligibleRun(currBoard, accountedForList, currCoOrd))) return 0;
+        Iterator<int[]> iterator = adjacent.iterator();
+        while (iterator.hasNext()) {
+            int[] adj = iterator.next();
+            if (Board.isCoOrdsContained(accountedForList, adj) ||
+                    !currBoard.getTile(adj[0], adj[1]).getPlacedToken().equals(currBoard.getTile(currCoOrd[0], currCoOrd[1]).getPlacedToken())) {
+                iterator.remove();
+            } else {
+                accountedForList.add(adj);
+            }
+        }
+        int members = 1;
+        for(int[] adj : adjacent) {
+            members += groupSizeHelper(accountedForList, adj, currBoard);
+        }
+        if(adjacent.isEmpty()) {
+            return 1;
+        } else {
+            return members;
+        }
+    }
+
+    public ArrayList<Integer> getGroupSizeAmount(Board currBoard, ArrayList<int[]> coOrdsToCheck, int wantedPairSize) {
+        if(wantedPairSize == 99) {
+            ArrayList<int[]> accountedList = new ArrayList<>();
+            ArrayList<Integer> groupSize = new ArrayList<Integer>();
+            for (int[] currCoOrd : coOrdsToCheck) {
+                if (!Board.isCoOrdsContained(accountedList, currCoOrd)) {
+                    groupSize.add(salmonRunFindHelper(accountedList, currCoOrd, currBoard));
+                }
+            }
+            return groupSize;
+        }
             ArrayList<int[]> accountedList = new ArrayList<>();
             ArrayList<Integer> groupSize = new ArrayList<Integer>();
             for (int[] currCoOrd : coOrdsToCheck) {
@@ -311,16 +374,6 @@ public class Scoring {
      * param wantedPairSize is 99
      */
     public int findGroupNumSize(Board currBoard, ArrayList<int[]> coOrdsToCheck, int wantedPairSize) {
-        if(wantedPairSize == 99) {
-            ArrayList<int[]> accountedList = new ArrayList<>();
-            int groupSize = 0;
-            for (int[] currCoOrd : coOrdsToCheck) {
-                if (!Board.isCoOrdsContained(accountedList, currCoOrd)) {
-                    groupSize += groupSizeHelper(accountedList, currCoOrd, currBoard);
-                }
-            }
-            return groupSize;
-        }
         ArrayList<int[]> accountedList = new ArrayList<>();
         int numValidPairs = 0;
         for(int[] currCoOrd : coOrdsToCheck) {
