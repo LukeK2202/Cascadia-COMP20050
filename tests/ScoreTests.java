@@ -89,6 +89,55 @@ public class ScoreTests {
     }
 
     @Test
+    public void testElkB() {
+                /*
+        Elk card B gives points for each elk within a group size, in any shape
+                 */
+
+        Board board = new Board(true);
+        Scoring scoreBoard = new Scoring(true);
+        TileCreators tc = new TileCreators();
+
+        Tile tB = tc.createPlacedBearTile();
+        Tile tH = tc.createPlacedHawkTile();
+        Tile tE = tc.createPlacedElkTile();
+        Tile tF = tc.createPlacedFoxTile();
+        Tile tS = tc.createPlacedSalmonTile();
+
+        /*
+        Board Visualisation:
+        10,10<     >10,11E<     >10,12E<     >10,13
+	          11,10E<     >11,11E<     >11,12E
+        12,10<     >12,11<     >12,12<     >12,13
+	          13,10<     >13,11<     >13,12
+        14,10E<     >14,11E<     >14,12E<     >14,13
+         */
+
+        //Creating elks and testing output
+        board.addTile(tE, 11, 11);
+        board.addTile(tE, 11, 12);
+
+        assertEquals(4, scoreBoard.elkScoreCardB(board));
+
+        //Adding more elks and other wildlife to see if they are ignored in scoring
+        board.addTile(tE, 11, 10);
+        board.addTile(tE, 10, 11);
+        board.addTile(tE, 10, 12);
+        board.addTile(tB, 12, 13);
+        board.addTile(tH, 10, 13);
+
+        assertEquals(14, scoreBoard.elkScoreCardB(board));
+
+        //Further addition of elks and other wildlife
+        board.addTile(tE, 14, 10);
+        board.addTile(tE, 14, 11);
+        board.addTile(tF, 13, 10);
+        assertEquals(18, scoreBoard.elkScoreCardB(board));
+
+        board.addTile(tE, 14, 12);
+        assertEquals(21, scoreBoard.elkScoreCardB(board));
+    }
+    @Test
     public void testHawkA() {
         /*
         Hawk card A gives points for each hawk that are not adjacent to any other hawk
@@ -114,6 +163,7 @@ public class ScoreTests {
         14,10<     >14,11<     >14,12<     >14,13
          */
 
+
         //Creating sample tiles
         Tile tB = tc.createPlacedBearTile();
         Tile tH = tc.createPlacedHawkTile();
@@ -131,4 +181,29 @@ public class ScoreTests {
         board.addTile(tH, 10, 12);
         assertEquals(2, scoreBoard.hawkScoreCardA(board));
     }
+
+//    @Test
+//    public void testSalmnonB(){
+//        /*
+//        Board Visualisation:
+//        10,10<     >10,11<     >10,12<     >10,13
+//	          11,10<     >11,11<     >11,12
+//        12,10<     >12,11<     >12,12<     >12,13
+//	          13,10<     >13,11<     >13,12
+//        14,10<     >14,11<     >14,12<     >14,13
+//         */
+//
+//        Board board = new Board(true);
+//        Scoring scoring = new Scoring(true);
+//        TileCreators tc = new TileCreators();
+//
+//        Tile tS1 = tc.createPlacedSalmonTile();
+//
+//        board.addTile(tS1, 11, 10);
+//        board.addTile(tS1, 12, 11);
+//        board.addTile(tS1, 12, 12);
+//        board.addTile(tS1, 11, 12);
+//
+//        assertEquals(4, scoring.salmonScoreCardB(board));
+//    }
 }

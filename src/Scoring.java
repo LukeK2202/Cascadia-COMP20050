@@ -3,6 +3,9 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 
+/**
+ * Scoring class to calculate score of the user's board based on the scorecards selected
+ */
 public class Scoring {
 
     private Method selectedHawkCard;
@@ -112,7 +115,6 @@ public class Scoring {
                 currentUserBoard.getTile(tempHolder[0], tempHolder[1]).getPlacedToken() != null) {
             adjacent.add(tempHolder);
         }
-
         return adjacent;
     }
 
@@ -144,7 +146,6 @@ public class Scoring {
                 currentUserBoard.getTile(tempHolder[0], tempHolder[1]).getPlacedToken() != null) {
             adjacent.add(tempHolder);
         }
-
         return adjacent;
     }
 
@@ -242,31 +243,84 @@ public class Scoring {
         return 0;
     }
 
-    public int elkScoreCardA(Board currUserBoard) {
+    public int elkScoreCardA(Board currentUserBoard) {
+        ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.ELK_PLACED);
+
+        for(int[] elkCoord : wildlifePositions) {
+        }
         return 0;
     }
 
-    public int elkScoreCardB(Board currUserBoard) {
-        return 0;
-    }
+    /**
+     * Generates points for total amount of elks in their groups
+     * @param currentUserBoard is the current user's board that will be used to navigate the tiles
+     * @return returns amount of points based on the total amount of elf and their respective group sizes
+     */
+    public int elkScoreCardB(Board currentUserBoard) {
+        ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.ELK_PLACED);
+        ArrayList<Integer> groupSizes = getGroupSizeAmount(currentUserBoard, wildlifePositions);
+        int totalScore = 0;
+
+        for(Integer amount : groupSizes) {
+            if (amount == 0) totalScore += 0;
+            else if (amount <= 2) totalScore += (2 + (2 * (amount - 1)));
+            else if (amount <= 4) totalScore += (7 + (3 * (amount - 3)));
+            else if (amount <= 6) totalScore += (14 + (4 * (amount - 5)));
+            else if (amount <= 8) totalScore += (23 + (5 * (amount - 7)));
+            else totalScore += 28;
+            }
+        return totalScore;
+        }
 
     public int elkScoreCardC(Board currUserBoard) {
         return 0;
     }
 
-    public int salmonScoreCardA(Board currUserBoard) {
-        return 0;
+    public void salmonScoreCardA(Board currentUserBoard) {
+        ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.SALMON_PLACED);
     }
 
-    public int salmonScoreCardB(Board currUserBoard) {
-        return 0;
+    public int salmonScoreCardB(Board currentUserBoard) {
+        int amount = 0;
+        return amount;
     }
 
     public int salmonScoreCardC(Board currUserBoard) {
         return 0;
     }
 
+    public ArrayList<Integer> getGroupSizeAmount(Board currBoard, ArrayList<int[]> coOrdsToCheck) {
+            ArrayList<int[]> accountedList = new ArrayList<>();
+            ArrayList<Integer> groupSize = new ArrayList<Integer>();
+            for (int[] currCoOrd : coOrdsToCheck) {
+                if (!Board.isCoOrdsContained(accountedList, currCoOrd)) {
+                    groupSize.add(groupSizeHelper(accountedList, currCoOrd, currBoard));
+                }
+            }
+            return groupSize;
+    }
+
+    /**
+     * Finds either group amount or group size
+     * @param currBoard is the current user's board that will be used to navigate the tiles
+     * @param coOrdsToCheck The ArrayList of the coords of a specific wildlife that needs to be checked for groups
+     *                      or group size
+     * @param wantedPairSize the wanted size of the group, if the value is 99, initiates to search just for the
+     *                      amount of wildlife within that group
+     * @return Amount of groups of a specific size, or, the amount of a wildlife in a group if
+     * param wantedPairSize is 99
+     */
     public int findGroupNumSize(Board currBoard, ArrayList<int[]> coOrdsToCheck, int wantedPairSize) {
+        if(wantedPairSize == 99) {
+            ArrayList<int[]> accountedList = new ArrayList<>();
+            int groupSize = 0;
+            for (int[] currCoOrd : coOrdsToCheck) {
+                if (!Board.isCoOrdsContained(accountedList, currCoOrd)) {
+                    groupSize += groupSizeHelper(accountedList, currCoOrd, currBoard);
+                }
+            }
+            return groupSize;
+        }
         ArrayList<int[]> accountedList = new ArrayList<>();
         int numValidPairs = 0;
         for(int[] currCoOrd : coOrdsToCheck) {
@@ -280,7 +334,19 @@ public class Scoring {
         return numValidPairs;
     }
 
+//    public int longestLineInARow() {
+//
+//    }
 
+    /**
+     * assists findGroupNumSize method in finding the amount of wildlife adjacent to each other
+     * @param accountedForList is the ArrayList of the wildlife already accounted for, meaning,
+     *                         they do not need to be added again
+     * @param currCoOrd used to find the neighbours of the current coord and only adds those neighbours if they are not
+     *                  in the accountForList ArrayList and / or if their wildlife token does not match the currCoord token
+     * @param currBoard is the current user's board that will be used to navigate the tiles
+     * @return returns amount of wildlife within this adjacent group
+     */
     public int groupSizeHelper(ArrayList<int[]> accountedForList , int[] currCoOrd, Board currBoard) {
         ArrayList<int[]> adjacent = getNeighbourTilesHelper(currBoard, currCoOrd);
         if(!Board.isCoOrdsContained(accountedForList, currCoOrd)) {
@@ -305,7 +371,6 @@ public class Scoring {
         } else {
             return members;
         }
-
     }
 
     /**
