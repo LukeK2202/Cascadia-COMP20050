@@ -94,6 +94,19 @@ public class Table {
         selectWildlife(n);
     }
 
+    public void swapSelected(int n) {
+        Tile tmpTile = selectedTile;
+        Wildlife tmpWildlife = selectedWildlife;
+
+        this.selectedWildlife = shownWildlife.get(n - 1);
+        shownWildlife.remove(n - 1);
+        shownWildlife.add(n - 1, tmpWildlife);
+
+        this.selectedTile = shownTiles.get(n - 1);
+        shownTiles.remove(n - 1);
+        shownTiles.add(n - 1, tmpTile);
+    }
+
     public void unselectTile() {
         this.selectedTile = null;
     }
