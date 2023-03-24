@@ -17,7 +17,7 @@ public class ScoreTests {
         4 pairs -> 27 points
          */
         Board board = new Board(true);
-        Scoring scoreBoard = new Scoring();
+        Scoring scoreBoard = new Scoring(true);
         TileCreators tc = new TileCreators();
 
         /*
@@ -55,7 +55,7 @@ public class ScoreTests {
         1 point for each unique wildlife bordering it
          */
         Board board = new Board(true);
-        Scoring scoreBoard = new Scoring();
+        Scoring scoreBoard = new Scoring(true);
         TileCreators tc = new TileCreators();
 
         /*
@@ -142,7 +142,7 @@ public class ScoreTests {
         8+ hawks -> 26 points
          */
         Board board = new Board(true);
-        Scoring scoreBoard = new Scoring();
+        Scoring scoreBoard = new Scoring(true);
         TileCreators tc = new TileCreators();
 
         /*
