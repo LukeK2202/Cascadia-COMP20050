@@ -2,8 +2,10 @@ import Exceptions.*;
 
 import java.util.ArrayList;
 
+/**
+ * class that initialises the board for the game
+ */
 public class Board {
-
 
     /* Main board matrix, a grid of tile classes */
     private Tile[][] board = new Tile[21][21];
@@ -162,6 +164,9 @@ public class Board {
         board[tempCoOrdHolder[0]][tempCoOrdHolder[1]].addWildlifeToken(wildlifeToken);
     }
 
+    /**
+     * displays the areas free to place a tile
+     */
     public void displayAvailableAreas() {
         for(int i = 0; i < placeableArea.size(); i++) {
             int[] coOrd = placeableArea.get(i);
@@ -170,6 +175,9 @@ public class Board {
         }
     }
 
+    /**
+     * hiding co-ordinates that are not needed for placing a tile
+     */
     public void hideAvailableAreas() {
         for(int i = 0; i < placeableArea.size(); i++) {
             int[] coOrd = placeableArea.get(i);
@@ -177,7 +185,12 @@ public class Board {
             board[coOrd[0]][coOrd[1]].hideCoOrd();
         }
 
-    }public void displayPlacedAreas() {
+    }
+
+    /**
+     * displays the areas where a tile is placed
+     */
+    public void displayPlacedAreas() {
         for(int i = 0; i < occupiedTiles.size(); i++) {
             int[] coOrd = occupiedTiles.get(i);
             board[coOrd[0]][coOrd[1]].setCoOrd(i);
@@ -185,6 +198,9 @@ public class Board {
         }
     }
 
+    /**
+     * hides the areas where a tile is placed
+     */
     public void hidePlacedAreas() {
         for(int i = 0; i < occupiedTiles.size(); i++) {
             int[] coOrd = occupiedTiles.get(i);
