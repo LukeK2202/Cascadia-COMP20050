@@ -82,9 +82,58 @@ public class ScoreTests {
 
         board.addTile(tB, 10, 12);
         board.addTile(tF, 11, 10);
-        assertEquals(4, scoreBoard.foxScoreCardA(board));
+        assertEquals(6, scoreBoard.foxScoreCardA(board));
 
         board.addTile(tE, 12, 12);
-        assertEquals(4, scoreBoard.foxScoreCardA(board));
+        assertEquals(6, scoreBoard.foxScoreCardA(board));
+    }
+
+    @Test
+    public void testElkB() {
+                /*
+        Elk card B gives points for each elk within a group size, in any shape
+         */
+        Board board = new Board(true);
+        Scoring scoreBoard = new Scoring();
+        TileCreators tc = new TileCreators();
+
+        /*
+        Board Visualisation:
+        10,10<     >10,11<     >10,12<     >10,13
+	          11,10<     >11,11<     >11,12
+        12,10<     >12,11<     >12,12<     >12,13
+	          13,10<     >13,11<     >13,12
+        14,10<     >14,11<     >14,12<     >14,13
+         */
+
+        Tile tB = tc.createPlacedBearTile();
+        Tile tH = tc.createPlacedHawkTile();
+        Tile tE = tc.createPlacedElkTile();
+        Tile tF = tc.createPlacedFoxTile();
+
+        //Creating elks and testing output
+        board.addTile(tE, 11, 11);
+        board.addTile(tE, 11, 12);
+
+        assertEquals(4, scoreBoard.elkScoreCardB(board));
+
+        //Adding more elks and other wildlife to see if they are ignored in scoring
+        board.addTile(tE, 11, 10);
+        board.addTile(tE, 10, 11);
+        board.addTile(tE, 10, 12);
+        board.addTile(tB, 12, 13);
+        board.addTile(tH, 10, 13);
+
+        assertEquals(14, scoreBoard.elkScoreCardB(board));
+
+        //Further addition of elks and other wildlife
+        board.addTile(tE, 14, 10);
+        board.addTile(tE, 14, 11);
+        board.addTile(tF, 13, 10);
+        assertEquals(23, scoreBoard.elkScoreCardB(board));
+
+        board.addTile(tE, 14, 12);
+        assertEquals(28, scoreBoard.elkScoreCardB(board));
+
     }
 }
