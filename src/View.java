@@ -35,8 +35,7 @@ public class View {
     //Displays all commands
     public void displayCommands() {
         System.out.println("Commands:");
-        System.out.println("Enter 'Q' to quit.");
-        System.out.println("Enter 'N' to go to next user.");
+        System.out.println("Enter 'N' to use a nature token.");
         System.out.println("Enter 'C' to display commands again.");
         System.out.println("Enter 'S'[1-4] to select a tile and wildlife pair from the table.");
         System.out.println("Enter 'R' to rotate a selected tile after selection");

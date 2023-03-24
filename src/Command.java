@@ -1,7 +1,7 @@
 public class Command{
     //Main Control Class, Purpose to call commands.
 
-    private enum CommandType {QUIT, NATURE, COMMAND, DECK_EMPTY, SELECT, ROTATE, PLACE}
+    private enum CommandType {QUIT, NATURE, COMMAND, SELECT, ROTATE, PLACE}
     private CommandType commandType;
     private int selected;
 
@@ -17,9 +17,6 @@ public class Command{
         }
         else if(inputFormat.equals("C")) {
             commandType = CommandType.COMMAND;
-        }
-        else if(inputFormat.equals("deckFin")) {
-            commandType = CommandType.DECK_EMPTY;
         }
         else if(inputFormat.matches("[S][1-4]")) {
             commandType = CommandType.SELECT;
@@ -39,8 +36,7 @@ public class Command{
     //Input validity checker, checks to ensure user input is only a valid input, return false if invalid
     public static boolean isValid(String input) {
        String inputFormat = input.trim().toUpperCase();
-       return inputFormat.equals("Q") || inputFormat.equals("N") || inputFormat.equals("C") ||
-               inputFormat.equals("DECKFIN") || inputFormat.matches("[S][1-4]") || inputFormat.equals("R")
+       return inputFormat.equals("Q") || inputFormat.equals("N") || inputFormat.equals("C") || inputFormat.matches("[S][1-4]") || inputFormat.equals("R")
                || inputFormat.matches("[P]\\d{1,2}");
 
     }
@@ -80,13 +76,6 @@ public class Command{
         }
     }
 
-    public boolean DeckisFin() {
-        if(commandType == CommandType.DECK_EMPTY) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     public int getSelected() {
         return selected;

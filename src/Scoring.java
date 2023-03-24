@@ -1,3 +1,4 @@
+import java.lang.reflect.Method;
 import java.util.*;
 
 
@@ -5,6 +6,64 @@ import java.util.*;
  * Scoring class to calculate score of the user's board based on the scorecards selected
  */
 public class Scoring {
+
+
+
+    public Scoring() {
+        View view = new View();
+        ArrayList<Method> hawkScoreCards = new ArrayList<>();
+        ArrayList<Method> elkScoreCards = new ArrayList<>();
+        ArrayList<Method> foxScoreCards = new ArrayList<>();
+        ArrayList<Method> bearScoreCards = new ArrayList<>();
+        ArrayList<Method> salmonScoreCards = new ArrayList<>();
+        for(Method method : Scoring.class.getDeclaredMethods()) {
+            if(method.getName().startsWith("hawkScoreCard")) hawkScoreCards.add(method);
+            if(method.getName().startsWith("elkScoreCard")) elkScoreCards.add(method);
+            if(method.getName().startsWith("foxScoreCard")) foxScoreCards.add(method);
+            if(method.getName().startsWith("bearScoreCard")) bearScoreCards.add(method);
+            if(method.getName().startsWith("salmonScoreCard")) salmonScoreCards.add(method);
+        }
+        hawkScoreCards.sort((name1, name2) -> name1.getName().compareTo(name2.getName()));
+        elkScoreCards.sort((name1, name2) -> name1.getName().compareTo(name2.getName()));
+        foxScoreCards.sort((name1, name2) -> name1.getName().compareTo(name2.getName()));
+        bearScoreCards.sort((name1, name2) -> name1.getName().compareTo(name2.getName()));
+        salmonScoreCards.sort((name1, name2) -> name1.getName().compareTo(name2.getName()));
+
+
+        System.out.println("Current Available score cards: ");
+        System.out.print("Hawk Cards -> ");
+        for(int i = 0; i < hawkScoreCards.size(); i++) System.out.print(hawkScoreCards.get(i).getName() + "(" + (i + 1) + "), "); System.out.println();
+        System.out.print("Elk Cards -> ");
+        for(int i = 0; i < elkScoreCards.size(); i++) System.out.print(elkScoreCards.get(i).getName() + "(" + (i + 1) + "), "); System.out.println();
+        System.out.print("Fox Cards -> ");
+        for(int i = 0; i < foxScoreCards.size(); i++) System.out.print(foxScoreCards.get(i).getName() + "(" + (i + 1) + "), "); System.out.println();
+        System.out.print("Bear Cards -> ");
+        for(int i = 0; i < bearScoreCards.size(); i++) System.out.print(bearScoreCards.get(i).getName() + "(" + (i + 1) + "), "); System.out.println();
+        System.out.print("Salmon Cards -> ");
+        for(int i = 0; i < salmonScoreCards.size(); i++) System.out.print(salmonScoreCards.get(i).getName() + "(" + (i + 1) + "), "); System.out.println();
+
+        System.out.println("Please select which hawk card you would like to use.");
+        int input = view.getUserint(1, hawkScoreCards.size());
+        Method selectedHawkCard = hawkScoreCards.get(input - 1);
+
+        System.out.println("Please select which elk card you would like to use.");
+        input = view.getUserint(1, elkScoreCards.size());
+        Method selectedElkCard = elkScoreCards.get(input - 1);
+
+        System.out.println("Please select which fox card you would like to use.");
+        input = view.getUserint(1, foxScoreCards.size());
+        Method selectedFoxCard = foxScoreCards.get(input - 1);
+
+        System.out.println("Please select which bear card you would like to use.");
+        input = view.getUserint(1, bearScoreCards.size());
+        Method selectedBearCard = bearScoreCards.get(input - 1);
+
+        System.out.println("Please select which salmon card you would like to use.");
+        input = view.getUserint(1, salmonScoreCards.size());
+        Method selectedSalmonCard = salmonScoreCards.get(input - 1);
+
+    }
+
 
     /**
      * Returns arraylist of the neighbouring tiles of the given tile, if the 'i' value of the tile coordinate is an odd number
@@ -100,6 +159,14 @@ public class Scoring {
         }
     }
 
+    public void hawkScoreCardB() {
+
+    }
+
+    public void hawkScoreCardC() {
+
+    }
+
     /**
      * locates all the tiles in the board that have a FOX_PLACED token on them and calculates the score for each fox
      * @param currentUserBoard is the current user's board that will be used to navigate the tiles
@@ -119,6 +186,14 @@ public class Scoring {
             else amount += wildlifeSet.size();
         }
         return amount;
+    }
+
+    public void foxScoreCardB() {
+
+    }
+
+    public void foxScoreCardC() {
+
     }
 
     public int bearScoreCardA(Board currentUserBoard) {
@@ -142,6 +217,7 @@ public class Scoring {
         return findGroupNumSize(currentUserBoard, wildlifePositions, 3);
     }
 
+
 //    public int elkScoreCardA(Board currentUserBoard) {
 //        ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.ELK_PLACED);
 //
@@ -161,6 +237,28 @@ public class Scoring {
         else return 28;
         }
 
+
+    public void elkScoreCardC() {
+
+    }
+
+
+
+    public void bearScoreCardC() {
+
+    }
+
+    public void salmonScoreCardA() {
+
+    }
+
+    public void salmonScoreCardB() {
+
+    }
+
+    public void salmonScoreCardC() {
+
+    }
 
     /**
      * Finds either group amount or group size
