@@ -263,8 +263,10 @@ public class Scoring {
 
     }
 
-    public void salmonScoreCardB() {
+    public int salmonScoreCardB(Board currentUserBoard) {
+        int amount = 0;
 
+        return amount;
     }
 
     public void salmonScoreCardC() {
