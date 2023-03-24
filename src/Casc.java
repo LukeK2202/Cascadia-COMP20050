@@ -30,7 +30,6 @@ public class Casc {
             usersArr.add(new User(p));
         }
         view.clearView();
-        view.displayCommands();
         //shuffles user array to get a random order
         Collections.shuffle(usersArr);
         //Sets current user to the first one in the array and sets the current board to the board of that user
@@ -38,57 +37,54 @@ public class Casc {
         Board currBoard = currUser.getBoard();
         //Creates a table
         Table table = new Table();
+        boolean showComm = true;
         do {
             boolean turnOver = false;
+            boolean commDone = false;
             //Display the table and the current board
             currBoard.checkPLaceableArea();
             currBoard.displayAvailableAreas();
             view.displayScreen(currUser, currBoard, table);
-
-            boolean commDone = false;
-            //Begins the loop to receive a command
+            if(showComm) {
+                view.displayCommands();
+                showComm = false;
+            }
+            //Beginning of cull code block
+            int cullDecision;
             do {
-                if (table.deckIsEmpty()) {
-                    commDone = true;
-                    command = new Command("deckFin");
-                }
-                //Beginning of cull code block
-                int cullDecision;
-                do {
-                    cullDecision = table.cullDetectionMethod();
-                    //If all 4 are matching, cull all
-                    if (cullDecision == 2) {
-                        table.cullAllCall();
-
-                        //Block to print out updated table
-                        view.displayScreen(currUser, currBoard, table);
-
-                        view.cullAllRequired();
-                        //If 3 are matching, optional cull
-                    } else if (cullDecision == 1) {
-                        //Check if the user has already used an optional cull this turn
-                        if (currUser.getOptionalCullCarriedOut()) {
-                            view.optionalCullCarriedOutAlready();
+                cullDecision = table.cullDetectionMethod();
+                //If all 4 are matching, cull all
+                if (cullDecision == 2) {
+                    table.cullAllCall();
+                    //Block to print out updated table
+                    view.displayScreen(currUser, currBoard, table);
+                    view.cullAllRequired();
+                    //If 3 are matching, optional cull
+                } else if (cullDecision == 1) {
+                    //Check if the user has already used an optional cull this turn
+                    if (currUser.getOptionalCullCarriedOut()) {
+                        view.optionalCullCarriedOutAlready();
+                        cullDecision = 0;
+                    } else {
+                        //Else get user input for if they want cull or not
+                        view.optionalCullAvailable();
+                        boolean input = view.getUserYorN();
+                        if (input) {
+                            table.optionalCull();
+                            currUser.setOptionalCullDoneNow();
+                            view.displayScreen(currUser, currBoard, table);
+                            view.optionalCullHasBeenCompleted();
+                        }
+                        else {
                             cullDecision = 0;
-                        } else {
-                            //Else get user input for if they want cull or not
-                            view.optionalCullAvailable();
-                            boolean input = view.getUserYorN();
-                            if (input) {
-                                table.optionalCull();
-                                currUser.setOptionalCullDoneNow();
-
-                                view.displayScreen(currUser, currBoard, table);
-
-                                view.optionalCullHasBeenCompleted();
-                            }
-                            else {
-                                cullDecision = 0;
-                            }
                         }
                     }
-                } while (cullDecision != 0);
+                }
+            } while (cullDecision != 0);
+            //Begins the loop to receive a command
+            do {
                 //receive user input
+                System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------");
                 command = view.getUserInput();
                 //If command is quit sets commDone to true to exit loop
                 if (command.isQuit()) {
@@ -133,7 +129,7 @@ public class Casc {
                         System.out.println("No nature tokens to spend.");
                     }
                 } else if (command.isComm()) {
-                    view.displayCommands();
+                    showComm = true;
                     commDone = true;
                 } else if (command.isSelect()) {
                         table.SelectTileWild(command.getSelected());
@@ -207,29 +203,30 @@ public class Casc {
                 }
             } while(!commDone);
             if(turnOver) {
-                table.fillTable();
-                view.displayScreen(currUser, currBoard, table);
-                System.out.println("Press 1 to move to next player.");
-                int userNext = 0;
-                do {
-                    userNext = view.getUserint(1, 1);
-                } while(userNext != 1);
-                currUser.setOptionalCullPreviouslyDone();
-                userIndex = (userIndex + 1) % playerNum;
-                currUser = usersArr.get(userIndex);
-                currBoard = currUser.getBoard();
-                System.out.println("Turn Over. Moving to next user.");
+                if (table.deckIsEmpty()) {
+                    command = new Command("Q");
+                } else {
+                    table.fillTable();
+                    view.displayScreen(currUser, currBoard, table);
+                    System.out.println("Press 1 to move to next player.");
+                    int userNext = 0;
+                    do {
+                        userNext = view.getUserint(1, 1);
+                    } while(userNext != 1);
+                    currUser.setOptionalCullPreviouslyDone();
+                    userIndex = (userIndex + 1) % playerNum;
+                    currUser = usersArr.get(userIndex);
+                    currBoard = currUser.getBoard();
+                    System.out.println("Turn Over. Moving to next user.");
+                }
             }
             view.clearView();
 
-        } while(!command.isQuit() && !command.DeckisFin());
+        } while(!command.isQuit());
         //If command is quit show quit game.
         if(command.isQuit()) {
             view.showQuit();
             System.out.println(scoreBoard.hawkScoreCardA(currBoard));
-        }
-        else if(command.DeckisFin()) {
-            view.showDeckEmpty();
         }
     }
 }
