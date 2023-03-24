@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Scoring {
 
@@ -50,26 +52,16 @@ public class Scoring {
 
         return adjacent;
     }
-    public int hawkAScoreCard(Board currentUserBoard) {
-        ArrayList<int[]> adjacent;
+    public int hawkScoreCardA(Board currentUserBoard) {
         int amount = 0;
-        for(int i = 0; i < currentUserBoard.getOccupiedTileArray().size(); i++) {
+        ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.HAWK_PLACED);
+        for(int[] hawkCoord : wildlifePositions) {
             int cycles = 0;
-            int[] coordHolder = currentUserBoard.getOccupiedTileArray().get(i);
-            if(currentUserBoard.getTile(coordHolder[0], coordHolder[1]).showPlacedToken().equals(Wildlife.HAWK_PLACED)) {
-                if(coordHolder[0] % 2 == 0) {
-                    adjacent = adjacentTilesEven(coordHolder, currentUserBoard);
-                }
-                else {
-                    adjacent = adjacentTilesOdd(coordHolder, currentUserBoard);
-                }
-
-                for(int j = 0; j < adjacent.size(); j++) {
-                    coordHolder = adjacent.get(j);
-                    if(currentUserBoard.getTile(coordHolder[0], coordHolder[1]).showPlacedToken().equals(Wildlife.HAWK_PLACED)) break;
-                    cycles++;
-                    if(cycles == 6) amount++;
-                }
+            ArrayList<int[]> adjacent = getNeighbourTilesHelper(currentUserBoard, hawkCoord);
+            for(int[] neighbourCoord : adjacent) {
+                if(currentUserBoard.getTile(neighbourCoord[0], neighbourCoord[1]).getPlacedToken().equals(Wildlife.HAWK_PLACED)) break;
+                cycles++;
+                if(cycles == 5) amount++;
             }
         }
         if(amount == 0) return amount;
@@ -82,26 +74,48 @@ public class Scoring {
         }
     }
 
-    public int bearAScoreCard(Board currentUserBoard) {
-        ArrayList<int[]> adjacent;
+//    public int bearScoreCardA(Board currentUserBoard) {
+//        ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.BEAR_PLACED);
+//        for(int i = 0; i < wildlifePositions.size(); i++) {
+//            ArrayList<int[]> adjacent = getNeighbourTilesHelper(currentUserBoard, wildlifePositions.get(i));
+//
+//        }
+//    }
+
+    public int FoxScoreCardA(Board currentUserBoard) {
         int amount = 0;
-        for (int i = 0; i < currentUserBoard.getOccupiedTileArray().size(); i++) {
-            //int cycles = 0;
-            int[] coordHolder = currentUserBoard.getOccupiedTileArray().get(i);
-            if (currentUserBoard.getTile(coordHolder[0], coordHolder[1]).showPlacedToken().equals(Wildlife.BEAR_PLACED)) {
-                if (coordHolder[0] % 2 == 0) {
-                    adjacent = adjacentTilesEven(coordHolder, currentUserBoard);
-                } else {
-                    adjacent = adjacentTilesOdd(coordHolder, currentUserBoard);
-                }
+        ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.FOX_PLACED);
+        for(int[] foxCoord : wildlifePositions) {
+            ArrayList<int[]> adjacent = getNeighbourTilesHelper(currentUserBoard, foxCoord);
+            ArrayList<Wildlife> wildlifeContainment = new ArrayList<Wildlife>();
+            for(int[] neighbourCoord : adjacent) {
+                wildlifeContainment.add(currentUserBoard.getTile(neighbourCoord[0], neighbourCoord[1]).getPlacedToken());
+            }
+            Set<Wildlife> wildlifeSet = new HashSet<Wildlife>(wildlifeContainment);
+            if(wildlifeSet.size() > 5) amount += 5;
+            else amount += wildlifeSet.size();
+        }
+        return amount;
+    }
+
+    public ArrayList<int[]> getArrayOfWildlifeHelper(Board userBoard, Wildlife wildlife) {
+        ArrayList<int[]> wildlifeArray = new ArrayList<int[]>();
+        for(int[] coord : userBoard.getOccupiedTileArray()) {
+            if(userBoard.getTile(coord[0], coord[1]).getPlacedToken().equals(wildlife)) {
+                wildlifeArray.add(coord);
             }
         }
+        return wildlifeArray;
     }
 
-    public int FoxAScoreCard(Board currentUserBoard) {
-
+    public ArrayList<int[]> getNeighbourTilesHelper(Board userBoard, int[] wildlifeCoord) {
+        ArrayList<int[]> neighbours = new ArrayList<int[]>();
+        if (wildlifeCoord[0] % 2 == 0) {
+            neighbours = adjacentTilesEven(wildlifeCoord, userBoard);
+        } else {
+            neighbours = adjacentTilesOdd(wildlifeCoord, userBoard);
+        }
+        return neighbours;
     }
-
-    public ArrayList<int[]>
 
 }
