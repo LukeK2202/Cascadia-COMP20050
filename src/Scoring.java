@@ -74,7 +74,11 @@ public class Scoring {
 
     }
 
-    //Generate score method for all users at the end of gameplay
+    /**
+     * Function to generate a users score, used at the end of the game
+     * finds score for each selected score card method and also nature tokens
+     * @param currUser the user to check score of
+     */
     public void generateScore(User currUser) {
         try {
             currUser.addScore((int) selectedHawkCard.invoke(this, currUser.getBoard()));
@@ -204,6 +208,11 @@ public class Scoring {
         return amount;
     }
 
+    /**
+     * Locates all the tiles on the users board that has a bear places on them and then calculates score accordingly
+     * @param currentUserBoard the users board in which you want to calculate the score of
+     * @return the total score from the bear card across the users board
+     */
     public int bearScoreCardA(Board currentUserBoard) {
         ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.BEAR_PLACED);
         int numValidGroups = findGroupNumSize(currentUserBoard, wildlifePositions, 2);
@@ -220,12 +229,22 @@ public class Scoring {
         }
     }
 
+    /**
+     * Locates all the tiles on the users board that has a bear places on them and then calculates score accordingly
+     * @param currentUserBoard the users board in which you want to calculate the score of
+     * @return the total score from the bear card across the users board
+     */
     public int bearScoreCardB(Board currentUserBoard) {
         ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.BEAR_PLACED);
         int numValidGroups = findGroupNumSize(currentUserBoard, wildlifePositions, 3);
         return 10 * numValidGroups;
     }
 
+    /**
+     * Locates all the tiles on the users board that has a bear places on them and then calculates score accordingly
+     * @param currUserBoard the users board in which you want to calculate the score of
+     * @return the total score from the bear card across the users board
+     */
     public int bearScoreCardC(Board currUserBoard) {
         ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currUserBoard, Wildlife.BEAR_PLACED);
         int numOneGroup = findGroupNumSize(currUserBoard, wildlifePositions, 1);
@@ -245,7 +264,7 @@ public class Scoring {
     /**
      * Generates points for total amount of elks in their groups
      * @param currentUserBoard is the current user's board that will be used to navigate the tiles
-     * @return returns amount of points based on the total amount of elf and their respective group sizes
+     * @return returns amount of points based on the total amount of elk and their respective group sizes
      */
     public int elkScoreCardB(Board currentUserBoard) {
         ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.ELK_PLACED);
@@ -263,7 +282,11 @@ public class Scoring {
         return totalScore;
         }
 
-
+    /**
+     * Generates points for each run of salmon on the users board
+     * @param currentUserBoard is the current user's board that will be used to navigate the tiles
+     * @return returns amount of points based on the total amount of runs and their length
+     */
     public int salmonScoreCardA(Board currentUserBoard) {
         ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.SALMON_PLACED);
         ArrayList<Integer> groupSizes = getGroupSizeAmount(currentUserBoard, wildlifePositions, 99);
@@ -280,6 +303,11 @@ public class Scoring {
         return totalScore;
     }
 
+    /**
+     * Generates points for each run of salmon on the users board
+     * @param currentUserBoard is the current user's board that will be used to navigate the tiles
+     * @return returns amount of points based on the total amount of runs and their length
+     */
     public int salmonScoreCardB(Board currentUserBoard) {
         ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.SALMON_PLACED);
         ArrayList<Integer> groupSizes = getGroupSizeAmount(currentUserBoard, wildlifePositions, 99);
@@ -295,6 +323,11 @@ public class Scoring {
         return totalScore;
     }
 
+    /**
+     * Generates points for each run of salmon on the users board
+     * @param currentUserBoard is the current user's board that will be used to navigate the tiles
+     * @return returns amount of points based on the total amount of runs and their length
+     */
     public int salmonScoreCardC(Board currentUserBoard) {
         ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.SALMON_PLACED);
         ArrayList<Integer> groupSizes = getGroupSizeAmount(currentUserBoard, wildlifePositions, 99);
@@ -311,6 +344,14 @@ public class Scoring {
         return totalScore;
     }
 
+    /**
+     * Helper function to help find a total run length used for the salmon cards recursively. returns a number above 100 if a
+     * tile has more than 3 salmon neighbours, resulting in a score of zero in the cards
+     * @param accountedForList arrayList to hold all tile co-ords that have already been iterated over
+     * @param currCoOrd the co-ord of the tile that will have its neighbours checked and recursively called
+     * @param currBoard the users board
+     * @return the size of the run of salmon from which the original first salmon was called on. or > 100 if a group of salmon more than 3
+     */
     public int salmonRunFindHelper(ArrayList<int[]> accountedForList , int[] currCoOrd, Board currBoard) {
         ArrayList<int[]> adjacent = getNeighbourTilesHelper(currBoard, currCoOrd);
         ArrayList<int[]> oldAdj = new ArrayList<>();
@@ -343,6 +384,14 @@ public class Scoring {
         }
     }
 
+    /**
+     * Method to find how many groups and their size with any shape, uses a recursive helper function.
+     * if wanted pair size is set to 99, switches to run mode, which is used for salmon scoring
+     * @param currBoard users board to check
+     * @param coOrdsToCheck the arrayList passed in fromt he score card which contains all co-ords of a certain tile class (e.g. all elk placed tiles)
+     * @param wantedPairSize the amount of members in a pair to search for
+     * @return an arrayList of integers, each memeber represents a group and the int represents the group size
+     */
     public ArrayList<Integer> getGroupSizeAmount(Board currBoard, ArrayList<int[]> coOrdsToCheck, int wantedPairSize) {
         if(wantedPairSize == 99) {
             ArrayList<int[]> accountedList = new ArrayList<>();
@@ -387,10 +436,6 @@ public class Scoring {
         }
         return numValidPairs;
     }
-
-//    public int longestLineInARow() {
-//
-//    }
 
     /**
      * assists findGroupNumSize method in finding the amount of wildlife adjacent to each other
