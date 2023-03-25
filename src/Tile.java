@@ -5,6 +5,14 @@ import java.util.Random;
 import Exceptions.*;
 
 //Tile class to construct and use tiles for the game
+/*
+COMP20050 Cascadia Project
+Group: Group 13 (TaskGroup13)
+Members:    Luke King (21327413) -      LukeK2202
+            Alexey Budnyev (21339913) - Alexey-B0
+            David Kenny (21727729) -    DavidKenny3
+ */
+
 public class Tile {
 
     //Enum used to determine what tile type is wanted

@@ -5,6 +5,14 @@ import java.util.ArrayList;
 /**
  * class that initialises the board for the game
  */
+/*
+COMP20050 Cascadia Project
+Group: Group 13 (TaskGroup13)
+Members:    Luke King (21327413) -      LukeK2202
+            Alexey Budnyev (21339913) - Alexey-B0
+            David Kenny (21727729) -    DavidKenny3
+ */
+
 public class Board {
 
     /* Main board matrix, a grid of tile classes */
