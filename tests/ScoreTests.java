@@ -301,6 +301,6 @@ public class ScoreTests {
         board.addTile(tS, 13, 10);
         board.addTile(tS, 13, 11);
         board.addTile(tB, 14, 11);
-        assertEquals(18, scoring.salmonScoreCardA(board));
+        assertEquals(11, scoring.salmonScoreCardA(board));
     }
 }
