@@ -294,7 +294,7 @@ public class ScoreTests {
         assertEquals(7, scoring.salmonScoreCardA(board));
 
         board.addTile(tS, 11, 13);
-        assertEquals(7, scoring.salmonScoreCardA(board));
+        assertEquals(0, scoring.salmonScoreCardA(board));
 
         board.addTile(tS, 14, 9);
         board.addTile(tS, 14, 10);

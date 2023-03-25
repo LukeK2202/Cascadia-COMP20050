@@ -298,8 +298,6 @@ public class Scoring {
         if(!Board.isCoOrdsContained(accountedForList, currCoOrd)) {
             accountedForList.add(currCoOrd);
         }
-
-        //if(!(isSalmonEligibleRun(currBoard, accountedForList, currCoOrd))) return 0;
         Iterator<int[]> iterator = adjacent.iterator();
         while (iterator.hasNext()) {
             int[] adj = iterator.next();
@@ -314,8 +312,8 @@ public class Scoring {
         for(int[] adj : adjacent) {
             members += salmonRunFindHelper(accountedForList, adj, currBoard);
         }
-        if(adjacent.isEmpty()) {
-            return 1;
+        if(adjacent.size() > 2) {
+            return 0;
         } else {
             return members;
         }
