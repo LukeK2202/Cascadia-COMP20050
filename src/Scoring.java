@@ -280,6 +280,37 @@ public class Scoring {
         return totalScore;
     }
 
+    public int salmonScoreCardB(Board currentUserBoard) {
+        ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.SALMON_PLACED);
+        ArrayList<Integer> groupSizes = getGroupSizeAmount(currentUserBoard, wildlifePositions, 99);
+        int totalScore = 0;
+
+        for(Integer amount : groupSizes) {
+            if(amount == 0) totalScore += 0;
+            else if (amount <= 2) totalScore += (2 + (2 * (amount - 1)));
+            else if (amount <= 4) totalScore += (8 + (4 * (amount - 3)));
+            else if (amount < 100) totalScore += 12;
+            else totalScore += 0;
+        }
+        return totalScore;
+    }
+
+    public int salmonScoreCardC(Board currentUserBoard) {
+        ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.SALMON_PLACED);
+        ArrayList<Integer> groupSizes = getGroupSizeAmount(currentUserBoard, wildlifePositions, 99);
+        int totalScore = 0;
+
+        for(Integer amount : groupSizes) {
+            if (amount == 0) totalScore += 0;
+            else if (amount <= 2) totalScore += (2 + (2 * (amount - 1)));
+            else if (amount == 3) totalScore += 9;
+            else if (amount <= 5) totalScore += (11 + (6 * (amount - 4)));
+            else if (amount < 100) totalScore += 17;
+            else totalScore += 0;
+        }
+        return totalScore;
+    }
+
     public int salmonRunFindHelper(ArrayList<int[]> accountedForList , int[] currCoOrd, Board currBoard) {
         ArrayList<int[]> adjacent = getNeighbourTilesHelper(currBoard, currCoOrd);
         ArrayList<int[]> oldAdj = new ArrayList<>();
