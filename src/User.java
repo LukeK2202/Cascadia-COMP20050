@@ -13,8 +13,6 @@ public class User {
     //future code to store the score of the individual user after the game finishes
     private String name;
     //name of the user entered from the console
-    private int orderNumber;
-    //integer number to store the order? Possible reworks may occur
     private boolean optionalCullCarriedOut = false;
     //boolean to tell the main class if the user has carried out an otional cull or not, on their current turn
     private Board board;
@@ -48,9 +46,7 @@ public class User {
     public String getName() {
         return name;
     }
-    public int getOrderNumber() {
-        return orderNumber;
-    }
+
     public String toString() {
         return name;
     }
@@ -61,6 +57,10 @@ public class User {
 
     public void addScore(int n) {
         score += n;
+    }
+
+    public boolean isUser() {
+        return this.getClass() == User.class;
     }
 
     public void setScore(int n) {

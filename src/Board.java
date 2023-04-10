@@ -1,6 +1,5 @@
-import Exceptions.*;
-
 import java.util.ArrayList;
+import Exceptions.*;
 
 /**
  * class that initialises the board for the game

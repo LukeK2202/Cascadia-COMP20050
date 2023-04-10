@@ -117,7 +117,7 @@ public class Scoring {
             for(int j = tileCoord[1]; j <= tileCoord[1] + 1; j++) {
                 if (i != tileCoord[0] || j != tileCoord[1]) {
                     tempHolder = new int[]{i, j};
-                    if(currentUserBoard.isCoOrdsContained(occupiedTiles, tempHolder) &&
+                    if(Board.isCoOrdsContained(occupiedTiles, tempHolder) &&
                             currentUserBoard.getTile(tempHolder[0], tempHolder[1]).getPlacedToken() != null) {
                         adjacent.add(tempHolder);
                     }
@@ -125,7 +125,7 @@ public class Scoring {
             }
         }
         tempHolder = new int[]{tileCoord[0], tileCoord[1] - 1};
-        if(currentUserBoard.isCoOrdsContained(occupiedTiles, tempHolder) &&
+        if(Board.isCoOrdsContained(occupiedTiles, tempHolder) &&
                 currentUserBoard.getTile(tempHolder[0], tempHolder[1]).getPlacedToken() != null) {
             adjacent.add(tempHolder);
         }
@@ -148,7 +148,7 @@ public class Scoring {
             for(int j = tileCoord[1] - 1; j <= tileCoord[1]; j++) {
                 if (i != tileCoord[0] || j != tileCoord[1]) {
                     tempHolder = new int[]{i, j};
-                    if(currentUserBoard.isCoOrdsContained(occupiedTiles, tempHolder) &&
+                    if(Board.isCoOrdsContained(occupiedTiles, tempHolder) &&
                             currentUserBoard.getTile(tempHolder[0], tempHolder[1]).getPlacedToken() != null) {
                         adjacent.add(tempHolder);
                     }
@@ -156,7 +156,7 @@ public class Scoring {
             }
         }
         tempHolder = new int[]{tileCoord[0], tileCoord[1] + 1};
-        if(currentUserBoard.isCoOrdsContained(occupiedTiles, tempHolder) &&
+        if(Board.isCoOrdsContained(occupiedTiles, tempHolder) &&
                 currentUserBoard.getTile(tempHolder[0], tempHolder[1]).getPlacedToken() != null) {
             adjacent.add(tempHolder);
         }

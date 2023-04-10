@@ -1,4 +1,3 @@
-
 /*
 COMP20050 Cascadia Project
 Group: Group 13 (TaskGroup13)
@@ -10,7 +9,7 @@ Members:    Luke King (21327413) -      LukeK2202
 public class Command{
     //Main Control Class, Purpose to call commands.
 
-    private enum CommandType {QUIT, NATURE, COMMAND, SELECT, ROTATE, PLACE}
+    private enum CommandType {QUIT, NATURE, COMMAND, SELECT, ROTATE, PLACE, DEV, NEXT}
     private CommandType commandType;
     private int selected;
 
@@ -38,6 +37,12 @@ public class Command{
             commandType = CommandType.PLACE;
             selected = Integer.parseInt(inputFormat.substring(1));
         }
+        else if(inputFormat.matches("DEV_MODE")) {
+            commandType = CommandType.DEV;
+        }
+        else if(inputFormat.matches("N_TURN")) {
+            commandType = CommandType.NEXT;
+        }
 
     }
 
@@ -46,7 +51,7 @@ public class Command{
     public static boolean isValid(String input) {
        String inputFormat = input.trim().toUpperCase();
        return inputFormat.equals("Q") || inputFormat.equals("N") || inputFormat.equals("C") || inputFormat.matches("[S][1-4]") || inputFormat.equals("R")
-               || inputFormat.matches("[P]\\d{1,2}");
+               || inputFormat.matches("[P]\\d{1,2}") || inputFormat.matches("DEV_MODE") || (inputFormat.matches("N_TURN") && Casc.devMode);
 
     }
 
@@ -85,12 +90,19 @@ public class Command{
         }
     }
 
-
     public int getSelected() {
         return selected;
     }
 
     public boolean isPlace() {
         return commandType == CommandType.PLACE;
+    }
+
+    public boolean isDev() {
+        return commandType == CommandType.DEV;
+    }
+
+    public boolean isNext() {
+        return commandType == CommandType.NEXT;
     }
 }

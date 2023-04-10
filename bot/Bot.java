@@ -1,4 +1,3 @@
-package Exceptions;
 /*
 COMP20050 Cascadia Project
 Group: Group 13 (TaskGroup13)
@@ -7,10 +6,10 @@ Members:    Luke King (21327413) -      LukeK2202
             David Kenny (21727729) -    DavidKenny3
  */
 
-public class CantPlaceWildlifeException extends Exception {
+ //Main class for bot, a subclass of user
+public class Bot extends User{
 
-    public CantPlaceWildlifeException(String str) {
-        super(str);
+    Bot(String name) {
+        super(name);
     }
-    
 }

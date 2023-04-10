@@ -197,13 +197,6 @@ public class View {
         return command;
     }
 
-//    public int[] getUserCullInfo() {
-//        boolean valid = false;
-//        do {
-//            System.out.println("Please enter ");
-//        }
-//    }
-
     public boolean getUserYorN() {
         boolean valid = false;
         boolean inputBool = false;

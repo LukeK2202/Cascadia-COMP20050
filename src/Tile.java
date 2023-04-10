@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-
 import Exceptions.*;
 
 //Tile class to construct and use tiles for the game
