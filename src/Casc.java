@@ -62,8 +62,11 @@ public class Casc {
             currBoard.checkPLaceableArea();
             currBoard.displayAvailableAreas();
             view.displayScreen(currUser, currBoard, table);
-            if(showComm) {
+            if(showComm || devMode) {
                 view.displayCommands();
+                if(devMode) {
+                    view.displayDevCommands();
+                }
                 showComm = false;
             }
             //Beginning of cull code block

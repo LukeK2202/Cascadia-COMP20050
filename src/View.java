@@ -50,6 +50,13 @@ public class View {
         System.out.println("Enter 'P'[0-99] to place the selected tile or wildlife on the board");
     }
 
+    public void displayDevCommands() {
+        System.out.println("In dev mode, a users turn does not end upon placing they're tokens.");
+        System.out.println("Dev Commands:");
+        System.out.println("Enter 'DEV_MODE' to exit dev mode");
+        System.out.println("Enter 'N_TURN' to go to next player");
+    }
+
     //Clears the view with new lines and adds a line. Used when at a new game state
     public void clearView() {
         skipLines();
@@ -338,6 +345,7 @@ public class View {
             System.out.println(Casc.usersArr.get(i) + "\t\t" + Casc.usersArr.get(i).getScore());
         }
     }
+
 }
 
 
