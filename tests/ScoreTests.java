@@ -181,6 +181,59 @@ public class ScoreTests {
     }
 
     @Test
+    public void testElkA() {
+                /*
+        Elk card A gives points for each elk within a straight line, up to 4 per line maximum
+                 */
+
+        Board board = new Board(true);
+        Scoring scoreBoard = new Scoring(true);
+        TileCreators tc = new TileCreators();
+
+        Tile tB = tc.createPlacedBearTile();
+        Tile tH = tc.createPlacedHawkTile();
+        Tile tE = tc.createPlacedElkTile();
+        Tile tF = tc.createPlacedFoxTile();
+        Tile tS = tc.createPlacedSalmonTile();
+
+        /*
+        Board Visualisation:
+        10,10<     >10,11<     >10,12<     >10,13
+	          11,10<     >11,11<     >11,12
+        12,10<     >12,11<     >12,12<     >12,13
+	          13,10<     >13,11<     >13,12
+        14,10<     >14,11<     >14,12<     >14,13
+         */
+
+        //Creating elks and testing output
+
+        board.addTile(tE, 14, 10);
+        assertEquals(2, scoreBoard.elkScoreCardA(board));
+
+        board.addTile(tE, 14,11);
+        assertEquals(5, scoreBoard.elkScoreCardA(board));
+
+        board.addTile(tE, 14, 12);
+
+        assertEquals(9, scoreBoard.elkScoreCardA(board));
+
+        board.addTile(tE, 13, 12);
+        assertEquals(11, scoreBoard.elkScoreCardA(board));
+
+        board.addTile(tE, 12, 13);
+        assertEquals(14, scoreBoard.elkScoreCardA(board));
+
+        board.addTile(tE, 12, 14);
+        assertEquals(16, scoreBoard.elkScoreCardA(board));
+
+        board.addTile(tE, 12, 15);
+        assertEquals(19, scoreBoard.elkScoreCardA(board));
+
+        board.addTile(tE, 15, 12);
+        assertEquals(21, scoreBoard.elkScoreCardA(board));
+    }
+
+    @Test
     public void testElkB() {
                 /*
         Elk card B gives points for each elk within a group size, in any shape

@@ -270,6 +270,99 @@ public class Scoring {
     }
 
     /**
+     * Calculates the amount of elks per line (up to max of 4) for all unique lines on the board
+     * @param currentUserBoard the users board in which you want to calculate the score of
+     * @return The values of the lengths of the lines of elks that are found on the board
+     */
+    public int elkScoreCardA(Board currentUserBoard) {
+        ArrayList<int[]> wildlifePositions = getArrayOfWildlifeHelper(currentUserBoard, Wildlife.ELK_PLACED);
+        ArrayList<Integer> groupSizes = new ArrayList<Integer>();
+        int totalScore = 0;
+
+        ArrayList<int[]> accountedList = new ArrayList<int[]>();
+        for(int[] wildlife : wildlifePositions) {
+            ArrayList<int[]> line = new ArrayList<int[]>();
+            findStraightLineOfTokens(accountedList, line,  wildlife, currentUserBoard);
+            groupSizes.add(line.size());
+        }
+
+        for(Integer amount : groupSizes) {
+            if (amount == 0) totalScore += 0;
+            else if (amount == 1) totalScore += 2;
+            else if (amount == 2) totalScore += 5;
+            else if (amount == 3) totalScore += 9;
+            else if (amount == 4) totalScore += 13;
+        }
+        return totalScore;
+    }
+
+
+    /**
+     * By modifying the accountedList and line ArrayLists, elkScoreCardA has the information of the amount of elks per line
+     * @param accountedList an ArrayList that keeps count of all elks already used as a single elk can only be used in one line
+     * @param line An ArrayList that is used to count the amount of elks per line
+     * @param currCoOrd The starting coordinate from which the next potential tile of the line is found
+     * @param currUserBoard the users board in which you want to calculate the score of
+     */
+    public void findStraightLineOfTokens(ArrayList<int[]> accountedList, ArrayList<int[]> line,  int[] currCoOrd, Board currUserBoard) {
+        if(line.size() < 1 && !Board.isCoOrdsContained(accountedList, currCoOrd)) {
+            accountedList.add(currCoOrd); // Add current tile to visited tiles list
+            line.add(currCoOrd);
+        }
+
+        ArrayList<int[]> adjacent = getNeighbourTilesHelper(currUserBoard, currCoOrd);
+        Iterator<int[]> iterator = adjacent.iterator();
+        while(iterator.hasNext()) { // Loop through all neighbors of current tile
+            int[] adj = iterator.next();
+            if (Board.isCoOrdsContained(accountedList, adj) ||
+                    !currUserBoard.getTile(adj[0], adj[1]).getPlacedToken().equals(currUserBoard.getTile(currCoOrd[0], currCoOrd[1]).getPlacedToken())) {
+                iterator.remove();
+            }
+            else {
+                if(line.size() >= 2) {
+                    if(checkLineStraight(line, adj)) {
+                        accountedList.add(adj);
+                        line.add(adj);
+                        findStraightLineOfTokens(accountedList, line, adj, currUserBoard);
+                        break;
+                    }
+                }
+                else {
+                    accountedList.add(adj);
+                    line.add(adj);
+                    findStraightLineOfTokens(accountedList, line, adj, currUserBoard);
+                    break;
+                }
+            }
+        }
+        if(line.size() == 4) return;
+    }
+
+
+    /**
+     * Method checks if the current elk to be checked is in a straight line with the current elks we have
+     * @param line ArrayList that contains the amount of elks per line, will use the last two elks to get vector trajectory
+     * @param currCoOrd the coordinate that is examined if it is to be added or not
+     * @return True if the coordinate is in a straight line with the current elks in line, False if not in a straight line
+     */
+    public boolean checkLineStraight (ArrayList<int[]> line, int[] currCoOrd) {
+        int[] lineTile1 = line.get(line.size() - 1);
+        int[] lineTile2 = line.get(line.size() - 2);
+        int currentTilesXvalue = lineTile1[0] - lineTile2[0];
+        int currentTilesYvalue = lineTile1[1] - lineTile2[1];
+        int newTileX = currCoOrd[0] - lineTile1[0];
+        int newTileY = currCoOrd[1] - lineTile1[1];
+        if (currentTilesXvalue * newTileY == newTileX * currentTilesYvalue && (newTileY == 0 || (lineTile1[1] % 2 == 0 && newTileY == -1) || (lineTile1[1] % 2 == 1 && newTileY == 1) || (lineTile1[1] % 2 == 1 && newTileY == -1) || (lineTile1[1] % 2 == 0 && newTileY == 1))) {
+            // Neighbor is in a straight line with existing tiles, continue with checking direction and distance
+            if (newTileX == 0 || (newTileX > 0 && newTileY == 0) || (newTileX < 0 && newTileY == 0 && lineTile1[1] % 2 == 1) || (newTileX < 0 && newTileY == 1 && lineTile1[1] % 2 == 0) || (newTileX < 0 && newTileY == -1 && lineTile1[1] % 2 == 1)) {
+                // Neighbor is in the correct direction and distance return true as line is in a straight line vector to the previous tiles
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Generates points for total amount of elks in their groups
      * @param currentUserBoard is the current user's board that will be used to navigate the tiles
      * @return returns amount of points based on the total amount of elk and their respective group sizes
