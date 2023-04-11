@@ -110,10 +110,12 @@ public class View {
         return players;
     }
 
-    public void displayScreen(User user, Board board, Table table) {
+    public void displayScreen(User user, Board board, Table table, Scoring score) {
+        score.generateScore(user);
         skipLines();
         printTable(table);
         System.out.println("Current Players Board: " + user.getName());
+        System.out.println("Current Players Score: " + user.getScore());
         System.out.println("Players Nature Tokens: " + user.getNatureTokens());
         printBoard(board);
         if(table.hadSelectedTile() || table.hadSelectedWildlife()) {

@@ -61,7 +61,7 @@ public class Casc {
             //Display the table and the current board
             currBoard.checkPLaceableArea();
             currBoard.displayAvailableAreas();
-            view.displayScreen(currUser, currBoard, table);
+            view.displayScreen(currUser, currBoard, table, scoreBoard);
             if(showComm || devMode) {
                 view.displayCommands();
                 if(devMode) {
@@ -77,7 +77,7 @@ public class Casc {
                 if (cullDecision == 2) {
                     table.cullAllCall();
                     //Block to print out updated table
-                    view.displayScreen(currUser, currBoard, table);
+                    view.displayScreen(currUser, currBoard, table, scoreBoard);
                     view.cullAllRequired();
                     //If 3 are matching, optional cull
                 } else if (cullDecision == 1) {
@@ -101,7 +101,7 @@ public class Casc {
                         if (input) {
                             table.optionalCull();
                             currUser.setOptionalCullDoneNow();
-                            view.displayScreen(currUser, currBoard, table);
+                            view.displayScreen(currUser, currBoard, table, scoreBoard);
                             view.optionalCullHasBeenCompleted();
                         }
                         else {
@@ -177,7 +177,7 @@ public class Casc {
                             //add method for bot do decide which tile is best for it
                             table.selectTile(userSelectTile);
 
-                            view.displayScreen(currUser, currBoard, table);
+                            view.displayScreen(currUser, currBoard, table, scoreBoard);
 
                             System.out.println("Please enter the number of the wildlife you would like to select: ");
                             int userSelectWildlife = view.getUserint(1, 4);
@@ -216,7 +216,7 @@ public class Casc {
 
                             currBoard.hideAvailableAreas();
                             currBoard.displayPlacedAreas();
-                            view.displayScreen(currUser, currBoard, table);
+                            view.displayScreen(currUser, currBoard, table, scoreBoard);
 
 
                         } else if (!table.hadSelectedWildlife()) {
@@ -284,7 +284,7 @@ public class Casc {
                     command = new Command("Q");
                 } else {
                     table.fillTable();
-                    view.displayScreen(currUser, currBoard, table);
+                    view.displayScreen(currUser, currBoard, table, scoreBoard);
                     if(!devMode) {
                         System.out.println("Press 1 to move to next player.");
                         int userNext = 0;
