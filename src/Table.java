@@ -46,10 +46,19 @@ public class Table {
         return shownTiles.get(n);
     }
 
+    public ArrayList<Tile> getShownTiles() {
+        return shownTiles;
+    }
+
     //return the shown wildlife at desired index
     public Wildlife getWildlife(int n) {
         return shownWildlife.get(n);
     }
+
+    public ArrayList<Wildlife> getShownWildlife() {
+        return shownWildlife;
+    }
+
     //removes a tile from the shown tiles and returns to deck
     public void returnTile(int position) {
         tileDeck.add(getTile(position));

@@ -122,7 +122,11 @@ public class Casc {
                     //e.g. select a tile, use a nature token, place a tile
                     //for place tile, could use if check to check if there is a currently selected tile
                     //Placeholder input for game functionality
-                    command = view.getUserInput();
+                    if(!table.hadSelectedTile()) {
+                        command = ((Bot) currUser).pickSelectTile(table);
+                    } else {
+                        command = ((Bot) currUser).pickPlaceTile();
+                    }
                 }
 
                 if(devMode) {

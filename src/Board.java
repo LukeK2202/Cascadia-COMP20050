@@ -109,6 +109,10 @@ public class Board {
         return occupiedTiles;
     }
 
+    public ArrayList<int[]> getPlaceableTileArray() {
+        return placeableArea;
+    }
+
     /**
      * Method to add a tile to the board, requiring the row and column
      * @param tile the tile object
