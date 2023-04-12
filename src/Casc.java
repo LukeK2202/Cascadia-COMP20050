@@ -96,7 +96,11 @@ public class Casc {
                             //create ability for bot to decide whether 
                             //or not it wants to do an optional cull
                             //Placeholder input
-                            input = view.getUserYorN();
+                            if(currUser.isUser()){
+                                input = view.getUserYorN();
+                            } else{
+                                input = ((Bot) currUser).optionalCullInput();
+                            }
                         }
                         if (input) {
                             table.optionalCull();

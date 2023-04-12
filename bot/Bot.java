@@ -35,4 +35,11 @@ public class Bot extends User{
         int pickedNum = rn.nextInt(0, placeableArr.size() - 1);
         return new Command("P" + pickedNum);
     }
+
+    // take in a random boolean for an optional cull
+    public boolean optionalCullInput(){
+        return rn.nextBoolean();
+    }
+
+
 }
