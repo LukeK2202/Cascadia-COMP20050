@@ -227,16 +227,27 @@ public class Casc {
                             throw new CantPlaceTileException("No Tile Selected. Please select a tile.");
                         }
                         do {
-                            System.out.println("Would you like to place wildlife token?");
-                            boolean input = view.getUserYorN();
-                            //TODO
-                            //add if else for if bot or user
-                            //add way of bot deciding if it wants to keep or discard wildlife
-                            if (input) {
-                                command = view.getUserInput();
+                            boolean input;
+                            if(currUser.isUser()) {
+                                System.out.println("Would you like to place wildlife token?");
+                                input = view.getUserYorN();
+                            }
+                            else {
                                 //TODO
                                 //add if else for if bot or user
-                                //add way for bot to decide where to place wildlife
+                                //add way of bot deciding if it wants to keep or discard wildlife
+                                input = ((Bot) currUser).botYorN(currBoard, table.getSelectedWildlife());
+                            }
+                            if (input) {
+                                if(currUser.isUser()) {
+                                    command = view.getUserInput();
+                                }
+                                else {
+                                    //TODO
+                                    //add if else for if bot or user
+                                    //add way for bot to decide where to place wildlife
+                                    command = ((Bot) currUser).placeWildlife(currBoard, table.getSelectedWildlife());
+                                }
                                 try {
                                     if (command.isPlace()) {
                                         currBoard.placeWildlife(command.getSelected(), table.getSelectedWildlife());

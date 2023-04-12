@@ -41,5 +41,39 @@ public class Bot extends User{
         return rn.nextBoolean();
     }
 
+     public boolean botYorN(Board botBoard, Wildlife selectedWildlife) {
+         for(int[] coOrd : botBoard.getOccupiedTileArray()) {
+
+             if(!botBoard.getTile(coOrd[0], coOrd[1]).hasPlacedToken()) {
+                 String tokenToCheck = selectedWildlife.getName();
+                 ArrayList<Wildlife> animals = botBoard.getTile(coOrd[0], coOrd[1]).getAnimals();
+
+                 for(Wildlife animal : animals) {
+                     if(animal.getName().equals(tokenToCheck)){
+                         return true;
+                     }
+                 }
+             }
+         }
+         return false;
+     }
+
+     public Command placeWildlife(Board botBoard, Wildlife selectedWildlife) {
+         ArrayList<Integer> placements = new ArrayList<Integer>();
+         for(int[] coOrd : botBoard.getOccupiedTileArray()) {
+             if(!botBoard.getTile(coOrd[0], coOrd[1]).hasPlacedToken()) {
+                 ArrayList<Wildlife> animals = botBoard.getTile(coOrd[0], coOrd[1]).getAnimals();
+                 for(Wildlife animal : animals){
+                     if(animal.getName().equals(selectedWildlife.getName())) {
+                         placements.add(botBoard.getTile(coOrd[0], coOrd[1]).getCoOrd());
+                     }
+                 }
+             }
+         }
+
+         int pickedTile = rn.nextInt(placements.size());
+
+         return new Command("P" + placements.get(pickedTile));
+     }
 
 }

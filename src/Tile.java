@@ -249,14 +249,14 @@ public class Tile {
 
     public void addWildlifeToken(Wildlife wildlifeToken) throws CantPlaceWildlifeException {
         int index = -1;
-        String[] tokenToBePlaced = wildlifeToken.name().split("_");
+        String tokenToBePlaced = wildlifeToken.getName();
 
         if (hasPlacedToken()) {
             throw new CantPlaceWildlifeException("Wildlife Token already placed");
         }
 
         for(int j = 0; j < wildlife.size(); j++) {
-            if(wildlife.get(j).name().equals(tokenToBePlaced[0])) {
+            if(wildlife.get(j).getName().equals(tokenToBePlaced)) {
                 index = j;
                 break;
             }
