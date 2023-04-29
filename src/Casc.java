@@ -246,7 +246,7 @@ public class Casc {
                                     //TODO
                                     //add if else for if bot or user
                                     //add way for bot to decide where to place wildlife
-                                    command = ((Bot) currUser).placeWildlife(currBoard, table.getSelectedWildlife());
+                                    command = ((Bot) currUser).placeWildlife(currBoard, table.getSelectedWildlife(), table);
                                 }
                                 try {
                                     if (command.isPlace()) {

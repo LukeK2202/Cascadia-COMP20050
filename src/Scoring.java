@@ -89,6 +89,7 @@ public class Scoring {
      */
     public void generateScore(User currUser) {
         try {
+            currUser.setScore(0);
             currUser.addScore((int) selectedHawkCard.invoke(this, currUser.getBoard()));
             currUser.addScore((int) selectedElkCard.invoke(this, currUser.getBoard()));
             currUser.addScore((int) selectedFoxCard.invoke(this, currUser.getBoard()));
