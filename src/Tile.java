@@ -140,6 +140,62 @@ public class Tile {
        }
     }
 
+
+
+    /**
+     * Copy constructor made specifically for the bot to have a copy of the bot's board
+     * @param og Original tile set at a memory location
+     */
+    Tile(Tile og) {
+        habitats = new ArrayList<Habitat>();
+        for(Habitat h : og.getHabitats()) {
+            habitats.add(h);
+        }
+
+        wildlife = new ArrayList<Wildlife>();
+        for(Wildlife w : og.getAnimals()) {
+            wildlife.add(w);
+        }
+
+        for(int i = 0; i < tile.length; i++) {
+            for(int j = 0; j < tile.length; j++) {
+                //If to check if its an outer edge of the matrix
+                if(i == 0 || i == tile.length - 1 || j == 0 || j == tile[i].length - 1) {
+                    //Secondary if to split between the first habitat locations and the second
+                    if(j < 2 || habitats.size() < 2) {
+                        this.tile[i][j] = habitats.get(0) + space + ViewColours.RESET;
+                    } else {
+                        this.tile[i][j] = habitats.get(1) + space + ViewColours.RESET;
+                    }
+                    //Else it is in the center of the tile
+                } else {
+                    //Multiple if's to check the wildlife locations and if there are 2 or 3 wildlife
+                    if (i == 1 && j == 1 && wildlife.size() >= 1) {
+                        this.tile[i][j] = wildlife.get(0).toString();
+                    } else if (i == 1 && j == 2 && wildlife.size() >= 2) {
+                        this.tile[i][j] = wildlife.get(1).toString();
+                    } else if (i == 2 && j == 1 && wildlife.size() == 3) {
+                        this.tile[i][j] = wildlife.get(2).toString();
+                    } else {
+                        this.tile[i][j] = whiteSpace;
+                    }
+                }
+            }
+        }
+
+        if(og.hasPlacedToken()) {
+            try {
+                this.addWildlifeToken(og.getPlacedToken());
+            } catch(CantPlaceWildlifeException ex) {
+                ex.getMessage();
+            }
+        }
+
+    }
+
+
+
+
     //Rotate function to rotate a tile by 2 slots
     public void rotate() {
         String tmp = tile[1][0];

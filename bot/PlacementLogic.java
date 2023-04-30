@@ -44,16 +44,18 @@ public class PlacementLogic {
         //try to see where hawk is best
         for(int j = 0; j < hawkLocations.size(); j++) {
             int[] hawkPosition = hawkLocations.get(j);
-            Bot botInstance = new Bot(bot, j);
+
+            Board newBoard = getBoardCopy(bot.getBoard());
+
 
             try {
-                botInstance.getBoard().getTile(hawkPosition[0], hawkPosition[1]).addWildlifeToken(Wildlife.HAWK_PLACED);
+                newBoard.getTile(hawkPosition[0], hawkPosition[1]).addWildlifeToken(Wildlife.HAWK_PLACED);
             } catch (CantPlaceWildlifeException ex) {
                 System.out.println(ex.getMessage());
             }
 
-            if(scoreBoard.hawkScoreCardA(botInstance.getBoard()) > currentBotScore) {
-                scoreValues[j] = scoreBoard.hawkScoreCardA(botInstance.getBoard());
+            if(scoreBoard.hawkScoreCardA(newBoard) > currentBotScore) {
+                scoreValues[j] = scoreBoard.hawkScoreCardA(newBoard);
             }
         }
 
@@ -69,5 +71,15 @@ public class PlacementLogic {
         }
         return hawkLocations.get(minIndex);
 
+    }
+
+    public Board getBoardCopy(Board ogBoard) {
+        Board newBoard = new Board(true);
+        for(int[] t : ogBoard.getOccupiedTileArray()) {
+            Tile tile = ogBoard.getTile(t[0], t[1]);
+            Tile copyTile = new Tile(tile);
+            newBoard.addTile(copyTile, t[0], t[1]);
+        }
+        return newBoard;
     }
 }
