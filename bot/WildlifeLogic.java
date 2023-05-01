@@ -10,7 +10,7 @@ Members:    Luke King (21327413) -      LukeK2202
             David Kenny (21727729) -    DavidKenny3
  */
 
-public class PlacementLogic {
+public class WildlifeLogic {
 
 
     // boolean hasHawk = false;

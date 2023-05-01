@@ -13,7 +13,7 @@ Members:    Luke King (21327413) -      LukeK2202
 public class Bot extends User{
 
     Random rn = new Random();
-    PlacementLogic placLog = new PlacementLogic();
+    WildlifeLogic placLog = new WildlifeLogic();
 
     Bot(String name) {
         super(name);
@@ -93,23 +93,6 @@ public class Bot extends User{
         return rn.nextBoolean();
     }
 
-    // public boolean botYorN(Board botBoard, Wildlife selectedWildlife) {
-    //     for(int[] coOrd : botBoard.getOccupiedTileArray()) {
-
-    //         if(!botBoard.getTile(coOrd[0], coOrd[1]).hasPlacedToken()) {
-    //             String tokenToCheck = selectedWildlife.getName();
-    //             ArrayList<Wildlife> animals = botBoard.getTile(coOrd[0], coOrd[1]).getAnimals();
-
-    //             for(Wildlife animal : animals) {
-    //                 if(animal.getName().equals(tokenToCheck)){
-    //                 return true;
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     return false;
-    // }
-
 
     public boolean botYorN() {
         int[] checker = getTileLocationForToken();
@@ -123,42 +106,8 @@ public class Bot extends User{
      * @return which tile to place token on
      */
     public Command placeWildlife(Board botBoard) {
-        // ArrayList<Integer> placements = new ArrayList<Integer>();
-        // for(int[] coOrd : botBoard.getOccupiedTileArray()) {
-        //     if(!botBoard.getTile(coOrd[0], coOrd[1]).hasPlacedToken()) {
-        //         ArrayList<Wildlife> animals = botBoard.getTile(coOrd[0], coOrd[1]).getAnimals();
-        //         for(Wildlife animal : animals){
-        //             if(animal.getName().equals(selectedWildlife.getName())) {
-        //                 placements.add(botBoard.getTile(coOrd[0], coOrd[1]).getCoOrd());
-        //             }
-        //         }
-        //     }
-        // }
-
-        //int pickedTile = rn.nextInt(placements.size());
         int[] place = getTileLocationForToken();
 
         return new Command("P" + botBoard.getTile(place[0], place[1]).getCoOrd());
     }
-
-
-
-
-    // public Command placeWildlife(Board botBoard, Wildlife selectedWildlife) {
-    //     ArrayList<Integer> placements = new ArrayList<Integer>();
-    //     for(int[] coOrd : botBoard.getOccupiedTileArray()) {
-    //         if(!botBoard.getTile(coOrd[0], coOrd[1]).hasPlacedToken()) {
-    //             ArrayList<Wildlife> animals = botBoard.getTile(coOrd[0], coOrd[1]).getAnimals();
-    //             for(Wildlife animal : animals){
-    //                 if(animal.getName().equals(selectedWildlife.getName())) {
-    //                     placements.add(botBoard.getTile(coOrd[0], coOrd[1]).getCoOrd());
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     int pickedTile = rn.nextInt(placements.size());
-
-    //     return new Command("P" + placements.get(pickedTile));
-    // }
 }
