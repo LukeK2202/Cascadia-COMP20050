@@ -303,9 +303,9 @@ public class Casc {
                     if(!devMode) {
                         System.out.println("Press 1 to move to next player.");
                         int userNext = 0;
-                        do {
-                            userNext = view.getUserint(1, 1);
-                        } while(userNext != 1);
+//                        do {
+//                            userNext = view.getUserint(1, 1);
+//                        } while(userNext != 1);
                         currUser.setOptionalCullPreviouslyDone();
                         userIndex = (userIndex + 1) % playerNum;
                         currUser = usersArr.get(userIndex);

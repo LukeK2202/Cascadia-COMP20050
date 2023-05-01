@@ -32,7 +32,7 @@ public class Bot extends User{
         Board board = getBoard();
         final ArrayList<int[]> placeableArr = board.getPlaceableTileArray();
 
-        int pickedNum = rn.nextInt(0, placeableArr.size() - 1);
+        int pickedNum = rn.nextInt(0, placeableArr.size());
         return new Command("P" + pickedNum);
     }
 

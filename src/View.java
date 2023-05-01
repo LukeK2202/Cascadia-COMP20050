@@ -128,20 +128,30 @@ public class View {
         String out = "";
         for (int row = 0; row < board.getBoardLength(); row++) {
             if (!board.isRowNull(row)) {
-                out = "";
                 for (int tileRow = 0; tileRow < 4; tileRow++) {
+                    out = largeTab + largeTab + largeTab + largeTab;
                     if (row % 2 == 1) {
                         out += "      ";
                     }
                     for (int i = 0; i < board.getBoardWidth(); i++) {
-                        out += board.getTile(row, i).toString(tileRow);
+                        if(i == board.getBoardWidth() - 1) {
+                            if(!board.isColumnBlank(i)) {
+                                out += board.getTile(row, i).toString(tileRow);
+                            }
+                        } else if(i == 0) {
+                            if(!board.isColumnBlank(i) || !board.isColumnBlank(i + 1)) {
+                                out += board.getTile(row, i).toString(tileRow);
+                            }
+                        } else {
+                            if(!board.isColumnBlank(i) || !board.isColumnBlank(i + 1) || !board.isColumnBlank(i - 1)) {
+                                out += board.getTile(row, i).toString(tileRow);
+                            }
+                        }
                     }
                     System.out.println(out);
-                    out = "";
                 }
             }
         }
-        skipLines();
     }
 
     //Displays table, being the 4 shown tiles and the 4 shown wildlife
@@ -170,7 +180,6 @@ public class View {
         out.append(largeTab + largeTab + largeTab);
         out.append("**       [1]                  [2]                  [3]                 [4]         **");
         System.out.println(out);
-        skipLines();
     }
 
     public void displaySelected(Table table) {

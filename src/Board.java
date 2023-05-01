@@ -68,6 +68,17 @@ public class Board {
         return false;
     }
 
+    public boolean isColumnBlank(int column) {
+        for(int i = 0; i < board.length; i++) {
+            if(!isRowNull(i)) {
+                if(!board[i][column].isBlank()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     /**
      * Method to populate an entire row with blank tiles
      * @param row to be populated
