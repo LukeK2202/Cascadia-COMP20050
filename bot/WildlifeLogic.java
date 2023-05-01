@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+import java.util.Collections;
 import Exceptions.CantPlaceWildlifeException;
 
 /*
@@ -11,19 +11,6 @@ Members:    Luke King (21327413) -      LukeK2202
  */
 
 public class WildlifeLogic {
-
-
-    // boolean hasHawk = false;
-    // ArrayList<int[]> hawkLocations = new ArrayList<int[]>();
-    // for(Wildlife w : table.getShownWildlife()) {
-    //     if(w.getName().equals(Wildlife.HAWK.getName())) {
-    //         hasHawk = true;
-    //         break;
-    //     }
-    // }
-    // if(!hasHawk) {
-    //     return null;
-    // }
 
     /**
      * All possible tile  locations on which the wildlife can be placed on
@@ -64,11 +51,11 @@ public class WildlifeLogic {
         //get the best wildlife location
         int maxIndex = 0;
         for(int k = 0; k < scoreValues.length; k++) {
-            if(scoreValues[k] > scoreValues[maxIndex]) {
+            if(scoreValues[k] > scoreValues[maxIndex] || (scoreValues[k] == scoreValues[maxIndex] && bot.getBoard().getTile(wildlifeLocations.get(k)[0], wildlifeLocations.get(k)[1]).isKeystoneTile())) {
                 maxIndex = k;
             }
         }
-        if(scoreValues[maxIndex] <= 0) {
+        if(scoreValues[maxIndex] < 0) {
             return new int[]{-1, -1};
         }
         return wildlifeLocations.get(maxIndex);
@@ -99,6 +86,15 @@ public class WildlifeLogic {
         totalNewBoardScore += scoreBoard.elkScoreCardA(newBoard);
         totalNewBoardScore += scoreBoard.foxScoreCardA(newBoard);
         totalNewBoardScore += scoreBoard.salmonScoreCardA(newBoard);
+
+        if(wildlife.getName().equals("Bear")) {
+            ArrayList<int[]> bearNeighbours = scoreBoard.getNeighbourTilesHelper(newBoard, wildlifePosition);
+            for(int[] tile : bearNeighbours) {
+                if(Collections.frequency(newBoard.getTile(tile[0], tile[1]).getAnimals(), wildlife) > 0){
+                    totalNewBoardScore += 2;
+                }
+            }
+        }
 
         if(totalNewBoardScore > currentBotScore) {
             scoreValues = totalNewBoardScore - currentBotScore;
