@@ -87,6 +87,8 @@ public class WildlifeLogic {
         totalNewBoardScore += scoreBoard.foxScoreCardA(newBoard);
         totalNewBoardScore += scoreBoard.salmonScoreCardA(newBoard);
 
+        if(newBoard.getTile(wildlifePosition[0], wildlifePosition[1]).isKeystoneTile()) totalNewBoardScore += 1;
+
         if(wildlife.getName().equals("Bear")) {
             ArrayList<int[]> bearNeighbours = scoreBoard.getNeighbourTilesHelper(newBoard, wildlifePosition);
             for(int[] tile : bearNeighbours) {

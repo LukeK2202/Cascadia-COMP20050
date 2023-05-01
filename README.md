@@ -9,7 +9,7 @@ Instructions on running a bot game:
     (bots and users included), when entering the names of each player, if you want it
     to be a regular user, enter then name as usual, e.g. "john" or "bob". If you want the
     player to be a bot, enter then name with a "bot" prefix, e.g. "bot john", or "bot bob".
-    (capitalisation on the prefix does not matter ant you can have multiple word names after, the
+    (capitalisation on the prefix does not matter, and you can have multiple word names after, the
     only part that matters is it has a prefix of bot separated by a space.)
     
     Once this is done, enter which score cards you would like to use, if you're doing a game with any bots.
