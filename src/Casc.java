@@ -149,7 +149,7 @@ public class Casc {
                     //TODO
                     //when should a bot use a nature token?
                 } else if (command.isNature()) {
-                    //sets optional cull to false, just in case it was true before so that optional cull is available next time fore the user
+                    //sets optional cull to false, just in case it was true before so that optional cull is available next time for the user
                     if(currUser.getNatureTokens() > 0) {
                         System.out.println("Spend a nature token to: ");
                         System.out.println("(0) to cancel, (1) Cull any number of wildlife tokens, or (2) Take any combination of tile and wildlife token: ");
@@ -202,8 +202,8 @@ public class Casc {
                     showComm = true;
                     commDone = true;
                 } else if (command.isSelect()) {
-                        table.SelectTileWild(command.getSelected());
-                        commDone = true;
+                    table.SelectTileWild(command.getSelected());
+                    commDone = true;
                 } else if (command.isRotate()) {
                     if (!table.hadSelectedTile()) {
                         view.showRotateError();
@@ -236,7 +236,7 @@ public class Casc {
                                 //TODO
                                 //add if else for if bot or user
                                 //add way of bot deciding if it wants to keep or discard wildlife
-                                input = ((Bot) currUser).botYorN(currBoard, table.getSelectedWildlife());
+                                input = ((Bot) currUser).botYorN();
                             }
                             if (input) {
                                 if(currUser.isUser()) {
@@ -246,7 +246,7 @@ public class Casc {
                                     //TODO
                                     //add if else for if bot or user
                                     //add way for bot to decide where to place wildlife
-                                    command = ((Bot) currUser).placeWildlife(currBoard, table.getSelectedWildlife());
+                                    command = ((Bot) currUser).placeWildlife(currBoard);
                                 }
                                 try {
                                     if (command.isPlace()) {
@@ -303,9 +303,9 @@ public class Casc {
                     if(!devMode) {
                         System.out.println("Press 1 to move to next player.");
                         int userNext = 0;
-//                        do {
-//                            userNext = view.getUserint(1, 1);
-//                        } while(userNext != 1);
+                       do {
+                           userNext = view.getUserint(1, 1);
+                       } while(userNext != 1);
                         currUser.setOptionalCullPreviouslyDone();
                         userIndex = (userIndex + 1) % playerNum;
                         currUser = usersArr.get(userIndex);
