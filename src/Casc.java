@@ -153,19 +153,23 @@ public class Casc {
                     if(currUser.getNatureTokens() > 0) {
                         System.out.println("Spend a nature token to: ");
                         System.out.println("(0) to cancel, (1) Cull any number of wildlife tokens, or (2) Take any combination of tile and wildlife token: ");
-                        int userInputInt = view.getUserint(0, 2);
-                        //TODO
-                        //add if else for bot or user
-                        //add method for bot to decide if it wants to cull or select a combo
+                        int userInputInt;
+                        if(currUser.isUser()) {
+                            userInputInt = view.getUserint(0, 2);
+                        } else {
+                        userInputInt = ((Bot) currUser).natureTokenDecider(currBoard, table);
+                        }
                         if(userInputInt == 1) {
                             System.out.println("Please enter the numbers of the wildlife you would like to cull (e.g. 1,3,4 to cull positions 1, 3 and 4): ");
-                            int[] userCullPos = new int[0];
-                            do {
+                            int[] userCullPos;
+                            if(currUser.isUser()) {
+                                do {
                                 userCullPos = view.getUserintArray(1, 4);
-                                //TODO
-                                //add if else for bot or user
-                                //add method for bot to detect which wildlife it wants to cull
                             } while (userCullPos.length > 4);
+                            } else {
+                               userCullPos = ((Bot) currUser).natureCull(currBoard, table); 
+                            }
+                            
                             for(int n = 0; n < userCullPos.length; n++) {
                                 userCullPos[n]--;
                             }

@@ -39,7 +39,17 @@ public class Bot extends User{
         final ArrayList<Tile> shownTiles = table.getShownTiles();
         final ArrayList<Wildlife> shownWildlife = table.getShownWildlife();
 
-        return new Command("S" + selectTileTokenPair(shownWildlife));
+        int n = selectTileTokenPair(shownWildlife);
+        if(n != -1) {
+            return new Command("S" + n);
+        } else {
+            if(this.getNatureTokens() > 0) {
+                return new Command("N");
+            } else {
+                return new Command("S" + rn.nextInt(1, 5));
+            }
+        }
+        
     }
 
     /**
@@ -67,18 +77,26 @@ public class Bot extends User{
             }
             scores[i] = placLog.bestScoreForLocation(this, primeLocations.get(i), shownWildlife.get(i));
         }
+
+
         for(int j = 0; j < scores.length; j++) {
             if(scores[j] > maxPoints) {
                 maxPoints = scores[j];
                 index = j;
             }
         }
+
+
         if(maxPoints < 1) {
             setTileLocationForToken(new int[]{-1, -1});
-            return rn.nextInt(1, 5);
+            return - 1;
         }
+
+
         setTileLocationForToken(primeLocations.get(index));
         return index + 1;
+
+
     }
 
     public Command pickPlaceTile() {
@@ -109,5 +127,13 @@ public class Bot extends User{
         int[] place = getTileLocationForToken();
 
         return new Command("P" + botBoard.getTile(place[0], place[1]).getCoOrd());
+    }
+
+    public int natureTokenDecider(Board botBoard, Table table) {
+        return 1;
+    }
+
+    public int[] natureCull(Board botBoard, Table table) {
+        return new int[] {1,2,3,4};
     }
 }
