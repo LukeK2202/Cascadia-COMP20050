@@ -607,5 +607,4 @@ public class Scoring {
         }
         return neighbours;
     }
-
 }
