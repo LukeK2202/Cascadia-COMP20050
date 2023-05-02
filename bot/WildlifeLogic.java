@@ -90,12 +90,17 @@ public class WildlifeLogic {
         if(newBoard.getTile(wildlifePosition[0], wildlifePosition[1]).isKeystoneTile()) totalNewBoardScore += 2;
 
         if(wildlife.getName().equals("Bear")) {
-            ArrayList<int[]> bearNeighbours = scoreBoard.getNeighbourTilesHelper(newBoard, wildlifePosition);
-            for(int[] tile : bearNeighbours) {
+            ArrayList<int[]> neighbours = scoreBoard.getNeighbourTilesHelper(newBoard, wildlifePosition);
+            for(int[] tile : neighbours) {
                 if(Collections.frequency(newBoard.getTile(tile[0], tile[1]).getAnimals(), wildlife) > 0){
                     totalNewBoardScore += 2;
                 }
             }
+        }
+
+
+        if(wildlife.getName().equals("Hawk") || wildlife.getName().equals("Fox")) {
+            totalNewBoardScore += ifWildlife(newBoard, scoreBoard, wildlifePosition);
         }
 
         if(totalNewBoardScore > currentBotScore) {
@@ -104,4 +109,19 @@ public class WildlifeLogic {
         return scoreValues;
     }
 
+    public int ifWildlife(Board newBoard, Scoring scoreBoard, int[] wildlifePosition) {
+        ArrayList<int[]> neighbours = scoreBoard.getNeighbourTilesHelper(newBoard, wildlifePosition);
+        for(int[] tile : neighbours) {
+            if(Collections.frequency(newBoard.getTile(tile[0], tile[1]).getAnimals(), Wildlife.BEAR) > 0){
+                return -2;
+            }
+            else if(Collections.frequency(newBoard.getTile(tile[0], tile[1]).getAnimals(), Wildlife.SALMON) > 0) {
+                return -1;
+            }
+            else if(Collections.frequency(newBoard.getTile(tile[0], tile[1]).getAnimals(), Wildlife.ELK) > 0) {
+                return -1;
+            }
+        }
+        return 0;
+    }
 }

@@ -22,7 +22,7 @@ public class Bot extends User{
     }
 
     //keeps location of what tile to place token on, or -1, -1 if no such combination exists
-    int[] tileLocationForToken = {-1, -1};
+    private int[] tileLocationForToken = {-1, -1};
 
     public void setTileLocationForToken(int[] loc) {
         tileLocationForToken = loc;
@@ -69,8 +69,8 @@ public class Bot extends User{
             }
         }
         return new Command("S" + (index + 1));
-        
-        
+
+
     }
 
     /**
@@ -125,7 +125,7 @@ public class Bot extends User{
     }
 
     public boolean optionalCullInput(){
-        return rn.nextBoolean();
+        return true;
     }
 
 
