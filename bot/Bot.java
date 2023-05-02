@@ -39,16 +39,27 @@ public class Bot extends User{
         final ArrayList<Tile> shownTiles = table.getShownTiles();
         final ArrayList<Wildlife> shownWildlife = table.getShownWildlife();
 
-        int n = selectTileTokenPair(shownWildlife);
-        if(n != -1) {
-            return new Command("S" + n);
-        } else {
-            if(this.getNatureTokens() > 0) {
-                return new Command("N");
-            } else {
-                return new Command("S" + rn.nextInt(1, 5));
+        int[] scores = selectTileTokenPair(shownWildlife);
+        int maxPoints = 0;
+        int index = 0;
+
+        for(int j = 0; j < scores.length; j++) {
+            if(scores[j] > maxPoints) {
+                maxPoints = scores[j];
+                index = j;
             }
         }
+        if(maxPoints < 2) {
+            if(this.getNatureTokens() > 0) {
+                return new Command("N");
+            } else if (maxPoints < 0) {
+                return new Command("S" + rn.nextInt(1, 5));
+            } else {
+                return new Command("S" + (index + 1));
+            }
+        }
+        return new Command("S" + (index + 1));
+        
         
     }
 
@@ -57,7 +68,7 @@ public class Bot extends User{
      * @param shownWildlife wildlife that is displayed on the table right now
      * @return index of which tile, token pair to choose
      */
-    public int selectTileTokenPair(ArrayList<Wildlife> shownWildlife) {
+    public int[] selectTileTokenPair(ArrayList<Wildlife> shownWildlife) {
         int maxPoints = 0;
         int index = 0;
         int[] scores = new int[shownWildlife.size()];
@@ -78,23 +89,19 @@ public class Bot extends User{
             scores[i] = placLog.bestScoreForLocation(this, primeLocations.get(i), shownWildlife.get(i));
         }
 
-
         for(int j = 0; j < scores.length; j++) {
             if(scores[j] > maxPoints) {
                 maxPoints = scores[j];
                 index = j;
             }
         }
-
-
-        if(maxPoints < 1) {
-            setTileLocationForToken(new int[]{-1, -1});
-            return - 1;
+        if(maxPoints < 0) {
+            setTileLocationForToken(new int[] {-1, -1});
+        } else {
+        setTileLocationForToken(primeLocations.get(index));
         }
 
-
-        setTileLocationForToken(primeLocations.get(index));
-        return index + 1;
+        return scores;
 
 
     }
