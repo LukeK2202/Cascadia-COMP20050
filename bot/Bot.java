@@ -46,7 +46,7 @@ public class Bot extends User{
      * @return which pair to select
      */
     public Command pickSelectTile(Table table) {
-        final ArrayList<Tile> shownTiles = table.getShownTiles();
+        // final ArrayList<Tile> shownTiles = table.getShownTiles();
         final ArrayList<Wildlife> shownWildlife = table.getShownWildlife();
 
         int[] scores = selectTileTokenPair(shownWildlife);
