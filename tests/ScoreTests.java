@@ -120,7 +120,6 @@ public class ScoreTests {
 
         //Creating Bear Tiles and some other animal tile
         Tile tB = tc.createPlacedBearTile();
-        Tile tH = tc.createPlacedHawkTile();
 
         //Creating valid 1 bear pair
         board.addTile(tB, 10, 10);
@@ -164,7 +163,6 @@ public class ScoreTests {
         Tile tH = tc.createPlacedHawkTile();
         Tile tE = tc.createPlacedElkTile();
         Tile tF = tc.createPlacedFoxTile();
-        Tile tS = tc.createPlacedSalmonTile();
 
         //Creating a fox with two unique neighbours
         board.addTile(tF, 11, 11);
@@ -190,11 +188,7 @@ public class ScoreTests {
         Scoring scoreBoard = new Scoring(true);
         TileCreators tc = new TileCreators();
 
-        Tile tB = tc.createPlacedBearTile();
-        Tile tH = tc.createPlacedHawkTile();
         Tile tE = tc.createPlacedElkTile();
-        Tile tF = tc.createPlacedFoxTile();
-        Tile tS = tc.createPlacedSalmonTile();
 
         /*
         Board Visualisation:
@@ -247,7 +241,6 @@ public class ScoreTests {
         Tile tH = tc.createPlacedHawkTile();
         Tile tE = tc.createPlacedElkTile();
         Tile tF = tc.createPlacedFoxTile();
-        Tile tS = tc.createPlacedSalmonTile();
 
         /*
         Board Visualisation:
@@ -312,9 +305,6 @@ public class ScoreTests {
         //Creating sample tiles
         Tile tB = tc.createPlacedBearTile();
         Tile tH = tc.createPlacedHawkTile();
-        Tile tE = tc.createPlacedElkTile();
-        Tile tF = tc.createPlacedFoxTile();
-        Tile tS = tc.createPlacedSalmonTile();
 
         board.addTile(tH, 11, 11);
         board.addTile(tB, 11, 12);
@@ -344,9 +334,6 @@ public class ScoreTests {
 
         //Creating sample tiles
         Tile tB = tc.createPlacedBearTile();
-        Tile tH = tc.createPlacedHawkTile();
-        Tile tE = tc.createPlacedElkTile();
-        Tile tF = tc.createPlacedFoxTile();
         Tile tS = tc.createPlacedSalmonTile();
 
         board.addTile(tS, 11, 12);
@@ -382,9 +369,6 @@ public class ScoreTests {
 
         //Creating sample tiles
         Tile tB = tc.createPlacedBearTile();
-        Tile tH = tc.createPlacedHawkTile();
-        Tile tE = tc.createPlacedElkTile();
-        Tile tF = tc.createPlacedFoxTile();
         Tile tS = tc.createPlacedSalmonTile();
 
         board.addTile(tS, 11, 12);
@@ -420,9 +404,6 @@ public class ScoreTests {
 
         //Creating sample tiles
         Tile tB = tc.createPlacedBearTile();
-        Tile tH = tc.createPlacedHawkTile();
-        Tile tE = tc.createPlacedElkTile();
-        Tile tF = tc.createPlacedFoxTile();
         Tile tS = tc.createPlacedSalmonTile();
 
         board.addTile(tS, 11, 12);

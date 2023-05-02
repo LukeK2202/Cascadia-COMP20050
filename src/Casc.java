@@ -146,7 +146,7 @@ public class Casc {
                         if(currUser.isUser()) {
                             userInputInt = view.getUserint(0, 2);
                         }else {
-                            userInputInt = ((Bot) currUser).natureTokenDecider(currBoard, table);
+                            userInputInt = ((Bot) currUser).natureTokenDecider();
                         }
                         if(userInputInt == 1) {
                             System.out.println("Please enter the numbers of the wildlife you would like to cull (e.g. 1,3,4 to cull positions 1, 3 and 4): ");
@@ -156,7 +156,7 @@ public class Casc {
                                     userCullPos = view.getUserintArray(1, 4);
                                 } while (userCullPos.length > 4);
                             } else {
-                                userCullPos = ((Bot) currUser).natureCull(currBoard, table);
+                                userCullPos = ((Bot) currUser).natureCull();
                             }
 
                             for(int n = 0; n < userCullPos.length; n++) {

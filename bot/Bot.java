@@ -33,12 +33,7 @@ public class Bot extends User{
     }
 
     public void setTestBoard(Board board) {
-        this.testBoard = new Board(true);
-        for(int[] t : board.getOccupiedTileArray()) {
-            Tile tile = board.getTile(t[0], t[1]);
-            Tile copyTile = new Tile(tile);
-            testBoard.addTile(copyTile, t[0], t[1]);
-        }
+        this.testBoard = Board.getBoardCopy(board);
     }
 
     public Board getTestBoard() {
@@ -151,11 +146,11 @@ public class Bot extends User{
         return new Command("P" + botBoard.getTile(place[0], place[1]).getCoOrd());
     }
 
-    public int natureTokenDecider(Board botBoard, Table table) {
+    public int natureTokenDecider() {
         return 1;
     }
 
-    public int[] natureCull(Board botBoard, Table table) {
+    public int[] natureCull() {
         return new int[] {1,2,3,4};
     }
 }
