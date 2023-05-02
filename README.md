@@ -4,6 +4,8 @@ Members:    Luke King (21327413) -      LukeK2202
             Alexey Budnyev (21339913) - Alexey-B0
             David Kenny (21727729) -    DavidKenny3
 
+GitHub link - https://github.com/LukeK2202/TaskGroup13.git
+
 Instructions on running a bot game:
     When beginning a new game, enter the amount of players you would like to run with
     (bots and users included), when entering the names of each player, if you want it
