@@ -15,6 +15,8 @@ public class Bot extends User{
     Random rn = new Random();
     WildlifeLogic placLog = new WildlifeLogic();
 
+    private Board testBoard;
+
     Bot(String name) {
         super(name);
     }
@@ -28,6 +30,19 @@ public class Bot extends User{
 
     public int[] getTileLocationForToken() {
         return tileLocationForToken;
+    }
+
+    public void setTestBoard(Board board) {
+        this.testBoard = new Board(true);
+        for(int[] t : board.getOccupiedTileArray()) {
+            Tile tile = board.getTile(t[0], t[1]);
+            Tile copyTile = new Tile(tile);
+            testBoard.addTile(copyTile, t[0], t[1]);
+        }
+    }
+
+    public Board getTestBoard() {
+        return testBoard;
     }
 
     /**

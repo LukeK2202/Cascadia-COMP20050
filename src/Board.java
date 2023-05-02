@@ -316,4 +316,19 @@ public class Board {
 
         }
     }
+
+    /**
+     * Creates an exact copy of the bots board, but in a different memory location, made not to modify bots current board
+     * @param ogBoard original board that the current bot holds
+     * @return copy of the original board
+     */
+    public static Board getBoardCopy(Board ogBoard) {
+        Board newBoard = new Board(true);
+        for(int[] t : ogBoard.getOccupiedTileArray()) {
+            Tile tile = ogBoard.getTile(t[0], t[1]);
+            Tile copyTile = new Tile(tile);
+            newBoard.addTile(copyTile, t[0], t[1]);
+        }
+        return newBoard;
+    }
 }

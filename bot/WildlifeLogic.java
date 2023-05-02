@@ -74,7 +74,7 @@ public class WildlifeLogic {
         int currentBotScore = bot.getScore();
 
         int totalNewBoardScore = 0;
-        Board newBoard = getBoardCopy(bot.getBoard());
+        Board newBoard = Board.getBoardCopy(bot.getBoard());
 
         try {
             newBoard.getTile(wildlifePosition[0], wildlifePosition[1]).addWildlifeToken(wildlife);
@@ -104,18 +104,4 @@ public class WildlifeLogic {
         return scoreValues;
     }
 
-    /**
-     * Creates an exact copy of the bots board, but in a different memory location, made not to modify bots current board
-     * @param ogBoard original board that the current bot holds
-     * @return copy of the original board
-     */
-    public Board getBoardCopy(Board ogBoard) {
-        Board newBoard = new Board(true);
-        for(int[] t : ogBoard.getOccupiedTileArray()) {
-            Tile tile = ogBoard.getTile(t[0], t[1]);
-            Tile copyTile = new Tile(tile);
-            newBoard.addTile(copyTile, t[0], t[1]);
-        }
-        return newBoard;
-    }
 }
