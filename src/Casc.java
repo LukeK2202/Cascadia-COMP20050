@@ -92,10 +92,6 @@ public class Casc {
                         if(currUser.isUser()) {
                             input = view.getUserYorN();
                         } else {
-                            //TODO
-                            //create ability for bot to decide whether 
-                            //or not it wants to do an optional cull
-                            //Placeholder input
                             if(currUser.isUser()){
                                 input = view.getUserYorN();
                             } else{
@@ -121,11 +117,6 @@ public class Casc {
                 if(currUser.isUser()) {
                     command = view.getUserInput();
                 } else {
-                    //TODO
-                    //create a bot method to decide which command to do
-                    //e.g. select a tile, use a nature token, place a tile
-                    //for place tile, could use if check to check if there is a currently selected tile
-                    //Placeholder input for game functionality
                     if(!table.hadSelectedTile()) {
                         command = ((Bot) currUser).pickSelectTile(table);
                     } else {
@@ -146,8 +137,6 @@ public class Casc {
                 if (command.isQuit()) {
                     commDone = true;
                     //If command is next then go to the next user and set the current board to their board
-                    //TODO
-                    //when should a bot use a nature token?
                 } else if (command.isNature()) {
                     //sets optional cull to false, just in case it was true before so that optional cull is available next time for the user
                     if(currUser.getNatureTokens() > 0) {
@@ -156,20 +145,20 @@ public class Casc {
                         int userInputInt;
                         if(currUser.isUser()) {
                             userInputInt = view.getUserint(0, 2);
-                        } else {
-                        userInputInt = ((Bot) currUser).natureTokenDecider(currBoard, table);
+                        }else {
+                            userInputInt = ((Bot) currUser).natureTokenDecider(currBoard, table);
                         }
                         if(userInputInt == 1) {
                             System.out.println("Please enter the numbers of the wildlife you would like to cull (e.g. 1,3,4 to cull positions 1, 3 and 4): ");
                             int[] userCullPos;
                             if(currUser.isUser()) {
                                 do {
-                                userCullPos = view.getUserintArray(1, 4);
-                            } while (userCullPos.length > 4);
+                                    userCullPos = view.getUserintArray(1, 4);
+                                } while (userCullPos.length > 4);
                             } else {
-                               userCullPos = ((Bot) currUser).natureCull(currBoard, table); 
+                                userCullPos = ((Bot) currUser).natureCull(currBoard, table);
                             }
-                            
+
                             for(int n = 0; n < userCullPos.length; n++) {
                                 userCullPos[n]--;
                             }
@@ -180,24 +169,17 @@ public class Casc {
                         } else if(userInputInt == 2) {
                             System.out.println("Please enter the number of the tile you would like to select: ");
                             int userSelectTile = view.getUserint(1, 4);
-                            //TODO
-                            //add if else for bot or user
-                            //add method for bot do decide which tile is best for it
                             table.selectTile(userSelectTile);
 
                             view.displayScreen(currUser, currBoard, table, scoreBoard);
 
                             System.out.println("Please enter the number of the wildlife you would like to select: ");
                             int userSelectWildlife = view.getUserint(1, 4);
-                            //TODO
-                            //add if else for bot or user
-                            //add method for bot to decide which wildlife is best for it
                             table.selectWildlife(userSelectWildlife);
 
                             currUser.removeNatureToken();
                             natureTokens++;
                             commDone = true;
-                        } else {
                         }
                     } else {
                         System.out.println("No nature tokens to spend.");
@@ -237,9 +219,6 @@ public class Casc {
                                 input = view.getUserYorN();
                             }
                             else {
-                                //TODO
-                                //add if else for if bot or user
-                                //add way of bot deciding if it wants to keep or discard wildlife
                                 input = ((Bot) currUser).botYorN();
                             }
                             if (input) {
@@ -247,9 +226,6 @@ public class Casc {
                                     command = view.getUserInput();
                                 }
                                 else {
-                                    //TODO
-                                    //add if else for if bot or user
-                                    //add way for bot to decide where to place wildlife
                                     command = ((Bot) currUser).placeWildlife(currBoard);
                                 }
                                 try {
@@ -307,10 +283,10 @@ public class Casc {
                     if(!devMode) {
                         if(currUser.isUser()) {
                             System.out.println("Press 1 to move to next player.");
-                        int userNext = 0;
-                       do {
-                           userNext = view.getUserint(1, 1);
-                       } while(userNext != 1);
+                            int userNext = 0;
+                            do {
+                                userNext = view.getUserint(1, 1);
+                            } while(userNext != 1);
                         }
                         currUser.setOptionalCullPreviouslyDone();
                         userIndex = (userIndex + 1) % playerNum;
