@@ -1,10 +1,10 @@
 COMP20050 Cascadia Project
 Group: Group 13 (TaskGroup13)
-Members:    Luke King (21327413) -      LukeK2202
-            Alexey Budnyev (21339913) - Alexey-B0
-            David Kenny (21727729) -    DavidKenny3
+Members:    Luke King () -      [LukeK2202](https://github.com/LukeK2202)
+            Alexey Budnyev () - [Alexey-B0](https://github.com/Alexey-B0)
+            David Kenny () -    [DavidKenny3](https://github.com/DavidKenny3)
 
-GitHub link - https://github.com/LukeK2202/TaskGroup13.git
+GitHub link - [https://github.com/LukeK2202/TaskGroup13.git](https://github.com/LukeK2202/Cascadia-COMP20050.git)
 
 Instructions on running a bot game:
     When beginning a new game, enter the amount of players you would like to run with
